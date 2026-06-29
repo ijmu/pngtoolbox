@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebP 转 PNG 在线工具 - PNG 透明背景处理</title>
+    <meta
+      name="description"
+      content="免费 WebP 转 PNG 与 PNG 透明背景处理工具。图片在浏览器本地处理，不上传服务器，适合电商图片、Logo、截图和自媒体素材。"
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://example.com/" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="WebP PNG 工具首页">
+        <span class="brand-mark">P</span>
+        <span>PNGToolbox</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="#webp-to-png">WebP 转 PNG</a>
+        <a href="#transparent-png">透明背景</a>
+        <a href="#guides">教程</a>
+        <a href="./privacy.html">隐私</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">免费在线图片工具</p>
+          <h1>WebP 转 PNG，顺手处理透明背景</h1>
+          <p>
+            面向电商、博客、Logo 和自媒体素材的小工具站。图片只在浏览器本地处理，不上传服务器，部署成本低，也更适合长期做 SEO 和 AdSense。
+          </p>
+        </div>
+        <div class="hero-panel" aria-label="工具摘要">
+          <div>
+            <strong>本地</strong>
+            <span>浏览器处理</span>
+          </div>
+          <div>
+            <strong>PNG</strong>
+            <span>透明输出</span>
+          </div>
+          <div>
+            <strong>批量</strong>
+            <span>WebP 转换</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
+        <div class="section-head">
+          <p class="eyebrow">工具 1</p>
+          <h2 id="converter-title">WebP 转 PNG</h2>
+          <p>拖入一个或多个 WebP 文件，直接导出 PNG。适合把网页图片、设计素材或后台下载图转成更通用的格式。</p>
+        </div>
+
+        <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="选择或拖入 WebP 图片">
+          <input id="webpInput" type="file" accept="image/webp" multiple />
+          <div class="drop-icon">+</div>
+          <p>拖入 WebP 文件，或点击选择图片</p>
+          <span>支持批量转换，建议单张小于 20MB</span>
+        </div>
+
+        <div class="controls compact-controls" aria-label="WebP 转 PNG 操作">
+          <button id="convertBtn" type="button" disabled>转换并下载 PNG</button>
+          <button id="clearWebpBtn" type="button" class="secondary" disabled>清空</button>
+        </div>
+
+        <div id="webpStatus" class="status" role="status">还没有选择 WebP 文件。</div>
+        <ul id="webpFileList" class="file-list" aria-label="已选择 WebP 文件"></ul>
+      </section>
+
+      <section id="transparent-png" class="tool-shell" aria-labelledby="transparent-title">
+        <div class="section-head">
+          <p class="eyebrow">工具 2</p>
+          <h2 id="transparent-title">PNG 透明背景处理</h2>
+          <p>上传 PNG，点击图片上的背景颜色取样，再调节容差。适合白底产品图、纯色 Logo 背景和截图背景去除。</p>
+        </div>
+
+        <div class="editor-grid">
+          <div>
+            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="选择或拖入 PNG 图片">
+              <input id="pngInput" type="file" accept="image/png" />
+              <div class="drop-icon">+</div>
+              <p>拖入 PNG 文件，或点击选择图片</p>
+              <span>点击预览图可吸取背景颜色</span>
+            </div>
+
+            <div class="transparent-controls" aria-label="透明背景设置">
+              <label>
+                背景颜色
+                <input id="bgColorInput" type="color" value="#ffffff" />
+              </label>
+              <label>
+                容差
+                <input id="toleranceInput" type="range" min="0" max="180" step="1" value="35" />
+                <output id="toleranceOutput">35</output>
+              </label>
+              <label>
+                边缘柔化
+                <input id="featherInput" type="range" min="0" max="80" step="1" value="18" />
+                <output id="featherOutput">18</output>
+              </label>
+              <button id="downloadTransparentBtn" type="button" disabled>下载透明 PNG</button>
+              <button id="resetTransparentBtn" type="button" class="secondary" disabled>重置</button>
+            </div>
+          </div>
+
+          <div class="preview-panel">
+            <canvas id="previewCanvas" width="720" height="480" aria-label="PNG 透明背景预览"></canvas>
+            <div id="transparentStatus" class="status" role="status">还没有选择 PNG 文件。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="guides" class="content-grid" aria-labelledby="guides-title">
+        <div class="section-head">
+          <p class="eyebrow">实用教程</p>
+          <h2 id="guides-title">围绕 PNG 可以继续扩展的内容</h2>
+        </div>
+        <article>
+          <h3>WebP 转 PNG 的搜索需求</h3>
+          <p>
+            很多用户从网页、后台或聊天工具里拿到 WebP，但设计软件、办公软件或电商平台更习惯 PNG。这个关键词明确，工具价值也直接。
+          </p>
+        </article>
+        <article>
+          <h3>透明背景处理的边界</h3>
+          <p>
+            纯色背景、白底产品图、Logo 底色最适合浏览器本地处理。复杂人像、发丝和杂乱背景建议另做 AI 抠图专题页，不要混在一个简单工具里。
+          </p>
+        </article>
+        <article>
+          <h3>AdSense 内容建议</h3>
+          <p>
+            工具页之外，可以补充 PNG 透明背景是什么、Logo 为什么要透明底、电商主图格式要求、WebP 和 PNG 区别等教程页。
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 PNGToolbox</span>
+      <a href="./privacy.html">隐私政策</a>
+      <a href="./terms.html">使用条款</a>
+      <a href="mailto:hello@example.com">联系</a>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
