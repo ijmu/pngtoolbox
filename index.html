@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WebP 转 PNG 在线工具 - PNG 透明背景处理</title>
+    <title>WebP to PNG Online - PNG Transparent Background Tool</title>
     <meta
       name="description"
-      content="免费 WebP 转 PNG 与 PNG 透明背景处理工具。图片在浏览器本地处理，不上传服务器，适合电商图片、Logo、截图和自媒体素材。"
+      content="Free WebP to PNG converter and PNG transparent background tool. Process images locally in your browser without uploading files."
     />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://www.pngtoolbox.com/" />
@@ -19,148 +19,149 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="./index.html" aria-label="PNGToolbox 首页">
+      <a class="brand" href="./index.html" aria-label="PNGToolbox home">
         <span class="brand-mark">P</span>
         <span>PNGToolbox</span>
       </a>
-      <nav aria-label="主导航">
-        <a href="#webp-to-png">WebP 转 PNG</a>
-        <a href="#transparent-png">透明背景</a>
-        <a href="#guides">教程</a>
-        <a href="./privacy.html">隐私</a>
+      <nav aria-label="Primary navigation">
+        <a href="#webp-to-png">WebP to PNG</a>
+        <a href="#transparent-png">Transparent PNG</a>
+        <a href="#guides">Guides</a>
+        <a href="./privacy.html">Privacy</a>
       </nav>
     </header>
 
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">免费在线图片工具</p>
-          <h1>WebP 转 PNG，顺手处理透明背景</h1>
+          <p class="eyebrow">Free online image tools</p>
+          <h1>Convert WebP to PNG and clean up transparent backgrounds</h1>
           <p>
-            面向电商、博客、Logo 和自媒体素材的小工具站。图片只在浏览器本地处理，不上传服务器，部署成本低，也更适合长期做 SEO 和 AdSense。
+            PNGToolbox helps you convert WebP files to PNG and make simple PNG backgrounds transparent. Images are processed locally in your browser, so your files stay on your device.
           </p>
         </div>
-        <div class="hero-panel" aria-label="工具摘要">
+        <div class="hero-panel" aria-label="Tool highlights">
           <div>
-            <strong>本地</strong>
-            <span>浏览器处理</span>
+            <strong>Local</strong>
+            <span>Browser processing</span>
           </div>
           <div>
             <strong>PNG</strong>
-            <span>透明输出</span>
+            <span>Transparent output</span>
           </div>
           <div>
-            <strong>批量</strong>
-            <span>WebP 转换</span>
+            <strong>Batch</strong>
+            <span>WebP conversion</span>
           </div>
         </div>
       </section>
 
       <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
         <div class="section-head">
-          <p class="eyebrow">工具 1</p>
-          <h2 id="converter-title">WebP 转 PNG</h2>
-          <p>拖入一个或多个 WebP 文件，直接导出 PNG。适合把网页图片、设计素材或后台下载图转成更通用的格式。</p>
+          <p class="eyebrow">Tool 1</p>
+          <h2 id="converter-title">WebP to PNG Converter</h2>
+          <p>Drop one or more WebP files and export them as PNG. This is useful for design assets, product images, screenshots, and files that need wider software compatibility.</p>
         </div>
 
-        <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="选择或拖入 WebP 图片">
+        <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
           <input id="webpInput" type="file" accept="image/webp" multiple />
           <div class="drop-icon">+</div>
-          <p>拖入 WebP 文件，或点击选择图片</p>
-          <span>支持批量转换，建议单张小于 20MB</span>
+          <p>Drop WebP files here, or click to choose images</p>
+          <span>Batch conversion supported. Recommended file size: under 20MB each.</span>
         </div>
 
-        <div class="controls compact-controls" aria-label="WebP 转 PNG 操作">
-          <button id="convertBtn" type="button" disabled>转换并下载 PNG</button>
-          <button id="clearWebpBtn" type="button" class="secondary" disabled>清空</button>
+        <div class="controls compact-controls" aria-label="WebP to PNG actions">
+          <button id="convertBtn" type="button" disabled>Convert and download PNG</button>
+          <button id="clearWebpBtn" type="button" class="secondary" disabled>Clear</button>
         </div>
 
-        <div id="webpStatus" class="status" role="status">还没有选择 WebP 文件。</div>
-        <ul id="webpFileList" class="file-list" aria-label="已选择 WebP 文件"></ul>
+        <div id="webpStatus" class="status" role="status">No WebP files selected yet.</div>
+        <ul id="webpFileList" class="file-list" aria-label="Selected WebP files"></ul>
       </section>
 
       <section id="transparent-png" class="tool-shell" aria-labelledby="transparent-title">
         <div class="section-head">
-          <p class="eyebrow">工具 2</p>
-          <h2 id="transparent-title">PNG 透明背景处理</h2>
-          <p>上传 PNG，点击图片上的背景颜色取样，再调节容差。适合白底产品图、纯色 Logo 背景和截图背景去除。</p>
+          <p class="eyebrow">Tool 2</p>
+          <h2 id="transparent-title">PNG Transparent Background Tool</h2>
+          <p>Upload a PNG, click the background color in the preview, then adjust tolerance and feathering. It works best for white backgrounds, solid-color logos, icons, and simple product images.</p>
         </div>
 
         <div class="editor-grid">
           <div>
-            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="选择或拖入 PNG 图片">
+            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="Choose or drop a PNG image">
               <input id="pngInput" type="file" accept="image/png" />
               <div class="drop-icon">+</div>
-              <p>拖入 PNG 文件，或点击选择图片</p>
-              <span>点击预览图可吸取背景颜色</span>
+              <p>Drop a PNG file here, or click to choose an image</p>
+              <span>Click the preview to sample a background color.</span>
             </div>
 
-            <div class="transparent-controls" aria-label="透明背景设置">
+            <div class="transparent-controls" aria-label="Transparent background settings">
               <label>
-                背景颜色
+                Background color
                 <input id="bgColorInput" type="color" value="#ffffff" />
               </label>
               <label>
-                容差
+                Tolerance
                 <input id="toleranceInput" type="range" min="0" max="180" step="1" value="35" />
                 <output id="toleranceOutput">35</output>
               </label>
               <label>
-                边缘柔化
+                Edge feathering
                 <input id="featherInput" type="range" min="0" max="80" step="1" value="18" />
                 <output id="featherOutput">18</output>
               </label>
-              <button id="downloadTransparentBtn" type="button" disabled>下载透明 PNG</button>
-              <button id="resetTransparentBtn" type="button" class="secondary" disabled>重置</button>
+              <button id="downloadTransparentBtn" type="button" disabled>Download transparent PNG</button>
+              <button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button>
             </div>
           </div>
 
           <div class="preview-panel">
-            <canvas id="previewCanvas" width="720" height="480" aria-label="PNG 透明背景预览"></canvas>
-            <div id="transparentStatus" class="status" role="status">还没有选择 PNG 文件。</div>
+            <canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas>
+            <div id="transparentStatus" class="status" role="status">No PNG file selected yet.</div>
           </div>
         </div>
       </section>
 
       <section id="guides" class="content-grid" aria-labelledby="guides-title">
         <div class="section-head">
-          <p class="eyebrow">实用教程</p>
-          <h2 id="guides-title">PNG 图片处理指南</h2>
+          <p class="eyebrow">Guides</p>
+          <h2 id="guides-title">PNG image processing guides</h2>
         </div>
         <article>
-          <h3><a href="./webp-to-png.html">WebP 转 PNG 完整指南</a></h3>
-          <p>了解什么时候需要把 WebP 转成 PNG，以及怎样避免透明通道、清晰度和文件大小方面的常见问题。</p>
+          <h3><a href="./webp-to-png.html">Complete guide to WebP to PNG</a></h3>
+          <p>Learn when to convert WebP to PNG and how to avoid common issues with transparency, quality, and file size.</p>
         </article>
         <article>
-          <h3><a href="./png-transparent-background.html">PNG 透明背景是什么</a></h3>
-          <p>解释透明背景、Alpha 通道、白底图和透明 PNG 的区别，适合 Logo、产品图和贴纸素材入门。</p>
+          <h3><a href="./png-transparent-background.html">What is a transparent PNG?</a></h3>
+          <p>Understand alpha channels, white backgrounds, and why transparent PNG files are useful for logos and product images.</p>
         </article>
         <article>
-          <h3><a href="./webp-vs-png.html">WebP 和 PNG 有什么区别</a></h3>
-          <p>从压缩方式、透明支持、浏览器兼容、设计软件兼容和使用场景对比 WebP 与 PNG。</p>
+          <h3><a href="./webp-vs-png.html">WebP vs PNG</a></h3>
+          <p>Compare compression, transparency, compatibility, and the best use cases for WebP and PNG.</p>
         </article>
         <article>
-          <h3><a href="./how-to-make-png-background-transparent.html">如何把 PNG 背景变透明</a></h3>
-          <p>适合白底产品图和纯色 Logo 的操作教程，包含取色、容差、边缘柔化和导出建议。</p>
+          <h3><a href="./how-to-make-png-background-transparent.html">How to make a PNG background transparent</a></h3>
+          <p>A practical workflow for removing white or solid-color backgrounds from PNG images.</p>
         </article>
         <article>
-          <h3><a href="./png-for-ecommerce.html">电商产品图为什么常用 PNG</a></h3>
-          <p>讲清楚产品图格式、透明背景、平台上传、文件体积和视觉一致性之间的关系。</p>
+          <h3><a href="./png-for-ecommerce.html">Why ecommerce images often use PNG</a></h3>
+          <p>Learn how transparent backgrounds, logos, and product cutouts help keep store visuals consistent.</p>
         </article>
         <article>
-          <h3><a href="./what-is-png.html">PNG 格式基础知识</a></h3>
-          <p>面向新手解释 PNG 的优点、缺点、适用场景，以及它和 JPG、WebP 的基本差异。</p>
+          <h3><a href="./what-is-png.html">PNG format basics</a></h3>
+          <p>A beginner-friendly explanation of PNG advantages, limitations, and common use cases.</p>
         </article>
       </section>
     </main>
 
     <footer>
       <span>© 2026 PNGToolbox</span>
-      <a href="./privacy.html">隐私政策</a>
-      <a href="./terms.html">使用条款</a>
-      <a href="mailto:5202013@gmail.com">联系</a>
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="mailto:5202013@gmail.com">Contact</a>
     </footer>
 
     <script src="./script.js"></script>
+    <script src="./translate.js"></script>
   </body>
 </html>

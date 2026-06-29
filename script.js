@@ -87,7 +87,7 @@ function renderWebpList() {
 
   convertBtn.disabled = webpFiles.length === 0;
   clearWebpBtn.disabled = webpFiles.length === 0;
-  webpStatus.textContent = webpFiles.length ? `已选择 ${webpFiles.length} 个 WebP 文件。` : "还没有选择 WebP 文件。";
+  webpStatus.textContent = webpFiles.length ? `${webpFiles.length} WebP file(s) selected.` : "No WebP files selected yet.";
 }
 
 function addWebpFiles(files) {
@@ -97,7 +97,7 @@ function addWebpFiles(files) {
   renderWebpList();
 
   if (validFiles.length !== files.length) {
-    webpStatus.textContent = "已忽略非 WebP 文件。";
+    webpStatus.textContent = "Non-WebP files were ignored.";
   }
 }
 
@@ -113,7 +113,7 @@ async function convertWebpToPng(file) {
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
       if (!blob) {
-        reject(new Error("浏览器无法导出 PNG。"));
+        reject(new Error("The browser could not export PNG."));
         return;
       }
       resolve(blob);
@@ -184,7 +184,7 @@ async function loadPngFile(file) {
   const valid = file && (file.type === "image/png" || file.name.toLowerCase().endsWith(".png"));
 
   if (!valid) {
-    transparentStatus.textContent = "请选择 PNG 文件。";
+    transparentStatus.textContent = "Please choose a PNG file.";
     return;
   }
 
@@ -198,7 +198,7 @@ async function loadPngFile(file) {
 
   downloadTransparentBtn.disabled = false;
   resetTransparentBtn.disabled = false;
-  transparentStatus.textContent = "已载入 PNG。点击图片背景可取色，然后调节容差。";
+  transparentStatus.textContent = "PNG loaded. Click the background in the preview, then adjust tolerance.";
   processTransparentPreview();
 }
 
@@ -206,7 +206,7 @@ function addPngFile(files) {
   const [file] = Array.from(files);
   if (!file) return;
   loadPngFile(file).catch((error) => {
-    transparentStatus.textContent = `PNG 载入失败：${error.message}`;
+    transparentStatus.textContent = `PNG loading failed: ${error.message}`;
   });
 }
 
@@ -220,13 +220,13 @@ convertBtn.addEventListener("click", async () => {
   try {
     for (let index = 0; index < webpFiles.length; index += 1) {
       const file = webpFiles[index];
-      webpStatus.textContent = `正在转换 ${index + 1}/${webpFiles.length}: ${file.name}`;
+      webpStatus.textContent = `Converting ${index + 1}/${webpFiles.length}: ${file.name}`;
       const blob = await convertWebpToPng(file);
       downloadBlob(blob, `${baseName(file.name)}.png`);
     }
-    webpStatus.textContent = "转换完成，浏览器已开始下载 PNG。";
+    webpStatus.textContent = "Conversion complete. Your browser has started downloading PNG files.";
   } catch (error) {
-    webpStatus.textContent = `转换失败：${error.message}`;
+    webpStatus.textContent = `Conversion failed: ${error.message}`;
   } finally {
     convertBtn.disabled = webpFiles.length === 0;
     clearWebpBtn.disabled = webpFiles.length === 0;
@@ -255,7 +255,7 @@ previewCanvas.addEventListener("click", (event) => {
   const pixel = previewCtx.getImageData(x, y, 1, 1).data;
 
   bgColorInput.value = rgbToHex(pixel[0], pixel[1], pixel[2]);
-  transparentStatus.textContent = `已取样背景颜色 ${bgColorInput.value}。`;
+  transparentStatus.textContent = `Sampled background color ${bgColorInput.value}.`;
   processTransparentPreview();
 });
 
@@ -263,7 +263,7 @@ downloadTransparentBtn.addEventListener("click", () => {
   if (!originalImageData) return;
   previewCanvas.toBlob((blob) => {
     if (!blob) {
-      transparentStatus.textContent = "浏览器无法导出透明 PNG。";
+      transparentStatus.textContent = "The browser could not export the transparent PNG.";
       return;
     }
     downloadBlob(blob, `${pngFileName}-transparent.png`);
@@ -279,5 +279,5 @@ resetTransparentBtn.addEventListener("click", () => {
   toleranceOutput.textContent = "35";
   featherOutput.textContent = "18";
   processTransparentPreview();
-  transparentStatus.textContent = "已重置为白色背景取样。";
+  transparentStatus.textContent = "Reset to white background sampling.";
 });
