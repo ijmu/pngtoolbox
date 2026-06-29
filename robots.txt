@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pngtoolbox.com/sitemap.xml
+Sitemap: https://www.pngtoolbox.com/sitemap.xml
