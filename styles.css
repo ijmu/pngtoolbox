@@ -411,6 +411,62 @@ output {
   grid-column: 1 / -1;
 }
 
+.info-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.info-grid .section-head {
+  grid-column: 1 / -1;
+}
+
+.detail-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.detail-list div {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 180px minmax(0, 1fr);
+  padding-top: 12px;
+}
+
+.detail-list dd {
+  margin: 0;
+}
+
+.faq-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 28px;
+  padding: 28px;
+}
+
+.faq-section details {
+  border-top: 1px solid var(--line);
+  padding: 15px 0;
+}
+
+.faq-section details:last-child {
+  padding-bottom: 0;
+}
+
+.faq-section summary {
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 760;
+}
+
+.faq-section p {
+  margin: 10px 0 0;
+}
+
 article {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -508,8 +564,13 @@ footer span {
   .hero,
   .controls,
   .content-grid,
+  .info-grid,
   .notice-band,
   .editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-list div {
     grid-template-columns: 1fr;
   }
 
