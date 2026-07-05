@@ -28,6 +28,12 @@
     <loc>https://www.pngtoolbox.com/terms.html</loc>
   </url>
   <url>
+    <loc>https://www.pngtoolbox.com/about.html</loc>
+  </url>
+  <url>
+    <loc>https://www.pngtoolbox.com/contact.html</loc>
+  </url>
+  <url>
     <loc>https://www.pngtoolbox.com/zh/</loc>
   </url>
   <url>
@@ -53,5 +59,11 @@
   </url>
   <url>
     <loc>https://www.pngtoolbox.com/zh/terms.html</loc>
+  </url>
+  <url>
+    <loc>https://www.pngtoolbox.com/zh/about.html</loc>
+  </url>
+  <url>
+    <loc>https://www.pngtoolbox.com/zh/contact.html</loc>
   </url>
 </urlset>
