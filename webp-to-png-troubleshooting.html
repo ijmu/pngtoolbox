@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebP to PNG Troubleshooting - PNGToolbox</title>
+    <meta name="description" content="Troubleshoot WebP to PNG conversion issues including large files, missing transparency, animated WebP files, browser limits, and failed downloads." />
+    <link rel="canonical" href="https://www.pngtoolbox.com/webp-to-png-troubleshooting.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/webp-to-png-troubleshooting.html" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation">
+        <a href="./#webp-to-png">Converter</a>
+        <a href="./webp-to-png.html">Guide</a>
+        <a href="./about.html">About</a>
+        <a href="./privacy.html">Privacy</a>
+      </nav>
+    </header>
+    <main class="page article-page">
+      <p class="eyebrow">Troubleshooting</p>
+      <h1>WebP to PNG Troubleshooting</h1>
+      <section>
+        <h2>The PNG is much larger than the WebP</h2>
+        <p>This is common. WebP is designed for efficient web compression, while PNG is often lossless and preserves transparency and sharp edges. The converted file may be larger even if the image looks the same.</p>
+        <p>If file size is more important than compatibility, WebP or JPG may be a better final format.</p>
+      </section>
+      <section>
+        <h2>Transparency disappeared</h2>
+        <p>First check whether the original WebP actually contains transparency. Some viewers display transparent pixels on a white background, which can make transparency hard to see.</p>
+        <p>Place the converted PNG on a colored background. If the area is still white, the source image may have had white pixels rather than transparent pixels.</p>
+      </section>
+      <section>
+        <h2>Animated WebP files</h2>
+        <p>PNGToolbox is intended for still image conversion. Animated WebP files may expose only one frame depending on browser behavior. If you need every frame, use a dedicated animation or video workflow.</p>
+      </section>
+      <section>
+        <h2>Download failed or browser became slow</h2>
+        <p>Very large files can use more memory during browser decoding and canvas export. Try converting fewer files at once, closing unused tabs, or starting from a smaller source image.</p>
+      </section>
+      <section>
+        <h2>Checklist</h2>
+        <ul>
+          <li>Use still WebP files when possible.</li>
+          <li>Check the source image for real transparency.</li>
+          <li>Convert large batches in smaller groups.</li>
+          <li>Use PNG when compatibility matters; use WebP or JPG when file size matters.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>FAQ</h2>
+        <h3>Does PNGToolbox upload files to fix conversion errors?</h3>
+        <p>No. Normal conversion runs locally in the browser. If a file cannot be decoded by the browser, the tool may not be able to convert it.</p>
+        <h3>Can a converted PNG look sharper than the original?</h3>
+        <p>No. Conversion does not recreate lost detail. It preserves the decoded image in PNG format.</p>
+        <h3>Why does another app reject my PNG?</h3>
+        <p>The app may have a size limit, dimension limit, or color-mode requirement. Resize or reduce the file before uploading.</p>
+      </section>
+    </main>
+    <footer>
+      <span>&copy; 2026 PNGToolbox</span>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="./terms.html">Terms</a>
+    </footer>
+  </body>
+</html>
