@@ -79,14 +79,43 @@ async function fileToImage(file) {
 function renderWebpList() {
   webpFileList.innerHTML = "";
 
-  webpFiles.forEach((file) => {
+  webpFiles.forEach((file, index) => {
     const item = document.createElement("li");
+    const info = document.createElement("div");
     const name = document.createElement("strong");
     const meta = document.createElement("span");
+    const removeButton = document.createElement("button");
 
     name.textContent = file.name;
-    meta.textContent = formatBytes(file.size);
-    item.append(name, meta);
+    meta.textContent = `Reading dimensions - ${formatBytes(file.size)}`;
+    info.className = "file-info";
+    removeButton.type = "button";
+    removeButton.className = "file-remove";
+    removeButton.textContent = "\u00d7";
+    removeButton.title = `Remove ${file.name}`;
+    removeButton.setAttribute("aria-label", `Remove ${file.name}`);
+    removeButton.addEventListener("click", () => {
+      webpFiles.splice(index, 1);
+      webpResizeRatio = null;
+      if (!webpFiles.length) {
+        webpResizeBasis = null;
+        webpWidthInput.value = "";
+        webpHeightInput.value = "";
+      }
+      renderWebpList();
+      primeWebpResizeRatio();
+    });
+
+    fileToImage(file)
+      .then((image) => {
+        meta.textContent = `${image.naturalWidth} x ${image.naturalHeight} - ${formatBytes(file.size)}`;
+      })
+      .catch(() => {
+        meta.textContent = formatBytes(file.size);
+      });
+
+    info.append(name, meta);
+    item.append(info, removeButton);
     webpFileList.append(item);
   });
 
@@ -270,6 +299,7 @@ async function primeWebpResizeRatio() {
   try {
     const image = await fileToImage(webpFiles[0]);
     webpResizeRatio = image.naturalWidth / image.naturalHeight;
+    if (webpResizeBasis) syncWebpResizeRatio(webpResizeBasis);
   } catch {
     webpResizeRatio = null;
   }

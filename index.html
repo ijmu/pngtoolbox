@@ -26,8 +26,8 @@
         <span>PNGToolbox</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#webp-to-png">WebP to PNG</a>
-        <a href="#transparent-png">Transparent PNG</a>
+        <a href="#webp-to-png">Converter</a>
+        <a href="#transparent-png">Background</a>
         <a href="#guides">Guides</a>
         <a href="./about.html">About</a>
         <a href="./privacy.html">Privacy</a>
@@ -37,40 +37,24 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Private image tools, built for the browser</p>
-          <h1>Convert WebP to PNG. Keep every pixel yours.</h1>
+          <p class="eyebrow">WEBP TO PNG &amp; TRANSPARENT BACKGROUNDS</p>
+          <h1>Convert WebP to PNG online</h1>
           <p>
-            Convert batches of WebP files, resize PNG output, or remove a simple solid background. Your images are processed on this device and are not sent to a conversion server.
+            Convert one file or a batch, resize the PNG output when needed, and remove simple solid backgrounds. Files stay on your device during normal use.
           </p>
-          <div class="hero-actions">
-            <a class="primary-link" href="#webp-to-png">Open WebP converter</a>
-            <span>Free &middot; No signup &middot; Browser-local</span>
-          </div>
-        </div>
-        <div class="hero-visual" aria-label="WebP to PNG browser conversion preview">
-          <p class="visual-label">Browser-local conversion</p>
-          <div class="file-flow">
-            <div class="file-tile">
-              <span class="file-type">WEBP</span>
-              <strong>source.webp</strong>
-              <small>Original image</small>
-            </div>
-            <span class="flow-arrow" aria-hidden="true">&rarr;</span>
-            <div class="file-tile file-tile-output">
-              <span class="file-type">PNG</span>
-              <strong>source.png</strong>
-              <small>Transparent-ready</small>
-            </div>
-          </div>
-          <p class="visual-note"><span aria-hidden="true"></span>Processed on your device</p>
+          <ul class="hero-facts" aria-label="Tool benefits">
+            <li>Browser-local</li>
+            <li>No account</li>
+            <li>Batch supported</li>
+          </ul>
         </div>
       </section>
 
       <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
         <div class="section-head">
           <div class="section-kicker-row">
-            <p class="eyebrow">Tool 1</p>
-            <span class="feature-badge">New: resize on export</span>
+            <p class="eyebrow">WEBP TO PNG</p>
+            <span class="feature-badge">Resize output</span>
           </div>
           <h2 id="converter-title">WebP to PNG Converter</h2>
           <p>Drop one or more WebP files and export them as PNG. You can keep the original size or resize the PNG output before downloading.</p>
@@ -79,8 +63,8 @@
         <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
           <input id="webpInput" type="file" accept="image/webp" multiple />
           <div class="drop-icon">+</div>
-          <p>Drop WebP files here, or click to choose images</p>
-          <span>Batch conversion supported. Recommended file size: under 20MB each.</span>
+          <p>Choose WebP files</p>
+          <span>or drop them here &middot; Batch supported &middot; Up to 20MB each</span>
         </div>
 
         <p class="control-label">Optional output size</p>
@@ -146,7 +130,7 @@
 
       <section id="transparent-png" class="tool-shell" aria-labelledby="transparent-title">
         <div class="section-head">
-          <p class="eyebrow">Tool 2</p>
+          <p class="eyebrow">TRANSPARENT BACKGROUND</p>
           <h2 id="transparent-title">PNG Transparent Background Tool</h2>
           <p>Upload a PNG, click the background color in the preview, then adjust tolerance and feathering. It works best for white backgrounds, solid-color logos, icons, and simple product images.</p>
         </div>
@@ -156,8 +140,8 @@
             <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="Choose or drop a PNG image">
               <input id="pngInput" type="file" accept="image/png" />
               <div class="drop-icon">+</div>
-              <p>Drop a PNG file here, or click to choose an image</p>
-              <span>Click the preview to sample a background color.</span>
+              <p>Choose a PNG image</p>
+              <span>or drop it here, then click the preview to sample a color</span>
             </div>
 
             <div class="transparent-controls" aria-label="Transparent background settings">
