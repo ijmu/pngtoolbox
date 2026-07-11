@@ -4,6 +4,9 @@ const webpFileList = document.querySelector("#webpFileList");
 const convertBtn = document.querySelector("#convertBtn");
 const clearWebpBtn = document.querySelector("#clearWebpBtn");
 const webpStatus = document.querySelector("#webpStatus");
+const webpWidthInput = document.querySelector("#webpWidthInput");
+const webpHeightInput = document.querySelector("#webpHeightInput");
+const webpLockRatioInput = document.querySelector("#webpLockRatioInput");
 
 const pngInput = document.querySelector("#pngInput");
 const pngDropzone = document.querySelector("#pngDropzone");
@@ -20,6 +23,8 @@ const transparentStatus = document.querySelector("#transparentStatus");
 const previewCtx = previewCanvas.getContext("2d", { willReadFrequently: true });
 
 let webpFiles = [];
+let webpResizeRatio = null;
+let webpResizeBasis = null;
 let pngFileName = "transparent-image";
 let originalImageData = null;
 
@@ -87,6 +92,9 @@ function renderWebpList() {
 
   convertBtn.disabled = webpFiles.length === 0;
   clearWebpBtn.disabled = webpFiles.length === 0;
+  [webpWidthInput, webpHeightInput, webpLockRatioInput].forEach((control) => {
+    control.disabled = webpFiles.length === 0;
+  });
   webpStatus.textContent = webpFiles.length ? `${webpFiles.length} WebP file(s) selected.` : "No WebP files selected yet.";
 }
 
@@ -95,20 +103,51 @@ function addWebpFiles(files) {
 
   webpFiles = [...webpFiles, ...validFiles];
   renderWebpList();
+  primeWebpResizeRatio();
 
   if (validFiles.length !== files.length) {
     webpStatus.textContent = "Non-WebP files were ignored.";
   }
 }
 
+function getResizeDimensions(image) {
+  const requestedWidth = Number(webpWidthInput.value);
+  const requestedHeight = Number(webpHeightInput.value);
+  let width = image.naturalWidth;
+  let height = image.naturalHeight;
+
+  if (webpLockRatioInput.checked && webpResizeBasis === "width" && requestedWidth > 0) {
+    width = Math.round(requestedWidth);
+    height = Math.max(1, Math.round(width / (image.naturalWidth / image.naturalHeight)));
+  } else if (webpLockRatioInput.checked && webpResizeBasis === "height" && requestedHeight > 0) {
+    height = Math.round(requestedHeight);
+    width = Math.max(1, Math.round(height * (image.naturalWidth / image.naturalHeight)));
+  } else if (requestedWidth > 0 && requestedHeight > 0) {
+    width = Math.round(requestedWidth);
+    height = Math.round(requestedHeight);
+  } else if (requestedWidth > 0) {
+    width = Math.round(requestedWidth);
+    height = Math.max(1, Math.round(width / (image.naturalWidth / image.naturalHeight)));
+  } else if (requestedHeight > 0) {
+    height = Math.round(requestedHeight);
+    width = Math.max(1, Math.round(height * (image.naturalWidth / image.naturalHeight)));
+  }
+
+  return {
+    width: Math.max(1, width),
+    height: Math.max(1, height),
+  };
+}
+
 async function convertWebpToPng(file) {
   const image = await fileToImage(file);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
+  const { width, height } = getResizeDimensions(image);
 
-  canvas.width = image.naturalWidth;
-  canvas.height = image.naturalHeight;
-  ctx.drawImage(image, 0, 0);
+  canvas.width = width;
+  canvas.height = height;
+  ctx.drawImage(image, 0, 0, width, height);
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => {
@@ -116,7 +155,7 @@ async function convertWebpToPng(file) {
         reject(new Error("The browser could not export PNG."));
         return;
       }
-      resolve(blob);
+      resolve({ blob, width, height });
     }, "image/png");
   });
 }
@@ -213,16 +252,44 @@ function addPngFile(files) {
 bindDropzone(webpDropzone, webpInput, addWebpFiles);
 bindDropzone(pngDropzone, pngInput, addPngFile);
 
+function syncWebpResizeRatio(changedInput) {
+  webpResizeBasis = changedInput;
+  if (!webpLockRatioInput.checked || !webpResizeRatio) return;
+
+  if (changedInput === "width" && Number(webpWidthInput.value) > 0) {
+    webpHeightInput.value = Math.max(1, Math.round(Number(webpWidthInput.value) / webpResizeRatio));
+  }
+
+  if (changedInput === "height" && Number(webpHeightInput.value) > 0) {
+    webpWidthInput.value = Math.max(1, Math.round(Number(webpHeightInput.value) * webpResizeRatio));
+  }
+}
+
+async function primeWebpResizeRatio() {
+  if (!webpFiles.length) return;
+  try {
+    const image = await fileToImage(webpFiles[0]);
+    webpResizeRatio = image.naturalWidth / image.naturalHeight;
+  } catch {
+    webpResizeRatio = null;
+  }
+}
+
+webpWidthInput.addEventListener("input", () => syncWebpResizeRatio("width"));
+webpHeightInput.addEventListener("input", () => syncWebpResizeRatio("height"));
+
 convertBtn.addEventListener("click", async () => {
   convertBtn.disabled = true;
   clearWebpBtn.disabled = true;
 
   try {
+    await primeWebpResizeRatio();
     for (let index = 0; index < webpFiles.length; index += 1) {
       const file = webpFiles[index];
       webpStatus.textContent = `Converting ${index + 1}/${webpFiles.length}: ${file.name}`;
-      const blob = await convertWebpToPng(file);
-      downloadBlob(blob, `${baseName(file.name)}.png`);
+      const { blob, width, height } = await convertWebpToPng(file);
+      const suffix = webpWidthInput.value || webpHeightInput.value ? `-${width}x${height}` : "";
+      downloadBlob(blob, `${baseName(file.name)}${suffix}.png`);
     }
     webpStatus.textContent = "Conversion complete. Your browser has started downloading PNG files.";
   } catch (error) {
@@ -235,6 +302,10 @@ convertBtn.addEventListener("click", async () => {
 
 clearWebpBtn.addEventListener("click", () => {
   webpFiles = [];
+  webpResizeRatio = null;
+  webpResizeBasis = null;
+  webpWidthInput.value = "";
+  webpHeightInput.value = "";
   renderWebpList();
 });
 

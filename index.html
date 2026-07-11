@@ -37,33 +37,43 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Free online image tools</p>
-          <h1>Convert WebP to PNG and clean up transparent backgrounds</h1>
+          <p class="eyebrow">Private image tools, built for the browser</p>
+          <h1>Convert WebP to PNG. Keep every pixel yours.</h1>
           <p>
-            PNGToolbox helps you convert WebP files to PNG and make simple PNG backgrounds transparent. Images are processed locally in your browser, so your files stay on your device.
+            Convert batches of WebP files, resize PNG output, or remove a simple solid background. Your images are processed on this device and are not sent to a conversion server.
           </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#webp-to-png">Open WebP converter</a>
+            <span>Free &middot; No signup &middot; Browser-local</span>
+          </div>
         </div>
-        <div class="hero-panel" aria-label="Tool highlights">
-          <div>
-            <strong>Local</strong>
-            <span>Browser processing</span>
+        <div class="hero-visual" aria-label="WebP to PNG browser conversion preview">
+          <p class="visual-label">Browser-local conversion</p>
+          <div class="file-flow">
+            <div class="file-tile">
+              <span class="file-type">WEBP</span>
+              <strong>source.webp</strong>
+              <small>Original image</small>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+            <div class="file-tile file-tile-output">
+              <span class="file-type">PNG</span>
+              <strong>source.png</strong>
+              <small>Transparent-ready</small>
+            </div>
           </div>
-          <div>
-            <strong>PNG</strong>
-            <span>Transparent output</span>
-          </div>
-          <div>
-            <strong>Batch</strong>
-            <span>WebP conversion</span>
-          </div>
+          <p class="visual-note"><span aria-hidden="true"></span>Processed on your device</p>
         </div>
       </section>
 
       <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
         <div class="section-head">
-          <p class="eyebrow">Tool 1</p>
+          <div class="section-kicker-row">
+            <p class="eyebrow">Tool 1</p>
+            <span class="feature-badge">New: resize on export</span>
+          </div>
           <h2 id="converter-title">WebP to PNG Converter</h2>
-          <p>Drop one or more WebP files and export them as PNG. This is useful for design assets, product images, screenshots, and files that need wider software compatibility.</p>
+          <p>Drop one or more WebP files and export them as PNG. You can keep the original size or resize the PNG output before downloading.</p>
         </div>
 
         <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
@@ -71,6 +81,22 @@
           <div class="drop-icon">+</div>
           <p>Drop WebP files here, or click to choose images</p>
           <span>Batch conversion supported. Recommended file size: under 20MB each.</span>
+        </div>
+
+        <p class="control-label">Optional output size</p>
+        <div class="conversion-options" aria-label="PNG output resize options">
+          <label>
+            Output width
+            <input id="webpWidthInput" type="number" min="1" placeholder="Original" disabled />
+          </label>
+          <label>
+            Output height
+            <input id="webpHeightInput" type="number" min="1" placeholder="Original" disabled />
+          </label>
+          <label class="check-row">
+            <input id="webpLockRatioInput" type="checkbox" checked disabled />
+            Keep aspect ratio while editing size
+          </label>
         </div>
 
         <div class="controls compact-controls" aria-label="WebP to PNG actions">
@@ -112,6 +138,7 @@
           <div><dt>Input format</dt><dd>WebP images for conversion, plus PNG images for transparent background cleanup.</dd></div>
           <div><dt>Output format</dt><dd>PNG files, including transparency when the source image or cleanup result contains transparent pixels.</dd></div>
           <div><dt>Batch support</dt><dd>Multiple WebP files can be converted in one session from the browser.</dd></div>
+          <div><dt>Output resize</dt><dd>Optional width and height settings can resize PNG output during conversion while preserving aspect ratio.</dd></div>
           <div><dt>Privacy model</dt><dd>Normal conversion runs locally in your browser, without sending selected image files to a conversion server.</dd></div>
           <div><dt>Best uses</dt><dd>Logos, icons, screenshots, design assets, product images, and upload forms that require PNG.</dd></div>
         </dl>
