@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WebP to PNG Online - PNG Transparent Background Tool</title>
+    <title>Transparent PNG Maker &amp; WebP to PNG Converter | PNGToolbox</title>
     <meta
       name="description"
-      content="Free WebP to PNG converter and PNG transparent background tool. Process images locally in your browser without uploading files."
+      content="Make image backgrounds transparent or convert WebP to PNG for free. Paste, upload, resize, and download PNG files locally in your browser."
     />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://www.pngtoolbox.com/" />
@@ -18,6 +18,19 @@
     ></script>
     <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PNGToolbox",
+        "url": "https://www.pngtoolbox.com/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any modern web browser",
+        "description": "Browser-based tools for making transparent PNG images and converting WebP files to PNG.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Transparent PNG maker", "WebP to PNG conversion", "Batch conversion", "Optional output resizing", "Local browser processing"]
+      }
+    </script>
   </head>
   <body>
     <header class="topbar">
@@ -37,11 +50,15 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">WEBP TO PNG &amp; TRANSPARENT BACKGROUNDS</p>
-          <h1>Convert WebP to PNG online</h1>
+          <p class="eyebrow">TRANSPARENT PNG &amp; WEBP CONVERSION</p>
+          <h1>Make transparent PNGs or convert WebP to PNG</h1>
           <p>
-            Convert one file or a batch, resize the PNG output when needed, and remove simple solid backgrounds. Files stay on your device during normal use.
+            Remove solid image backgrounds, convert one WebP or a batch, and resize PNG output when needed. Files stay on your device during normal use.
           </p>
+          <div class="task-links" aria-label="Choose a PNG task">
+            <a href="#transparent-png">Make background transparent</a>
+            <a href="#webp-to-png">Convert WebP to PNG</a>
+          </div>
           <ul class="hero-facts" aria-label="Tool benefits">
             <li>Browser-local</li>
             <li>No account</li>
@@ -119,7 +136,7 @@
           <p>PNGToolbox keeps the workflow focused on common WebP and PNG tasks instead of adding account-based cloud features.</p>
         </div>
         <dl class="detail-list">
-          <div><dt>Input format</dt><dd>WebP images for conversion, plus PNG images for transparent background cleanup.</dd></div>
+          <div><dt>Input format</dt><dd>WebP images for conversion, plus JPG, PNG, or WebP images for transparent background cleanup.</dd></div>
           <div><dt>Output format</dt><dd>PNG files, including transparency when the source image or cleanup result contains transparent pixels.</dd></div>
           <div><dt>Batch support</dt><dd>Multiple WebP files can be converted in one session from the browser.</dd></div>
           <div><dt>Output resize</dt><dd>Optional width and height settings can resize PNG output during conversion while preserving aspect ratio.</dd></div>
@@ -131,20 +148,27 @@
       <section id="transparent-png" class="tool-shell" aria-labelledby="transparent-title">
         <div class="section-head">
           <p class="eyebrow">TRANSPARENT BACKGROUND</p>
-          <h2 id="transparent-title">PNG Transparent Background Tool</h2>
-          <p>Upload a PNG, click the background color in the preview, then adjust tolerance and feathering. It works best for white backgrounds, solid-color logos, icons, and simple product images.</p>
+          <h2 id="transparent-title">Free Transparent PNG Maker</h2>
+          <p>Upload or paste a JPG, PNG, or WebP image, click the background color in the preview, then adjust tolerance and feathering. It works best for white or solid-color backgrounds.</p>
         </div>
 
         <div class="editor-grid">
           <div>
-            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="Choose or drop a PNG image">
-              <input id="pngInput" type="file" accept="image/png" />
+            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="Choose, drop, or paste an image to make a transparent PNG">
+              <input id="pngInput" type="file" accept="image/jpeg,image/png,image/webp" />
               <div class="drop-icon">+</div>
-              <p>Choose a PNG image</p>
-              <span>or drop it here, then click the preview to sample a color</span>
+              <p>Choose an image</p>
+              <span>JPG, PNG, or WebP &middot; Drop here or paste with Ctrl+V</span>
             </div>
 
             <div class="transparent-controls" aria-label="Transparent background settings">
+              <label>
+                Removal mode
+                <select id="removalModeInput">
+                  <option value="edges">Background connected to edges</option>
+                  <option value="global">Matching color everywhere</option>
+                </select>
+              </label>
               <label>
                 Background color
                 <input id="bgColorInput" type="color" value="#ffffff" />

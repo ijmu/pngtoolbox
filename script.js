@@ -11,6 +11,7 @@ const webpLockRatioInput = document.querySelector("#webpLockRatioInput");
 const pngInput = document.querySelector("#pngInput");
 const pngDropzone = document.querySelector("#pngDropzone");
 const previewCanvas = document.querySelector("#previewCanvas");
+const removalModeInput = document.querySelector("#removalModeInput");
 const bgColorInput = document.querySelector("#bgColorInput");
 const toleranceInput = document.querySelector("#toleranceInput");
 const toleranceOutput = document.querySelector("#toleranceOutput");
@@ -234,25 +235,77 @@ function processTransparentPreview() {
   const output = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
   const data = output.data;
 
-  for (let index = 0; index < data.length; index += 4) {
-    const distance = colorDistance(data, index, target);
+  if (removalModeInput.value === "global") {
+    for (let index = 0; index < data.length; index += 4) {
+      const distance = colorDistance(data, index, target);
 
-    if (distance <= tolerance) {
-      data[index + 3] = 0;
-    } else if (feather > 0 && distance <= tolerance + feather) {
-      const ratio = (distance - tolerance) / feather;
-      data[index + 3] = Math.round(data[index + 3] * ratio);
+      if (distance <= tolerance) {
+        data[index + 3] = 0;
+      } else if (feather > 0 && distance <= tolerance + feather) {
+        const ratio = (distance - tolerance) / feather;
+        data[index + 3] = Math.round(data[index + 3] * ratio);
+      }
     }
+  } else {
+    removeEdgeConnectedBackground(data, output.width, output.height, target, tolerance, feather);
   }
 
   previewCtx.putImageData(output, 0, 0);
 }
 
+function removeEdgeConnectedBackground(data, width, height, target, tolerance, feather) {
+  const pixelCount = width * height;
+  const visited = new Uint8Array(pixelCount);
+  const queue = new Int32Array(pixelCount);
+  const limit = tolerance + feather;
+  let head = 0;
+  let tail = 0;
+
+  function enqueue(pixelIndex) {
+    if (visited[pixelIndex]) return;
+    const dataIndex = pixelIndex * 4;
+    if (colorDistance(data, dataIndex, target) > limit) return;
+    visited[pixelIndex] = 1;
+    queue[tail] = pixelIndex;
+    tail += 1;
+  }
+
+  for (let x = 0; x < width; x += 1) {
+    enqueue(x);
+    enqueue((height - 1) * width + x);
+  }
+  for (let y = 1; y < height - 1; y += 1) {
+    enqueue(y * width);
+    enqueue(y * width + width - 1);
+  }
+
+  while (head < tail) {
+    const pixelIndex = queue[head];
+    head += 1;
+    const x = pixelIndex % width;
+    const y = Math.floor(pixelIndex / width);
+    const dataIndex = pixelIndex * 4;
+    const distance = colorDistance(data, dataIndex, target);
+
+    if (distance <= tolerance) {
+      data[dataIndex + 3] = 0;
+    } else if (feather > 0) {
+      data[dataIndex + 3] = Math.round(data[dataIndex + 3] * ((distance - tolerance) / feather));
+    }
+
+    if (x > 0) enqueue(pixelIndex - 1);
+    if (x + 1 < width) enqueue(pixelIndex + 1);
+    if (y > 0) enqueue(pixelIndex - width);
+    if (y + 1 < height) enqueue(pixelIndex + width);
+  }
+}
+
 async function loadPngFile(file) {
-  const valid = file && (file.type === "image/png" || file.name.toLowerCase().endsWith(".png"));
+  const validTypes = ["image/jpeg", "image/png", "image/webp"];
+  const valid = file && validTypes.includes(file.type);
 
   if (!valid) {
-    transparentStatus.textContent = "Please choose a PNG file.";
+    transparentStatus.textContent = "Please choose a JPG, PNG, or WebP image.";
     return;
   }
 
@@ -266,7 +319,7 @@ async function loadPngFile(file) {
 
   downloadTransparentBtn.disabled = false;
   resetTransparentBtn.disabled = false;
-  transparentStatus.textContent = "PNG loaded. Click the background in the preview, then adjust tolerance.";
+  transparentStatus.textContent = "Image loaded. Click the background in the preview, then adjust tolerance.";
   processTransparentPreview();
 }
 
@@ -347,6 +400,23 @@ clearWebpBtn.addEventListener("click", () => {
   });
 });
 
+removalModeInput.addEventListener("change", () => {
+  processTransparentPreview();
+  transparentStatus.textContent = removalModeInput.value === "edges"
+    ? "Removing matching background connected to the image edges."
+    : "Removing the matching color everywhere in the image.";
+});
+
+window.addEventListener("paste", (event) => {
+  const imageItem = Array.from(event.clipboardData?.items || []).find((item) => item.type.startsWith("image/"));
+  const file = imageItem?.getAsFile();
+  if (!file) return;
+  event.preventDefault();
+  loadPngFile(file).catch((error) => {
+    transparentStatus.textContent = `Pasted image loading failed: ${error.message}`;
+  });
+});
+
 previewCanvas.addEventListener("click", (event) => {
   if (!originalImageData) return;
 
@@ -375,6 +445,7 @@ resetTransparentBtn.addEventListener("click", () => {
   if (!originalImageData) return;
   previewCtx.putImageData(originalImageData, 0, 0);
   bgColorInput.value = "#ffffff";
+  removalModeInput.value = "edges";
   toleranceInput.value = "35";
   featherInput.value = "18";
   toleranceOutput.textContent = "35";
