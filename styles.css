@@ -1,16 +1,16 @@
 :root {
   color-scheme: light;
-  --bg: #f3f4ef;
+  --bg: #f5f6f2;
   --surface: #ffffff;
   --surface-soft: #f8f9f5;
   --ink: #152019;
   --muted: #606a63;
-  --line: #d8dbd4;
-  --line-strong: #b7bdb5;
-  --accent: #0b6b4f;
-  --accent-dark: #084b38;
-  --accent-soft: #e2eee8;
-  --signal: #d9f95f;
+  --line: #dce0da;
+  --line-strong: #c2c9c1;
+  --accent: #197056;
+  --accent-dark: #11523f;
+  --accent-soft: #e7f0eb;
+  --signal: #c9e78f;
   --warm: #b85f12;
   --warm-soft: #fff1df;
   --warn: #955f09;
@@ -236,7 +236,7 @@ li {
 .task-links a {
   background: var(--surface);
   border: 1px solid var(--line-strong);
-  border-radius: 5px;
+  border-radius: 7px;
   color: var(--accent-dark);
   font-size: 0.9rem;
   font-weight: 760;
@@ -245,8 +245,8 @@ li {
 }
 
 .task-links a:first-child {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -265,13 +265,14 @@ li {
 .tool-shell {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 8px;
+  box-shadow: 0 14px 36px rgba(33, 52, 42, 0.055);
   padding: 30px;
   position: relative;
 }
 
 #webp-to-png {
-  border-left: 5px solid var(--accent);
+  border-left: 4px solid var(--accent);
   display: grid;
   gap: 0 36px;
   grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
@@ -279,7 +280,7 @@ li {
 }
 
 #transparent-png {
-  border-left: 5px solid var(--signal);
+  border-left: 4px solid var(--signal);
 }
 
 #webp-to-png,
@@ -317,7 +318,7 @@ li {
 .feature-badge {
   background: var(--accent-soft);
   border: 1px solid #b8dacd;
-  border-radius: 3px;
+  border-radius: 6px;
   color: var(--accent-dark);
   font-size: 0.76rem;
   font-weight: 800;
@@ -336,7 +337,7 @@ li {
   align-items: center;
   background: var(--surface-soft);
   border: 2px dashed var(--line-strong);
-  border-radius: 3px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -376,7 +377,7 @@ li {
   border: 1px solid var(--line);
   background: var(--signal);
   border-color: #b5dacd;
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--accent-dark);
   display: inline-flex;
   font-size: 1.7rem;
@@ -431,7 +432,7 @@ li {
 .conversion-options label {
   background: #fbfcfb;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 7px;
   padding: 12px;
 }
 
@@ -468,7 +469,7 @@ input[type="color"] {
 .preview-stage {
   background: #edf2ef;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
 }
@@ -556,7 +557,7 @@ select,
 input[type="number"] {
   background: white;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 6px;
   color: var(--ink);
   padding: 0 12px;
 }
@@ -564,7 +565,7 @@ input[type="number"] {
 button {
   background: var(--accent);
   border: 0;
-  border-radius: 4px;
+  border-radius: 7px;
   color: white;
   cursor: pointer;
   font-weight: 760;
@@ -606,7 +607,7 @@ output {
   align-items: center;
   background: var(--surface-soft);
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 7px;
   display: flex;
   gap: 10px;
   margin-top: 18px;
@@ -635,7 +636,7 @@ output {
   align-items: center;
   background: #fbfcfb;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 7px;
   color: var(--ink);
   display: flex;
   justify-content: space-between;
@@ -719,7 +720,7 @@ output {
 .faq-section {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 8px;
   margin-top: 28px;
   padding: 28px;
 }
