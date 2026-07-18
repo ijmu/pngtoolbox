@@ -20,6 +20,7 @@ const featherOutput = document.querySelector("#featherOutput");
 const downloadTransparentBtn = document.querySelector("#downloadTransparentBtn");
 const resetTransparentBtn = document.querySelector("#resetTransparentBtn");
 const transparentStatus = document.querySelector("#transparentStatus");
+const previewEmpty = document.querySelector("#previewEmpty");
 
 const previewCtx = previewCanvas.getContext("2d", { willReadFrequently: true });
 
@@ -316,6 +317,7 @@ async function loadPngFile(file) {
   previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
   previewCtx.drawImage(image, 0, 0);
   originalImageData = previewCtx.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
+  previewEmpty.hidden = true;
 
   downloadTransparentBtn.disabled = false;
   resetTransparentBtn.disabled = false;

@@ -37,6 +37,7 @@
       <a class="brand" href="./" aria-label="PNGToolbox home">
         <img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" />
         <span>PNGToolbox</span>
+        <small>PNG utilities</small>
       </a>
       <nav aria-label="Primary navigation">
         <a href="#webp-to-png">Converter</a>
@@ -66,6 +67,12 @@
           </ul>
         </div>
       </section>
+
+      <ol class="process-rail" aria-label="How the tools work">
+        <li><span>1</span><strong>Add</strong><small>Choose, drop, or paste</small></li>
+        <li><span>2</span><strong>Adjust</strong><small>Pick output or background</small></li>
+        <li><span>3</span><strong>Save</strong><small>Download the PNG</small></li>
+      </ol>
 
       <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
         <div class="section-head">
@@ -189,7 +196,14 @@
           </div>
 
           <div class="preview-panel">
-            <canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas>
+            <div class="preview-stage">
+              <canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas>
+              <div id="previewEmpty" class="preview-empty" aria-hidden="true">
+                <span class="preview-symbol">PNG</span>
+                <strong>Your transparent preview appears here</strong>
+                <small>Click the image to sample its background color</small>
+              </div>
+            </div>
             <div id="transparentStatus" class="status" role="status">No PNG file selected yet.</div>
           </div>
         </div>
