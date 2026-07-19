@@ -11,6 +11,10 @@ const webpLockRatioInput = document.querySelector("#webpLockRatioInput");
 const pngInput = document.querySelector("#pngInput");
 const pngDropzone = document.querySelector("#pngDropzone");
 const previewCanvas = document.querySelector("#previewCanvas");
+const originalCanvas = document.querySelector("#originalCanvas");
+const resultPreviewBtn = document.querySelector("#resultPreviewBtn");
+const originalPreviewBtn = document.querySelector("#originalPreviewBtn");
+const transparentMeasure = document.querySelector("#transparentMeasure");
 const removalModeInput = document.querySelector("#removalModeInput");
 const bgColorInput = document.querySelector("#bgColorInput");
 const toleranceInput = document.querySelector("#toleranceInput");
@@ -23,12 +27,14 @@ const transparentStatus = document.querySelector("#transparentStatus");
 const previewEmpty = document.querySelector("#previewEmpty");
 
 const previewCtx = previewCanvas.getContext("2d", { willReadFrequently: true });
+const originalCtx = originalCanvas.getContext("2d");
 
 let webpFiles = [];
 let webpResizeRatio = null;
 let webpResizeBasis = null;
 let pngFileName = "transparent-image";
 let originalImageData = null;
+let transparentMeasureSequence = 0;
 
 function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`;
@@ -252,6 +258,27 @@ function processTransparentPreview() {
   }
 
   previewCtx.putImageData(output, 0, 0);
+
+  let transparentPixels = 0;
+  for (let index = 3; index < data.length; index += 4) {
+    if (data[index] === 0) transparentPixels += 1;
+  }
+  const transparentPercent = (transparentPixels / (output.width * output.height)) * 100;
+  const sequence = ++transparentMeasureSequence;
+  previewCanvas.toBlob((blob) => {
+    if (!blob || sequence !== transparentMeasureSequence) return;
+    transparentMeasure.textContent = `${transparentPercent.toFixed(1)}% transparent · ${formatBytes(blob.size)} PNG`;
+  }, "image/png");
+}
+
+function setPreviewMode(mode) {
+  const showOriginal = mode === "original";
+  originalCanvas.classList.toggle("is-hidden", !showOriginal);
+  previewCanvas.classList.toggle("is-hidden", showOriginal);
+  originalPreviewBtn.classList.toggle("is-active", showOriginal);
+  resultPreviewBtn.classList.toggle("is-active", !showOriginal);
+  originalPreviewBtn.setAttribute("aria-pressed", String(showOriginal));
+  resultPreviewBtn.setAttribute("aria-pressed", String(!showOriginal));
 }
 
 function removeEdgeConnectedBackground(data, width, height, target, tolerance, feather) {
@@ -314,13 +341,20 @@ async function loadPngFile(file) {
   pngFileName = baseName(file.name);
   previewCanvas.width = image.naturalWidth;
   previewCanvas.height = image.naturalHeight;
+  originalCanvas.width = image.naturalWidth;
+  originalCanvas.height = image.naturalHeight;
   previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
   previewCtx.drawImage(image, 0, 0);
+  originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
+  originalCtx.drawImage(image, 0, 0);
   originalImageData = previewCtx.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
   previewEmpty.hidden = true;
 
   downloadTransparentBtn.disabled = false;
   resetTransparentBtn.disabled = false;
+  resultPreviewBtn.disabled = false;
+  originalPreviewBtn.disabled = false;
+  setPreviewMode("result");
   transparentStatus.textContent = "Image loaded. Click the background in the preview, then adjust tolerance.";
   processTransparentPreview();
 }
@@ -419,18 +453,24 @@ window.addEventListener("paste", (event) => {
   });
 });
 
-previewCanvas.addEventListener("click", (event) => {
+function sampleBackground(event, canvas) {
   if (!originalImageData) return;
 
-  const rect = previewCanvas.getBoundingClientRect();
-  const x = Math.floor(((event.clientX - rect.left) / rect.width) * previewCanvas.width);
-  const y = Math.floor(((event.clientY - rect.top) / rect.height) * previewCanvas.height);
-  const pixel = previewCtx.getImageData(x, y, 1, 1).data;
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.min(originalImageData.width - 1, Math.max(0, Math.floor(((event.clientX - rect.left) / rect.width) * originalImageData.width)));
+  const y = Math.min(originalImageData.height - 1, Math.max(0, Math.floor(((event.clientY - rect.top) / rect.height) * originalImageData.height)));
+  const index = (y * originalImageData.width + x) * 4;
+  const pixel = originalImageData.data.subarray(index, index + 4);
 
   bgColorInput.value = rgbToHex(pixel[0], pixel[1], pixel[2]);
   transparentStatus.textContent = `Sampled background color ${bgColorInput.value}.`;
   processTransparentPreview();
-});
+}
+
+previewCanvas.addEventListener("click", (event) => sampleBackground(event, previewCanvas));
+originalCanvas.addEventListener("click", (event) => sampleBackground(event, originalCanvas));
+resultPreviewBtn.addEventListener("click", () => setPreviewMode("result"));
+originalPreviewBtn.addEventListener("click", () => setPreviewMode("original"));
 
 downloadTransparentBtn.addEventListener("click", () => {
   if (!originalImageData) return;

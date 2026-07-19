@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How PNGToolbox Tests PNG Output</title>
+    <meta name="description" content="See how PNGToolbox checks WebP conversion, transparent pixels, background color removal, output dimensions, and downloaded PNG files." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://www.pngtoolbox.com/png-output-testing.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/png-output-testing.html" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="./#webp-to-png">Converter</a><a href="./#transparent-png">Background</a><a href="./about.html">About</a><a href="./privacy.html">Privacy</a></nav>
+    </header>
+    <main class="page article-page">
+      <p class="eyebrow">Testing notes</p>
+      <h1>How PNGToolbox Tests PNG Output</h1>
+      <section>
+        <h2>Why publish a test method?</h2>
+        <p>PNG output can look correct in a preview while still having the wrong dimensions, a missing alpha channel, or an unexpectedly large file. PNGToolbox reports measurements from the processed canvas and uses downloadable files in its release checks. This page documents those checks so users can understand what the tool verifies and what still requires visual judgment.</p>
+      </section>
+      <section>
+        <h2>Core test matrix</h2>
+        <table>
+          <thead><tr><th>Input</th><th>Operation</th><th>Expected result</th></tr></thead>
+          <tbody>
+            <tr><td>Still WebP with transparency</td><td>Convert at original dimensions</td><td>PNG opens at the same dimensions and retains transparent pixels.</td></tr>
+            <tr><td>Still WebP photo</td><td>Convert with a smaller width</td><td>Height follows the source ratio and the downloaded filename records the new dimensions.</td></tr>
+            <tr><td>Product image on white</td><td>Edge-connected removal</td><td>Matching pixels connected to the outer edges become transparent while enclosed white details remain.</td></tr>
+            <tr><td>Graphic with separate background areas</td><td>Global color removal</td><td>Matching pixels across the image are removed, including subject pixels if their color also matches.</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>How transparency is measured</h2>
+        <p>The background tool creates an RGBA pixel buffer from the selected image. After applying the selected mode, tolerance, and feathering, it counts pixels whose alpha value is zero and divides that count by the total number of pixels. The percentage shown above the preview therefore includes both transparency created by the tool and fully transparent pixels already present in the source.</p>
+        <p>The PNG size is measured from the blob produced by the browser's PNG encoder. Two browsers can produce slightly different byte sizes from the same pixels because encoder implementations are not guaranteed to be identical.</p>
+      </section>
+      <section>
+        <h2>What edge-connected removal checks</h2>
+        <p>The safer default starts at pixels along the four outside edges. It follows neighboring pixels only when their color distance is within the selected tolerance and feather range. This prevents a matching color enclosed inside the subject from being removed unless it connects to the outer background.</p>
+        <p>Global mode intentionally skips that boundary rule and evaluates every pixel. It is useful for separate pockets of the same background, but it can also remove a white logo, highlight, or product detail. The Original and Result switch is part of the check, not decoration: users should compare both views before export.</p>
+      </section>
+      <section>
+        <h2>Visual and interaction checks</h2>
+        <ul>
+          <li>Sampling a point must use the original pixel data even when the processed result is visible.</li>
+          <li>Changing tolerance, feathering, or mode must update the result measurement.</li>
+          <li>Original and Result controls must not overwrite the downloadable result.</li>
+          <li>Batch conversion must preserve per-file names and process each selected WebP.</li>
+          <li>Keyboard focus, drag and drop, paste input, and mobile layouts must remain usable.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Known limits</h2>
+        <p>Color matching is not semantic subject detection. Hair, shadows, reflections, textured backgrounds, and colors shared with the subject often need a layered editor or a dedicated segmentation tool. Feathering can soften a halo but excessive values make fine edges partially transparent. Animated WebP is outside the intended workflow and may decode as a single frame.</p>
+        <p>Testing notes last reviewed in July 2026. Found a result that does not match this method? Use the <a href="./contact.html">contact page</a> and include the browser, source format, selected mode, and expected result without sending a private source image.</p>
+      </section>
+    </main>
+    <footer><span>&copy; 2026 PNGToolbox</span><a href="./about.html">About</a><a href="./contact.html">Contact</a><a href="./privacy.html">Privacy Policy</a><a href="./terms.html">Terms</a></footer>
+  </body>
+</html>

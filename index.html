@@ -28,7 +28,7 @@
         "operatingSystem": "Any modern web browser",
         "description": "Browser-based tools for making transparent PNG images and converting WebP files to PNG.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["Transparent PNG maker", "WebP to PNG conversion", "Batch conversion", "Optional output resizing", "Local browser processing"]
+        "featureList": ["Transparent PNG maker", "Original and result comparison", "Removed pixel measurement", "WebP to PNG conversion", "Batch conversion", "Optional output resizing", "Local browser processing"]
       }
     </script>
   </head>
@@ -37,7 +37,7 @@
       <a class="brand" href="./" aria-label="PNGToolbox home">
         <img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" />
         <span>PNGToolbox</span>
-        <small>PNG utilities</small>
+        <small>Private PNG tools</small>
       </a>
       <nav aria-label="Primary navigation">
         <a href="#webp-to-png">Converter</a>
@@ -51,19 +51,19 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">TRANSPARENT PNG &amp; WEBP CONVERSION</p>
-          <h1>Transparent PNG maker and WebP converter</h1>
+          <p class="eyebrow">Private, browser-based PNG tools</p>
+          <h1>Make a clean PNG. See exactly what changed.</h1>
           <p>
-            Remove a solid background or turn WebP files into PNGs. Everything runs in your browser, with no upload queue or account.
+            Remove a solid background or convert WebP files to PNG. Compare the original with the result and measure the transparent area before downloading.
           </p>
           <div class="task-links" aria-label="Choose a PNG task">
             <a href="#transparent-png">Remove a background</a>
             <a href="#webp-to-png">Convert WebP files</a>
           </div>
           <ul class="hero-facts" aria-label="Tool benefits">
-            <li>Browser-local</li>
+            <li>Before and after</li>
             <li>No account</li>
-            <li>Batch supported</li>
+            <li>Files stay local</li>
           </ul>
         </div>
       </section>
@@ -190,8 +190,16 @@
           </div>
 
           <div class="preview-panel">
+            <div class="preview-toolbar">
+              <div class="segmented-control" role="group" aria-label="Preview image">
+                <button id="resultPreviewBtn" type="button" class="segment is-active" aria-pressed="true" disabled>Result</button>
+                <button id="originalPreviewBtn" type="button" class="segment" aria-pressed="false" disabled>Original</button>
+              </div>
+              <span id="transparentMeasure" class="preview-measure">Measured after processing</span>
+            </div>
             <div class="preview-stage">
               <canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas>
+              <canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas>
               <div id="previewEmpty" class="preview-empty" aria-hidden="true">
                 <span class="preview-symbol">PNG</span>
                 <strong>Your transparent preview appears here</strong>
@@ -200,6 +208,45 @@
             </div>
             <div id="transparentStatus" class="status" role="status">No PNG file selected yet.</div>
           </div>
+        </div>
+      </section>
+
+      <section class="evidence-section" aria-labelledby="evidence-title">
+        <div class="section-head">
+          <p class="eyebrow">A result you can inspect</p>
+          <h2 id="evidence-title">Transparency is measured from the processed pixels</h2>
+          <p>The result is not a stock preview. PNGToolbox processes the selected image on this device, counts transparent pixels in the working canvas, and measures the exported PNG file.</p>
+        </div>
+        <div class="evidence-grid">
+          <article>
+            <span class="evidence-number">01</span>
+            <h3>Sample the real background</h3>
+            <p>Click a background area in the preview. The selected pixel color becomes the removal target, so you can correct off-white or colored backgrounds.</p>
+          </article>
+          <article>
+            <span class="evidence-number">02</span>
+            <h3>Compare before and after</h3>
+            <p>Switch between Original and Result without changing the export canvas. This makes missed edges, holes, and excessive removal easier to spot.</p>
+          </article>
+          <article>
+            <span class="evidence-number">03</span>
+            <h3>Read the actual result</h3>
+            <p>The toolbar reports the transparent share of the image and the browser-generated PNG size instead of promising a fixed outcome.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="decision-section" aria-labelledby="decision-title">
+        <div class="section-head">
+          <p class="eyebrow">Choose the right operation</p>
+          <h2 id="decision-title">Edge removal or global color removal?</h2>
+          <p>These modes solve different background problems. Choosing the safer mode first protects colors inside the subject.</p>
+        </div>
+        <div class="decision-table" role="table" aria-label="Background removal mode comparison">
+          <div class="decision-row decision-head" role="row"><span role="columnheader">Mode</span><span role="columnheader">Use it when</span><span role="columnheader">Tradeoff</span></div>
+          <div class="decision-row" role="row"><strong role="cell">Connected to edges</strong><span role="cell">The subject is surrounded by one background color</span><span role="cell">Safer for white details enclosed inside the subject</span></div>
+          <div class="decision-row" role="row"><strong role="cell">Everywhere</strong><span role="cell">The same unwanted color appears in separate areas</span><span role="cell">Can remove matching colors that belong to the subject</span></div>
+          <div class="decision-row" role="row"><strong role="cell">Feathering</strong><span role="cell">Edges look jagged or retain a light halo</span><span role="cell">Too much can make fine details translucent</span></div>
         </div>
       </section>
 
@@ -243,6 +290,10 @@
         <article>
           <h3><a href="./webp-to-png-troubleshooting.html">WebP to PNG troubleshooting</a></h3>
           <p>Fix common conversion issues such as large files, missing transparency, and unsupported animated images.</p>
+        </article>
+        <article>
+          <h3><a href="./png-output-testing.html">How PNGToolbox tests PNG output</a></h3>
+          <p>Review the reproducible checks used for dimensions, alpha transparency, color removal, batch conversion, and downloaded PNG files.</p>
         </article>
       </section>
 
