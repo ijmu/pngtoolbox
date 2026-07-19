@@ -28,185 +28,89 @@
         "operatingSystem": "Any modern web browser",
         "description": "Browser-based tools for making transparent PNG images and converting WebP files to PNG.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": ["Transparent PNG maker", "Original and result comparison", "Removed pixel measurement", "WebP to PNG conversion", "Batch conversion", "Optional output resizing", "Local browser processing"]
+        "featureList": ["Transparent PNG maker", "Original and result comparison", "Removed pixel measurement", "WebP to PNG conversion", "Batch ZIP conversion", "High-quality output resizing", "Transparent edge trimming", "Output padding", "Local browser processing"]
       }
     </script>
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="./" aria-label="PNGToolbox home">
-        <img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" />
-        <span>PNGToolbox</span>
-        <small>Private PNG tools</small>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="#webp-to-png">Converter</a>
-        <a href="#transparent-png">Background</a>
-        <a href="#guides">Guides</a>
-        <a href="./about.html">About</a>
-        <a href="./privacy.html">Privacy</a>
-      </nav>
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="#tool">Tools</a><a href="#guides">Guides</a><a href="./about.html">About</a><a href="./privacy.html">Privacy</a></nav>
     </header>
 
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Private, browser-based PNG tools</p>
-          <h1>Make a clean PNG. See exactly what changed.</h1>
-          <p>
-            Remove a solid background or convert WebP files to PNG. Compare the original with the result and measure the transparent area before downloading.
-          </p>
-          <div class="task-links" aria-label="Choose a PNG task">
-            <a href="#transparent-png">Remove a background</a>
-            <a href="#webp-to-png">Convert WebP files</a>
+          <h1>Convert WebP and make transparent PNGs</h1>
+          <p>Convert one file or a batch, resize with high-quality sampling, or remove a solid background and trim empty transparent edges.</p>
+          <ul class="hero-facts" aria-label="Tool benefits"><li>Free to use</li><li>No sign-up</li><li>Files stay local</li></ul>
+        </div>
+      </section>
+
+      <section id="tool" class="tool-shell" aria-labelledby="tool-title">
+        <div class="workspace-head">
+          <div><h2 id="tool-title">PNG tools</h2><p>Select a task. Only the active tool is shown.</p></div>
+          <div class="tool-tabs" role="tablist" aria-label="Choose a PNG tool">
+            <button id="converterTab" type="button" class="tool-tab is-active" role="tab" aria-selected="true" aria-controls="converterPanel">WebP to PNG</button>
+            <button id="backgroundTab" type="button" class="tool-tab" role="tab" aria-selected="false" aria-controls="backgroundPanel">Remove background</button>
           </div>
-          <ul class="hero-facts" aria-label="Tool benefits">
-            <li>Before and after</li>
-            <li>No account</li>
-            <li>Files stay local</li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="webp-to-png" class="tool-shell" aria-labelledby="converter-title">
-        <div class="section-head">
-          <div class="section-kicker-row">
-            <p class="eyebrow">WEBP TO PNG</p>
-            <span class="feature-badge">Local processing</span>
-          </div>
-          <h2 id="converter-title">WebP to PNG Converter</h2>
-          <p>Drop one or more WebP files and export them as PNG. You can keep the original size or resize the PNG output before downloading.</p>
         </div>
 
-        <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
-          <input id="webpInput" type="file" accept="image/webp" multiple />
-          <div class="drop-icon">+</div>
-          <p>Choose WebP files</p>
-          <span>or drop them here &middot; Batch supported &middot; Up to 20MB each</span>
-        </div>
-
-        <p class="control-label">Optional output size</p>
-        <div class="conversion-options" aria-label="PNG output resize options">
-          <label>
-            Output width
-            <input id="webpWidthInput" type="number" min="1" placeholder="Original" disabled />
-          </label>
-          <label>
-            Output height
-            <input id="webpHeightInput" type="number" min="1" placeholder="Original" disabled />
-          </label>
-          <label class="check-row">
-            <input id="webpLockRatioInput" type="checkbox" checked disabled />
-            Keep aspect ratio while editing size
-          </label>
-        </div>
-
-        <div class="controls compact-controls" aria-label="WebP to PNG actions">
-          <button id="convertBtn" type="button" disabled>Convert and download PNG</button>
-          <button id="clearWebpBtn" type="button" class="secondary" disabled>Clear</button>
-        </div>
-
-        <div id="webpStatus" class="status" role="status">No WebP files selected yet.</div>
-        <ul id="webpFileList" class="file-list" aria-label="Selected WebP files"></ul>
-      </section>
-
-      <section class="info-grid" aria-labelledby="steps-title">
-        <div class="section-head">
-          <p class="eyebrow">Workflow</p>
-          <h2 id="steps-title">How to convert WebP to PNG</h2>
-          <p>Use PNGToolbox when a WebP file needs PNG compatibility, transparency support, or easier editing in design software.</p>
-        </div>
-        <article>
-          <h3>1. Select WebP files</h3>
-          <p>Choose one or more WebP images from your device. Batch conversion is useful for icons, screenshots, and product images.</p>
-        </article>
-        <article>
-          <h3>2. Convert in your browser</h3>
-          <p>The converter reads the selected files locally and prepares PNG output without requiring an account or cloud upload for normal use.</p>
-        </article>
-        <article>
-          <h3>3. Download PNG files</h3>
-          <p>Save the PNG output and use it in editors, presentations, ecommerce tools, or systems that do not accept WebP files.</p>
-        </article>
-      </section>
-
-      <section class="tool-shell reference-panel" aria-labelledby="support-title">
-        <div class="section-head">
-          <p class="eyebrow">Formats and privacy</p>
-          <h2 id="support-title">Supported conversion details</h2>
-          <p>PNGToolbox keeps the workflow focused on common WebP and PNG tasks instead of adding account-based cloud features.</p>
-        </div>
-        <dl class="detail-list">
-          <div><dt>Input format</dt><dd>WebP images for conversion, plus JPG, PNG, or WebP images for transparent background cleanup.</dd></div>
-          <div><dt>Output format</dt><dd>PNG files, including transparency when the source image or cleanup result contains transparent pixels.</dd></div>
-          <div><dt>Batch support</dt><dd>Multiple WebP files can be converted in one session from the browser.</dd></div>
-          <div><dt>Output resize</dt><dd>Optional width and height settings can resize PNG output during conversion while preserving aspect ratio.</dd></div>
-          <div><dt>Privacy model</dt><dd>Normal conversion runs locally in your browser, without sending selected image files to a conversion server.</dd></div>
-          <div><dt>Best uses</dt><dd>Logos, icons, screenshots, design assets, product images, and upload forms that require PNG.</dd></div>
-        </dl>
-      </section>
-
-      <section id="transparent-png" class="tool-shell" aria-labelledby="transparent-title">
-        <div class="section-head">
-          <p class="eyebrow">TRANSPARENT BACKGROUND</p>
-          <h2 id="transparent-title">Free Transparent PNG Maker</h2>
-          <p>Upload or paste a JPG, PNG, or WebP image, click the background color in the preview, then adjust tolerance and feathering. It works best for white or solid-color backgrounds.</p>
-        </div>
-
-        <div class="editor-grid">
-          <div>
-            <div id="pngDropzone" class="dropzone small-dropzone" tabindex="0" role="button" aria-label="Choose, drop, or paste an image to make a transparent PNG">
-              <input id="pngInput" type="file" accept="image/jpeg,image/png,image/webp" />
-              <div class="drop-icon">+</div>
-              <p>Choose an image</p>
-              <span>JPG, PNG, or WebP &middot; Drop here or paste with Ctrl+V</span>
-            </div>
-
-            <div class="transparent-controls" aria-label="Transparent background settings">
-              <label>
-                Removal mode
-                <select id="removalModeInput">
-                  <option value="edges">Background connected to edges</option>
-                  <option value="global">Matching color everywhere</option>
-                </select>
-              </label>
-              <label>
-                Background color
-                <input id="bgColorInput" type="color" value="#ffffff" />
-              </label>
-              <label>
-                Tolerance
-                <input id="toleranceInput" type="range" min="0" max="180" step="1" value="35" />
-                <output id="toleranceOutput">35</output>
-              </label>
-              <label>
-                Edge feathering
-                <input id="featherInput" type="range" min="0" max="80" step="1" value="18" />
-                <output id="featherOutput">18</output>
-              </label>
-              <button id="downloadTransparentBtn" type="button" disabled>Download transparent PNG</button>
-              <button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button>
-            </div>
-          </div>
-
-          <div class="preview-panel">
-            <div class="preview-toolbar">
-              <div class="segmented-control" role="group" aria-label="Preview image">
-                <button id="resultPreviewBtn" type="button" class="segment is-active" aria-pressed="true" disabled>Result</button>
-                <button id="originalPreviewBtn" type="button" class="segment" aria-pressed="false" disabled>Original</button>
+        <div id="converterPanel" class="tool-panel" role="tabpanel" aria-labelledby="converterTab">
+          <div class="tool-grid">
+            <div class="control-panel">
+              <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
+                <input id="webpInput" type="file" accept="image/webp" multiple />
+                <div class="drop-icon">+</div><p>Choose WebP files</p><span>Drop one or more files here &middot; Batch ZIP supported</span>
               </div>
-              <span id="transparentMeasure" class="preview-measure">Measured after processing</span>
-            </div>
-            <div class="preview-stage">
-              <canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas>
-              <canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas>
-              <div id="previewEmpty" class="preview-empty" aria-hidden="true">
-                <span class="preview-symbol">PNG</span>
-                <strong>Your transparent preview appears here</strong>
-                <small>Click the image to sample its background color</small>
+              <div class="control-section">
+                <strong class="control-section-title">Output size</strong>
+                <div class="conversion-options" aria-label="PNG output resize options">
+                  <label>Width<input id="webpWidthInput" type="number" min="1" placeholder="Original" disabled /></label>
+                  <label>Height<input id="webpHeightInput" type="number" min="1" placeholder="Original" disabled /></label>
+                  <label class="check-row"><input id="webpLockRatioInput" type="checkbox" checked disabled />Keep aspect ratio</label>
+                </div>
               </div>
+              <div class="controls compact-controls" aria-label="WebP to PNG actions">
+                <button id="convertBtn" type="button" disabled>Convert files</button>
+                <button id="cancelConvertBtn" type="button" class="secondary" hidden>Cancel</button>
+                <button id="clearWebpBtn" type="button" class="secondary" disabled>Clear</button>
+              </div>
+              <progress id="convertProgress" class="progress-bar" max="100" value="0" hidden>0%</progress>
+              <div id="webpStatus" class="status" role="status">Choose WebP files to start.</div>
             </div>
-            <div id="transparentStatus" class="status" role="status">No PNG file selected yet.</div>
+            <div class="queue-panel">
+              <div class="queue-head"><strong>Selected files</strong><span id="queueCount">0 files</span></div>
+              <ul id="webpFileList" class="file-list" aria-label="Selected WebP files"></ul>
+              <div id="queueEmpty" class="queue-empty"><span>WEBP</span><strong>Your conversion queue appears here</strong><small>Multiple results download together as one ZIP file.</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="backgroundPanel" class="tool-panel" role="tabpanel" aria-labelledby="backgroundTab" hidden>
+          <div class="editor-grid">
+            <div class="control-panel">
+              <div id="pngDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose, drop, or paste an image to make a transparent PNG">
+                <input id="pngInput" type="file" accept="image/jpeg,image/png,image/webp" />
+                <div class="drop-icon">+</div><p>Choose an image</p><span>JPG, PNG, or WebP &middot; Drop here or paste with Ctrl+V</span>
+              </div>
+              <div class="transparent-controls" aria-label="Transparent background settings">
+                <label>Removal mode<select id="removalModeInput"><option value="edges">Background connected to edges</option><option value="global">Matching color everywhere</option></select></label>
+                <label class="color-field">Background color<input id="bgColorInput" type="color" value="#ffffff" /></label>
+                <label>Tolerance<input id="toleranceInput" type="range" min="0" max="180" step="1" value="35" /><output id="toleranceOutput">35</output></label>
+                <label>Edge feathering<input id="featherInput" type="range" min="0" max="80" step="1" value="18" /><output id="featherOutput">18</output></label>
+                <label class="check-row"><input id="trimTransparentInput" type="checkbox" />Trim transparent edges</label>
+                <label>Padding (px)<input id="paddingInput" type="number" min="0" max="500" value="0" /></label>
+                <label>Canvas fill<select id="canvasFillSelect"><option value="transparent">Transparent</option><option value="white">White</option><option value="custom">Custom color</option></select></label>
+                <label id="fillColorField" class="color-field" hidden>Fill color<input id="fillColorInput" type="color" value="#ffffff" /></label>
+              </div>
+              <div class="controls compact-controls"><button id="downloadTransparentBtn" type="button" disabled>Download PNG</button><button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button></div>
+            </div>
+            <div class="preview-panel">
+              <div class="preview-toolbar"><div class="segmented-control" role="group" aria-label="Preview image"><button id="resultPreviewBtn" type="button" class="segment is-active" aria-pressed="true" disabled>Result</button><button id="originalPreviewBtn" type="button" class="segment" aria-pressed="false" disabled>Original</button></div><span id="transparentMeasure" class="preview-measure">Measured after processing</span></div>
+              <div class="preview-stage"><canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas><canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas><div id="previewEmpty" class="preview-empty" aria-hidden="true"><span class="preview-symbol">PNG</span><strong>Your transparent preview appears here</strong><small>Click the image to sample its background color</small></div></div>
+              <div id="transparentStatus" class="status" role="status">Choose an image to start.</div>
+            </div>
           </div>
         </div>
       </section>
@@ -329,7 +233,7 @@
       <a href="./terms.html">Terms</a>
     </footer>
 
-    <script src="./script.js"></script>
+    <script type="module" src="./src/main.ts"></script>
 </body>
 </html>
 
