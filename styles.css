@@ -1402,3 +1402,113 @@ output { color: #526158; display: inline-block; font-size: 0.82rem; text-align: 
 
 @media (hover: none) { .dropzone:hover { background: #f8faf9; border-color: #aab9b2; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+
+/* 2026 Pro Workspace: the application is the homepage. */
+body { background: #f5f5f7; }
+.workspace-page { max-width: 1280px; padding: 28px 24px 88px; }
+.app-workspace { border-color: #d7d7dc; box-shadow: 0 18px 48px rgba(20, 28, 24, 0.08); }
+.app-workspace .workspace-head {
+  background: #f5f5f7;
+  border-bottom-color: #d7d7dc;
+  min-height: 92px;
+  padding: 20px 24px;
+}
+.workspace-title { min-width: 0; }
+.workspace-title h1 {
+  color: #1d1d1f;
+  font-size: 1.85rem;
+  line-height: 1.12;
+  margin: 0;
+  text-align: left;
+}
+.workspace-title p { color: #6e6e73; font-size: 0.86rem; line-height: 1.45; margin: 6px 0 0; }
+.app-workspace .tool-tabs { background: #e9e9ed; flex: 0 0 auto; }
+.app-workspace .tool-tab { color: #515154; min-height: 36px; }
+.app-workspace .tool-tab.is-active,
+.app-workspace .tool-tab.is-active:not(:disabled):hover { color: var(--accent-dark); }
+.app-workspace .tool-grid,
+.app-workspace .editor-grid { grid-template-columns: 310px minmax(0, 1fr); min-height: 620px; }
+.app-workspace .app-sidebar {
+  background: rgba(242, 242, 247, 0.92);
+  border-right-color: #d7d7dc;
+  padding: 20px 18px;
+}
+.app-workspace .app-canvas { background: #ececef; padding: 18px; }
+.app-workspace .dropzone {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: #b8b8bf;
+  min-height: 130px;
+}
+.app-workspace .dropzone:hover,
+.app-workspace .dropzone:focus-visible,
+.app-workspace .dropzone.dragover { background: #fff; }
+.app-workspace .control-section { border-top-color: #d7d7dc; margin-top: 16px; padding-top: 16px; }
+.app-workspace .conversion-options,
+.app-workspace .transparent-controls { grid-template-columns: 1fr; }
+.app-workspace .conversion-options .check-row,
+.app-workspace .transparent-controls .check-row { grid-column: auto; }
+.app-workspace input[type="number"],
+.app-workspace select,
+.app-workspace .check-row { background-color: rgba(255, 255, 255, 0.82); }
+.app-workspace .controls { grid-template-columns: 1fr; margin-top: 16px; }
+.app-workspace .status { background: rgba(255, 255, 255, 0.72); border-color: #d7d7dc; }
+.app-workspace .queue-head,
+.app-workspace .preview-toolbar {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid #d5d5da;
+  border-radius: 8px 8px 0 0;
+  margin: 0;
+  min-height: 44px;
+  padding: 0 12px;
+}
+.app-workspace .queue-empty,
+.app-workspace .file-list {
+  background: #fff;
+  border: 1px solid #d5d5da;
+  border-top: 0;
+  border-radius: 0 0 8px 8px;
+  min-height: 510px;
+}
+.app-workspace .queue-empty { justify-content: center; }
+.app-workspace .file-list { max-height: 510px; padding: 12px; }
+.app-workspace .file-list:empty { display: none; }
+.app-workspace .preview-stage {
+  border-color: #d5d5da;
+  border-radius: 0;
+  border-top: 0;
+  min-height: 510px;
+}
+.app-workspace .preview-empty { inset: 18px; position: absolute; }
+.app-workspace .preview-panel > .status {
+  border-color: #d5d5da;
+  border-radius: 0 0 8px 8px;
+  margin: 0;
+}
+.app-workspace button { transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1); }
+.app-workspace button:not(:disabled):active { transform: scale(0.98); }
+
+@media (max-width: 900px) {
+  .workspace-page { padding-top: 20px; }
+  .app-workspace .workspace-head { align-items: flex-start; }
+  .app-workspace .tool-grid,
+  .app-workspace .editor-grid { grid-template-columns: 1fr; }
+  .app-workspace .app-sidebar { border-bottom: 1px solid #d7d7dc; border-right: 0; }
+  .app-workspace .conversion-options,
+  .app-workspace .transparent-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-workspace .conversion-options .check-row,
+  .app-workspace .transparent-controls .check-row { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .workspace-page { padding: 14px 12px 64px; }
+  .app-workspace .workspace-head { min-height: 0; padding: 18px 16px; }
+  .workspace-title h1 { font-size: 1.55rem; }
+  .app-workspace .app-sidebar,
+  .app-workspace .app-canvas { padding: 16px; }
+  .app-workspace .conversion-options,
+  .app-workspace .transparent-controls { grid-template-columns: 1fr; }
+  .app-workspace .conversion-options .check-row,
+  .app-workspace .transparent-controls .check-row { grid-column: auto; }
+  .app-workspace .queue-empty,
+  .app-workspace .file-list,
+  .app-workspace .preview-stage { min-height: 300px; }
+}

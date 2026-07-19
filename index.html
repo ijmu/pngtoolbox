@@ -38,18 +38,10 @@
       <nav aria-label="Primary navigation"><a href="#tool">Tools</a><a href="#guides">Guides</a><a href="./about.html">About</a><a href="./privacy.html">Privacy</a></nav>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <h1>Convert WebP and make transparent PNGs</h1>
-          <p>Convert one file or a batch, resize with high-quality sampling, or remove a solid background and trim empty transparent edges.</p>
-          <ul class="hero-facts" aria-label="Tool benefits"><li>Free to use</li><li>No sign-up</li><li>Files stay local</li></ul>
-        </div>
-      </section>
-
-      <section id="tool" class="tool-shell" aria-labelledby="tool-title">
+    <main class="workspace-page">
+      <section id="tool" class="tool-shell app-workspace" aria-labelledby="tool-title">
         <div class="workspace-head">
-          <div><h2 id="tool-title">PNG tools</h2><p>Select a task. Only the active tool is shown.</p></div>
+          <div class="workspace-title"><h1 id="tool-title">PNG workspace</h1><p>Convert WebP files, remove solid backgrounds, and inspect the PNG result before downloading.</p></div>
           <div class="tool-tabs" role="tablist" aria-label="Choose a PNG tool">
             <button id="converterTab" type="button" class="tool-tab is-active" role="tab" aria-selected="true" aria-controls="converterPanel">WebP to PNG</button>
             <button id="backgroundTab" type="button" class="tool-tab" role="tab" aria-selected="false" aria-controls="backgroundPanel">Remove background</button>
@@ -58,7 +50,7 @@
 
         <div id="converterPanel" class="tool-panel" role="tabpanel" aria-labelledby="converterTab">
           <div class="tool-grid">
-            <div class="control-panel">
+            <div class="control-panel app-sidebar">
               <div id="webpDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP images">
                 <input id="webpInput" type="file" accept="image/webp" multiple />
                 <div class="drop-icon">+</div><p>Choose WebP files</p><span>Drop one or more files here &middot; Batch ZIP supported</span>
@@ -79,7 +71,7 @@
               <progress id="convertProgress" class="progress-bar" max="100" value="0" hidden>0%</progress>
               <div id="webpStatus" class="status" role="status">Choose WebP files to start.</div>
             </div>
-            <div class="queue-panel">
+            <div class="queue-panel app-canvas">
               <div class="queue-head"><strong>Selected files</strong><span id="queueCount">0 files</span></div>
               <ul id="webpFileList" class="file-list" aria-label="Selected WebP files"></ul>
               <div id="queueEmpty" class="queue-empty"><span>WEBP</span><strong>Your conversion queue appears here</strong><small>Multiple results download together as one ZIP file.</small></div>
@@ -89,7 +81,7 @@
 
         <div id="backgroundPanel" class="tool-panel" role="tabpanel" aria-labelledby="backgroundTab" hidden>
           <div class="editor-grid">
-            <div class="control-panel">
+            <div class="control-panel app-sidebar">
               <div id="pngDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose, drop, or paste an image to make a transparent PNG">
                 <input id="pngInput" type="file" accept="image/jpeg,image/png,image/webp" />
                 <div class="drop-icon">+</div><p>Choose an image</p><span>JPG, PNG, or WebP &middot; Drop here or paste with Ctrl+V</span>
@@ -106,7 +98,7 @@
               </div>
               <div class="controls compact-controls"><button id="downloadTransparentBtn" type="button" disabled>Download PNG</button><button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button></div>
             </div>
-            <div class="preview-panel">
+            <div class="preview-panel app-canvas">
               <div class="preview-toolbar"><div class="segmented-control" role="group" aria-label="Preview image"><button id="resultPreviewBtn" type="button" class="segment is-active" aria-pressed="true" disabled>Result</button><button id="originalPreviewBtn" type="button" class="segment" aria-pressed="false" disabled>Original</button></div><span id="transparentMeasure" class="preview-measure">Measured after processing</span></div>
               <div class="preview-stage"><canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas><canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas><div id="previewEmpty" class="preview-empty" aria-hidden="true"><span class="preview-symbol">PNG</span><strong>Your transparent preview appears here</strong><small>Click the image to sample its background color</small></div></div>
               <div id="transparentStatus" class="status" role="status">Choose an image to start.</div>
