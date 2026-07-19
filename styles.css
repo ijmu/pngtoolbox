@@ -1512,3 +1512,119 @@ body { background: #f5f5f7; }
   .app-workspace .file-list,
   .app-workspace .preview-stage { min-height: 300px; }
 }
+
+/* Content-rich workspace: direct first action, progressive controls, useful empty state. */
+.workspace-page { max-width: 1240px; padding: 0 24px 88px; }
+
+.product-intro {
+  align-items: end;
+  display: grid;
+  gap: 34px 68px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(520px, 0.95fr);
+  padding: 52px 20px 34px;
+}
+.intro-copy { max-width: 650px; }
+.intro-kicker,
+.workspace-kicker { color: #127a5a; font-size: 0.76rem; font-weight: 750; margin: 0 0 10px; }
+.product-intro h1 {
+  color: #17201c;
+  font-size: clamp(2.55rem, 4.7vw, 4.35rem);
+  font-weight: 750;
+  line-height: 0.99;
+  margin: 0;
+  max-width: 680px;
+  text-align: left;
+}
+.intro-copy > p:last-child { color: #59645f; font-size: 1.04rem; line-height: 1.62; margin: 20px 0 0; max-width: 590px; }
+.capability-strip { border-bottom: 1px solid #d7ddd9; border-top: 1px solid #d7ddd9; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.capability-strip > div { min-width: 0; padding: 22px 18px; }
+.capability-strip > div + div { border-left: 1px solid #d7ddd9; }
+.capability-strip span { color: #127a5a; display: block; font-size: 0.7rem; font-weight: 800; margin-bottom: 15px; }
+.capability-strip strong { display: block; font-size: 0.88rem; }
+.capability-strip small { color: #737d78; display: block; font-size: 0.75rem; line-height: 1.45; margin-top: 5px; }
+
+.app-workspace { border-color: #d7ddd9; box-shadow: 0 20px 58px rgba(25, 45, 35, 0.09); }
+.app-workspace .workspace-head { background: #fff; min-height: 106px; padding: 22px 28px; }
+.workspace-title h2 { color: #17201c; font-size: 1.72rem; line-height: 1.12; margin: 0; }
+.workspace-title .workspace-kicker { margin-bottom: 5px; }
+.app-workspace .tool-grid,
+.app-workspace .editor-grid { grid-template-columns: 380px minmax(0, 1fr); min-height: 570px; }
+.app-workspace .app-sidebar { background: #fafcfb; padding: 24px; }
+.app-workspace .app-canvas { background: #eff3f1; padding: 22px; }
+.app-workspace .dropzone { background: #fff; border-color: #b5c1bb; min-height: 158px; }
+.app-workspace .dropzone:hover,
+.app-workspace .dropzone:focus-visible,
+.app-workspace .dropzone.dragover { background: #f6fcf9; border-color: #127a5a; }
+
+.start-summary { border-bottom: 1px solid #dce3df; border-top: 1px solid #dce3df; margin-top: 22px; padding: 20px 2px; }
+.start-summary strong { display: block; font-size: 0.9rem; }
+.start-summary ul { display: grid; gap: 9px; list-style: none; margin: 14px 0; padding: 0; }
+.start-summary li { color: #4f5c56; font-size: 0.8rem; padding-left: 22px; position: relative; }
+.start-summary li::before { color: #127a5a; content: "✓"; font-weight: 800; left: 0; position: absolute; }
+.start-summary p { color: #737d78; font-size: 0.75rem; margin: 0; }
+body.has-webp-files .converter-summary,
+body.has-png-source .background-summary { display: none; }
+body:not(.has-webp-files) .converter-controls,
+body:not(.has-png-source) .background-controls { display: none; }
+
+.app-workspace .queue-empty,
+.app-workspace .file-list,
+.app-workspace .preview-stage { min-height: 500px; }
+.app-workspace .file-list { align-content: start; }
+.empty-dashboard {
+  align-items: stretch;
+  background: #fff;
+  inset: 0;
+  justify-content: flex-start;
+  overflow: auto;
+  padding: 46px 48px 30px;
+  text-align: left;
+}
+.preview-empty.empty-dashboard { position: absolute; }
+.queue-empty.empty-dashboard { display: flex; }
+.queue-empty.empty-dashboard[hidden] { display: none; }
+.empty-heading { align-items: center; display: flex; gap: 16px; width: 100%; }
+.empty-heading .preview-symbol { background: #13352a; color: #8de0be; flex: 0 0 auto; margin: 0; }
+.empty-heading strong { display: block; font-size: 1.08rem; margin: 0; }
+.empty-heading small { display: block; font-size: 0.8rem; line-height: 1.5; margin-top: 4px; }
+.empty-capabilities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 38px; width: 100%; }
+.empty-capabilities > div { border-top: 1px solid #dce3df; min-width: 0; padding: 22px 22px 24px 0; }
+.empty-capabilities > div:nth-child(even) { border-left: 1px solid #dce3df; padding-left: 22px; }
+.empty-capabilities span { background: transparent; border: 0; border-radius: 0; color: #127a5a; display: block; font-size: 0.68rem; font-weight: 800; height: auto; margin: 0 0 17px; width: auto; }
+.empty-capabilities strong { display: block; font-size: 0.88rem; margin: 0; }
+.empty-capabilities small { display: block; font-size: 0.76rem; line-height: 1.5; margin-top: 6px; max-width: 245px; }
+.empty-privacy { align-items: center; color: #6f7874; display: flex; font-size: 0.75rem; margin: 22px 0 0; width: 100%; }
+.empty-privacy > span { background: #34c759; border: 0; border-radius: 50%; height: 7px; margin: 0 8px 0 0; width: 7px; }
+
+@media (max-width: 980px) {
+  .product-intro { align-items: start; grid-template-columns: 1fr; padding-inline: 4px; }
+  .capability-strip { max-width: 720px; }
+  .app-workspace .tool-grid,
+  .app-workspace .editor-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .workspace-page { padding: 0 12px 64px; }
+  .product-intro { gap: 24px; padding: 34px 4px 26px; }
+  .product-intro h1 { font-size: 2.5rem; }
+  .intro-copy > p:last-child { font-size: 0.94rem; margin-top: 16px; }
+  .capability-strip { grid-template-columns: 1fr; }
+  .capability-strip > div { padding: 14px 4px; }
+  .capability-strip > div + div { border-left: 0; border-top: 1px solid #d7ddd9; }
+  .capability-strip span { display: inline-block; margin: 0 10px 0 0; }
+  .capability-strip strong { display: inline; }
+  .capability-strip small { margin-left: 35px; }
+  .app-workspace .workspace-head { padding: 20px 16px; }
+  .workspace-title h2 { font-size: 1.5rem; }
+  .app-workspace .app-sidebar,
+  .app-workspace .app-canvas { padding: 16px; }
+  .empty-dashboard { padding: 28px 22px 22px; }
+  .empty-heading { align-items: flex-start; }
+  .empty-capabilities { grid-template-columns: 1fr; margin-top: 24px; }
+  .empty-capabilities > div,
+  .empty-capabilities > div:nth-child(even) { border-left: 0; padding: 16px 0; }
+  .empty-capabilities small { max-width: none; }
+  .app-workspace .queue-empty,
+  .app-workspace .file-list,
+  .app-workspace .preview-stage { min-height: 520px; }
+}

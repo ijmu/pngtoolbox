@@ -159,6 +159,7 @@ async function convertWebp(file: File, token: number): Promise<{ blob: Blob; wid
 }
 
 function renderQueue(): void {
+  document.body.classList.toggle("has-webp-files", webpFiles.length > 0);
   webpFileList.replaceChildren();
   queueEmpty.hidden = webpFiles.length > 0;
   queueCount.textContent = `${webpFiles.length} file${webpFiles.length === 1 ? "" : "s"}`;
@@ -303,6 +304,7 @@ async function loadBackgroundFile(file: File | undefined): Promise<void> {
   previewContext.drawImage(image, 0, 0);
   originalContext.drawImage(image, 0, 0);
   originalImageData = previewContext.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
+  document.body.classList.add("has-png-source");
   previewEmpty.hidden = true;
   [downloadTransparentBtn, resetTransparentBtn, resultPreviewBtn, originalPreviewBtn].forEach((button) => { button.disabled = false; });
   setPreviewMode("result");

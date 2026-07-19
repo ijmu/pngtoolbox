@@ -39,9 +39,22 @@
     </header>
 
     <main class="workspace-page">
+      <section class="product-intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="intro-kicker">Purpose-built PNG tools</p>
+          <h1 id="page-title">Convert WebP. Make clean PNGs.</h1>
+          <p>Turn WebP files into PNG, process a batch, or remove a solid background with a result you can inspect before saving.</p>
+        </div>
+        <div class="capability-strip" aria-label="PNGToolbox capabilities">
+          <div><span>PNG</span><strong>Lossless output</strong><small>Convert still WebP files with transparency</small></div>
+          <div><span>ZIP</span><strong>Batch ready</strong><small>Process several files in one download</small></div>
+          <div><span>α</span><strong>Visible transparency</strong><small>Compare pixels before exporting</small></div>
+        </div>
+      </section>
+
       <section id="tool" class="tool-shell app-workspace" aria-labelledby="tool-title">
         <div class="workspace-head">
-          <div class="workspace-title"><h1 id="tool-title">PNG workspace</h1><p>Convert WebP files, remove solid backgrounds, and inspect the PNG result before downloading.</p></div>
+          <div class="workspace-title"><p class="workspace-kicker">Two focused tools</p><h2 id="tool-title">PNG workspace</h2><p>Convert WebP files, remove solid backgrounds, and inspect the PNG result before downloading.</p></div>
           <div class="tool-tabs" role="tablist" aria-label="Choose a PNG tool">
             <button id="converterTab" type="button" class="tool-tab is-active" role="tab" aria-selected="true" aria-controls="converterPanel">WebP to PNG</button>
             <button id="backgroundTab" type="button" class="tool-tab" role="tab" aria-selected="false" aria-controls="backgroundPanel">Remove background</button>
@@ -55,7 +68,12 @@
                 <input id="webpInput" type="file" accept="image/webp" multiple />
                 <div class="drop-icon">+</div><p>Choose WebP files</p><span>Drop one or more files here &middot; Batch ZIP supported</span>
               </div>
-              <div class="control-section">
+              <div class="start-summary converter-summary">
+                <strong>Fast batch conversion</strong>
+                <ul><li>Add one or more WebP files</li><li>Keep the original size or resize</li><li>Download PNG or a ZIP</li></ul>
+                <p>Files are processed locally in this browser.</p>
+              </div>
+              <div class="control-section converter-controls">
                 <strong class="control-section-title">Output size</strong>
                 <div class="conversion-options" aria-label="PNG output resize options">
                   <label>Width<input id="webpWidthInput" type="number" min="1" placeholder="Original" disabled /></label>
@@ -63,7 +81,7 @@
                   <label class="check-row"><input id="webpLockRatioInput" type="checkbox" checked disabled />Keep aspect ratio</label>
                 </div>
               </div>
-              <div class="controls compact-controls" aria-label="WebP to PNG actions">
+              <div class="controls compact-controls converter-controls" aria-label="WebP to PNG actions">
                 <button id="convertBtn" type="button" disabled>Convert files</button>
                 <button id="cancelConvertBtn" type="button" class="secondary" hidden>Cancel</button>
                 <button id="clearWebpBtn" type="button" class="secondary" disabled>Clear</button>
@@ -74,7 +92,16 @@
             <div class="queue-panel app-canvas">
               <div class="queue-head"><strong>Selected files</strong><span id="queueCount">0 files</span></div>
               <ul id="webpFileList" class="file-list" aria-label="Selected WebP files"></ul>
-              <div id="queueEmpty" class="queue-empty"><span>WEBP</span><strong>Your conversion queue appears here</strong><small>Multiple results download together as one ZIP file.</small></div>
+              <div id="queueEmpty" class="queue-empty empty-dashboard">
+                <div class="empty-heading"><span class="preview-symbol">P</span><div><strong>WebP in, practical PNG out</strong><small>Add files to replace this overview with your live conversion queue.</small></div></div>
+                <div class="empty-capabilities">
+                  <div><span>01</span><strong>Keep transparency</strong><small>Preserve transparent pixels when the source contains them.</small></div>
+                  <div><span>02</span><strong>Resize if needed</strong><small>Keep original dimensions or set an exact output size.</small></div>
+                  <div><span>03</span><strong>Convert a batch</strong><small>Process multiple still images in the same queue.</small></div>
+                  <div><span>04</span><strong>Download once</strong><small>Single files save as PNG; batches arrive in a ZIP.</small></div>
+                </div>
+                <p class="empty-privacy"><span></span> Local conversion · No account required</p>
+              </div>
             </div>
           </div>
         </div>
@@ -86,7 +113,12 @@
                 <input id="pngInput" type="file" accept="image/jpeg,image/png,image/webp" />
                 <div class="drop-icon">+</div><p>Choose an image</p><span>JPG, PNG, or WebP &middot; Drop here or paste with Ctrl+V</span>
               </div>
-              <div class="transparent-controls" aria-label="Transparent background settings">
+              <div class="start-summary background-summary">
+                <strong>Controlled background removal</strong>
+                <ul><li>Choose or paste an image</li><li>Sample the real background color</li><li>Compare before downloading</li></ul>
+                <p>Best for solid or near-solid backgrounds.</p>
+              </div>
+              <div class="transparent-controls background-controls" aria-label="Transparent background settings">
                 <label>Removal mode<select id="removalModeInput"><option value="edges">Background connected to edges</option><option value="global">Matching color everywhere</option></select></label>
                 <label class="color-field">Background color<input id="bgColorInput" type="color" value="#ffffff" /></label>
                 <label>Tolerance<input id="toleranceInput" type="range" min="0" max="180" step="1" value="35" /><output id="toleranceOutput">35</output></label>
@@ -96,11 +128,20 @@
                 <label>Canvas fill<select id="canvasFillSelect"><option value="transparent">Transparent</option><option value="white">White</option><option value="custom">Custom color</option></select></label>
                 <label id="fillColorField" class="color-field" hidden>Fill color<input id="fillColorInput" type="color" value="#ffffff" /></label>
               </div>
-              <div class="controls compact-controls"><button id="downloadTransparentBtn" type="button" disabled>Download PNG</button><button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button></div>
+              <div class="controls compact-controls background-controls"><button id="downloadTransparentBtn" type="button" disabled>Download PNG</button><button id="resetTransparentBtn" type="button" class="secondary" disabled>Reset</button></div>
             </div>
             <div class="preview-panel app-canvas">
               <div class="preview-toolbar"><div class="segmented-control" role="group" aria-label="Preview image"><button id="resultPreviewBtn" type="button" class="segment is-active" aria-pressed="true" disabled>Result</button><button id="originalPreviewBtn" type="button" class="segment" aria-pressed="false" disabled>Original</button></div><span id="transparentMeasure" class="preview-measure">Measured after processing</span></div>
-              <div class="preview-stage"><canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas><canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas><div id="previewEmpty" class="preview-empty" aria-hidden="true"><span class="preview-symbol">PNG</span><strong>Your transparent preview appears here</strong><small>Click the image to sample its background color</small></div></div>
+              <div class="preview-stage"><canvas id="previewCanvas" width="720" height="480" aria-label="Transparent PNG preview"></canvas><canvas id="originalCanvas" class="is-hidden" width="720" height="480" aria-label="Original image preview"></canvas><div id="previewEmpty" class="preview-empty empty-dashboard" aria-hidden="true">
+                <div class="empty-heading"><span class="preview-symbol">α</span><div><strong>Remove only the background you intend</strong><small>Choose an image to open a live, checkered transparency preview.</small></div></div>
+                <div class="empty-capabilities">
+                  <div><span>01</span><strong>Sample a color</strong><small>Click the image to target an off-white or colored background.</small></div>
+                  <div><span>02</span><strong>Protect the subject</strong><small>Start with edge-connected removal for a safer result.</small></div>
+                  <div><span>03</span><strong>Refine the edge</strong><small>Adjust tolerance and feathering while watching the preview.</small></div>
+                  <div><span>04</span><strong>Trim and pad</strong><small>Prepare a cleaner canvas for products, logos, or graphics.</small></div>
+                </div>
+                <p class="empty-privacy"><span></span> Pixel-level preview · Browser-local processing</p>
+              </div></div>
               <div id="transparentStatus" class="status" role="status">Choose an image to start.</div>
             </div>
           </div>
