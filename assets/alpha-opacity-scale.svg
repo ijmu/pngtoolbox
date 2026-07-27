@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">PNG alpha opacity scale</title>
+  <desc id="desc">Five circles show opacity levels from fully opaque to fully transparent over a checkerboard.</desc>
+  <defs>
+    <pattern id="checker" width="32" height="32" patternUnits="userSpaceOnUse">
+      <rect width="32" height="32" fill="#ffffff"/>
+      <rect width="16" height="16" fill="#dce7e2"/>
+      <rect x="16" y="16" width="16" height="16" fill="#dce7e2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="720" fill="#f3f7f5"/>
+  <text x="72" y="88" fill="#14231e" font-family="Arial, sans-serif" font-size="36" font-weight="700">Alpha stores more than on or off</text>
+  <text x="72" y="132" fill="#5d6f68" font-family="Arial, sans-serif" font-size="25">Each PNG pixel can be opaque, transparent, or partially transparent.</text>
+  <rect x="72" y="180" width="1056" height="390" rx="20" fill="url(#checker)"/>
+  <circle cx="190" cy="360" r="82" fill="#078260" fill-opacity="1"/>
+  <circle cx="395" cy="360" r="82" fill="#078260" fill-opacity=".75"/>
+  <circle cx="600" cy="360" r="82" fill="#078260" fill-opacity=".5"/>
+  <circle cx="805" cy="360" r="82" fill="#078260" fill-opacity=".25"/>
+  <circle cx="1010" cy="360" r="82" fill="#078260" fill-opacity="0" stroke="#078260" stroke-dasharray="8 8" stroke-width="3"/>
+  <g fill="#14231e" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">
+    <text x="190" y="620">100% opaque</text>
+    <text x="395" y="620">75%</text>
+    <text x="600" y="620">50%</text>
+    <text x="805" y="620">25%</text>
+    <text x="1010" y="620">0% opaque</text>
+  </g>
+</svg>

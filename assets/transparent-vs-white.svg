@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">White background compared with transparent background</title>
+  <desc id="desc">The same green object appears with a white rectangle on the left and without a rectangle over a checkerboard on the right.</desc>
+  <defs>
+    <pattern id="checker" width="40" height="40" patternUnits="userSpaceOnUse">
+      <rect width="40" height="40" fill="#ffffff"/>
+      <rect width="20" height="20" fill="#dce7e2"/>
+      <rect x="20" y="20" width="20" height="20" fill="#dce7e2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="720" fill="#f3f7f5"/>
+  <text x="72" y="82" fill="#14231e" font-family="Arial, sans-serif" font-size="34" font-weight="700">White pixels and transparent pixels are different</text>
+  <rect x="72" y="130" width="500" height="470" rx="18" fill="#b9d8ef"/>
+  <rect x="142" y="210" width="360" height="300" fill="#ffffff"/>
+  <circle cx="322" cy="360" r="105" fill="#078260"/>
+  <text x="322" y="645" text-anchor="middle" fill="#5d6f68" font-family="Arial, sans-serif" font-size="26">White background: rectangle remains visible</text>
+  <rect x="628" y="130" width="500" height="470" rx="18" fill="url(#checker)"/>
+  <circle cx="878" cy="360" r="105" fill="#078260"/>
+  <text x="878" y="645" text-anchor="middle" fill="#5d6f68" font-family="Arial, sans-serif" font-size="26">Transparency: the new background shows through</text>
+</svg>

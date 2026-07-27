@@ -5,7 +5,19 @@ import { join } from "node:path";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const out = fileURLToPath(new URL("../dist/", import.meta.url));
 const entries = await readdir(root, { withFileTypes: true });
-const excluded = new Set(["index.html", "node_modules", "dist", ".git", "src", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts", "script.js"]);
+const excluded = new Set([
+  "index.html",
+  "how-to-make-png-background-transparent.html",
+  "node_modules",
+  "dist",
+  ".git",
+  "src",
+  "package.json",
+  "package-lock.json",
+  "tsconfig.json",
+  "vite.config.ts",
+  "script.js",
+]);
 
 await mkdir(out, { recursive: true });
 for (const entry of entries) {

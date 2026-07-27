@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>What Is a Transparent PNG? - PNGToolbox</title>
-    <meta name="description" content="Understand transparent PNG files, alpha channels, white backgrounds, and why transparency matters for logos and product images." />
+    <title>Transparent PNG Explained: Alpha, Backgrounds &amp; Uses</title>
+    <meta name="description" content="See how transparent PNG pixels differ from white backgrounds, understand alpha opacity, inspect practical examples, and learn when PNG transparency works best." />
     <link rel="canonical" href="https://www.pngtoolbox.com/png-transparent-background.html" />
     <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/png-transparent-background.html" />
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
     <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./transparent-tool.css" />
   </head>
   <body>
     <header class="topbar">
@@ -22,8 +23,19 @@
       </nav>
     </header>
     <main class="page article-page">
-      <p class="eyebrow">PNG basics</p>
+      <p class="eyebrow">Visual PNG guide</p>
       <h1>What Is a Transparent PNG?</h1>
+      <p>A transparent PNG stores opacity for individual pixels. Unlike a white background, transparent areas reveal whatever page, slide, thumbnail, or design sits behind the image.</p>
+      <div class="transparency-evidence" aria-label="Transparency diagrams">
+        <figure>
+          <img src="./assets/transparent-vs-white.svg" width="1200" height="720" alt="Comparison showing a visible white rectangle and a transparent object over a checkerboard" />
+          <figcaption>A white background contains visible pixels. A transparent background contains pixels whose opacity allows the next layer to show through.</figcaption>
+        </figure>
+        <figure>
+          <img src="./assets/alpha-opacity-scale.svg" width="1200" height="720" alt="Five green circles showing opacity levels from 100 percent to zero" />
+          <figcaption>PNG alpha is a scale. Partially transparent edge pixels help curves, shadows, and antialiasing blend into a new background.</figcaption>
+        </figure>
+      </div>
       <section>
         <h2>Transparent background is not the same as white background</h2>
         <p>A white-background image simply has white pixels behind the subject. When placed on a colored design, the white rectangle is still visible. A transparent PNG stores transparency information, so empty areas reveal the page, poster, or video background behind it.</p>
@@ -31,6 +43,14 @@
       <section>
         <h2>How alpha channels work</h2>
         <p>PNG supports an alpha channel, which records the opacity of each pixel. A pixel can be fully opaque, fully transparent, or partially transparent. This is why PNG is commonly used for logos, icons, stickers, product cutouts, and design assets.</p>
+        <table class="method-table">
+          <thead><tr><th>Alpha value</th><th>Visible result</th><th>Typical use</th></tr></thead>
+          <tbody>
+            <tr><td>255 / 100%</td><td>Fully opaque</td><td>The solid subject</td></tr>
+            <tr><td>1-254</td><td>Partially transparent</td><td>Soft edges, shadows, antialiasing</td></tr>
+            <tr><td>0 / 0%</td><td>Fully transparent</td><td>Removed background area</td></tr>
+          </tbody>
+        </table>
       </section>
       <section>
         <h2>Why logos often use transparent PNG</h2>
@@ -48,6 +68,8 @@
       <section>
         <h2>What the PNGToolbox cleanup tool can and cannot do</h2>
         <p>The tool is designed for simple color-based cleanup. It works by comparing pixels to a selected background color and reducing opacity for matching areas. It is not a full AI cutout tool, so complex scenes may need manual editing after export.</p>
+        <p><a href="./how-to-make-png-background-transparent.html#tool">Try the solid-background cleanup tool</a> and inspect the measured percentage of fully transparent pixels before downloading.</p>
+        <p class="tested-note">Diagrams and alpha checks reviewed July 25, 2026. See the <a href="./png-output-testing.html">PNG output testing method</a>.</p>
       </section>
       <section>
         <h2>FAQ</h2>
