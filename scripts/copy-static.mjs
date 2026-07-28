@@ -10,6 +10,7 @@ const excluded = new Set([
   "how-to-make-png-background-transparent.html",
   "node_modules",
   "dist",
+  "zh",
   ".git",
   "src",
   "package.json",
