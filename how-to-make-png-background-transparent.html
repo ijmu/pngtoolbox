@@ -41,7 +41,7 @@
         <div>
           <p class="eyebrow">Solid-background cleanup</p>
           <h1 id="page-title">Make a PNG background transparent.</h1>
-          <p class="transparent-intro-copy">Choose a JPG, PNG, or WebP image, sample its background color, then adjust tolerance and feathering before downloading a measured transparent PNG.</p>
+          <p class="transparent-intro-copy">Remove a white or solid-color background from a JPG, PNG, or WebP image. Sample the background, adjust tolerance and feathering, then download a measured transparent PNG.</p>
         </div>
         <div class="scope-note">
           <strong>Best for white and mostly solid backgrounds</strong>
@@ -113,6 +113,15 @@
             <h2>Know when this method is not enough</h2>
             <p>Color matching cannot understand people, products, or depth. Complex backgrounds, hair, reflections, glass, and heavy shadows require a subject-aware editor. PNGToolbox states this limit because a clean result matters more than an automatic-looking one.</p>
           </section>
+          <section>
+            <h2>Transparent PNG questions</h2>
+            <h3>How do I remove a white background from an image?</h3>
+            <p>Choose the image, click a white background area to sample it, and start with edge-connected removal. Increase tolerance gradually until the outside background is transparent without erasing white details inside the subject.</p>
+            <h3>Can I upload a JPG and download a transparent PNG?</h3>
+            <p>Yes. JPG does not store transparency, but this tool can remove a solid JPG background and export the processed result as PNG with transparent pixels.</p>
+            <h3>Why did part of the subject become transparent?</h3>
+            <p>The sampled color may also exist inside the subject, or the tolerance may be too high. Switch to edge-connected mode, reduce tolerance, and compare the result with the original before downloading.</p>
+          </section>
         </div>
         <aside>
           <section>
@@ -135,6 +144,11 @@
               <li>Icons and sticker graphics</li>
               <li>Scans with a uniform backdrop</li>
             </ul>
+          </section>
+          <section>
+            <h2>Related PNG help</h2>
+            <p><a href="./png-transparent-background.html">Learn how PNG transparency and alpha pixels work</a>.</p>
+            <p><a href="./transparent-background-product-images.html">Prepare transparent product images for stores and catalogs</a>.</p>
           </section>
         </aside>
       </div>
