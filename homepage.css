@@ -1114,6 +1114,30 @@ body {
 
 .start-summary li::before { color: var(--apple-green); }
 .start-summary p { color: var(--apple-muted); font-size: 0.7rem; }
+.app-workspace .start-summary .sample-action {
+  background: transparent;
+  border: 0;
+  color: var(--apple-green);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 4px 0;
+  text-align: left;
+}
+.app-workspace .start-summary .sample-action:hover {
+  background: transparent;
+  color: var(--apple-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.app-workspace .start-summary .sample-action:disabled {
+  background: transparent;
+  color: var(--apple-muted);
+  cursor: wait;
+  text-decoration: none;
+}
 
 .app-workspace .control-section,
 .app-workspace .transparent-controls {
@@ -1150,6 +1174,19 @@ body {
 .app-workspace button:not(.secondary):not(.tool-tab):not(.segment):hover:not(:disabled) {
   background: var(--apple-green-dark);
   border-color: var(--apple-green-dark);
+}
+.app-workspace #sampleWebpBtn,
+.app-workspace #sampleBackgroundBtn {
+  background: transparent;
+  border: 0;
+  color: var(--apple-green);
+  min-height: 0;
+}
+.app-workspace #sampleWebpBtn:hover:not(:disabled),
+.app-workspace #sampleBackgroundBtn:hover:not(:disabled) {
+  background: transparent;
+  border-color: transparent;
+  color: var(--apple-green);
 }
 
 .app-workspace button:active:not(:disabled) { transform: translateY(1px); }
@@ -1306,6 +1343,19 @@ body {
 }
 
 .evidence-number { color: var(--apple-green); }
+.review-line {
+  align-items: center;
+  border-top: 1px solid var(--apple-line);
+  color: var(--apple-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.76rem;
+  gap: 10px 18px;
+  margin-top: 34px;
+  padding-top: 20px;
+}
+.review-line strong { color: var(--apple-ink); font-weight: 600; }
+.review-line a { color: var(--apple-green); font-weight: 600; text-underline-offset: 3px; }
 
 .decision-section {
   display: grid;
@@ -1417,6 +1467,7 @@ body {
   .content-grid { grid-template-columns: 1fr; }
   .evidence-grid article,
   .evidence-grid article:first-child { border-left: 0; border-top: 1px solid var(--apple-line); padding: 20px 0; }
+  .review-line { align-items: flex-start; flex-direction: column; }
   .section-head h2 { font-size: 2.05rem; }
   .decision-row { gap: 5px; grid-template-columns: 1fr; padding: 16px; }
   .decision-head { display: none; }

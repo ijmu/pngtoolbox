@@ -49,6 +49,8 @@ const downloadTransparentBtn = get<HTMLButtonElement>("#downloadTransparentBtn")
 const resetTransparentBtn = get<HTMLButtonElement>("#resetTransparentBtn");
 const transparentStatus = get<HTMLElement>("#transparentStatus");
 const previewEmpty = get<HTMLElement>("#previewEmpty");
+const sampleWebpBtn = get<HTMLButtonElement>("#sampleWebpBtn");
+const sampleBackgroundBtn = get<HTMLButtonElement>("#sampleBackgroundBtn");
 
 const previewContext = previewCanvas.getContext("2d", { willReadFrequently: true })!;
 const originalContext = originalCanvas.getContext("2d")!;
@@ -81,6 +83,39 @@ function fileToImage(file: File): Promise<HTMLImageElement> {
 
 function canvasBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("The browser could not export PNG.")), "image/png"));
+}
+
+function sampleCanvas(): HTMLCanvasElement {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1200;
+  canvas.height = 800;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Canvas is unavailable in this browser.");
+  context.fillStyle = "#f4f0e8";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "#0a7c5d";
+  context.beginPath();
+  context.roundRect(210, 145, 780, 510, 80);
+  context.fill();
+  context.fillStyle = "#ffffff";
+  context.font = "700 96px Arial, sans-serif";
+  context.fillText("PNG", 470, 420);
+  context.font = "500 42px Arial, sans-serif";
+  context.fillText("solid background sample", 345, 510);
+  return canvas;
+}
+
+function encodedSample(type: "image/webp" | "image/jpeg", filename: string): Promise<File> {
+  const canvas = sampleCanvas();
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error(type === "image/webp" ? "This browser could not create a WebP sample." : "This browser could not create the sample."));
+        return;
+      }
+      resolve(new File([blob], filename, { type }));
+    }, type, 0.92);
+  });
 }
 
 function downloadBlob(blob: Blob, filename: string): void {
@@ -235,6 +270,19 @@ convertBtn.addEventListener("click", async () => {
 
 cancelConvertBtn.addEventListener("click", () => { conversionToken += 1; setConverting(false); webpStatus.textContent = "Conversion cancelled."; });
 clearWebpBtn.addEventListener("click", () => { webpFiles = []; webpRatio = null; resizeBasis = null; webpWidthInput.value = ""; webpHeightInput.value = ""; renderQueue(); });
+sampleWebpBtn.addEventListener("click", async () => {
+  sampleWebpBtn.disabled = true;
+  webpStatus.textContent = "Creating a local WebP sample...";
+  try {
+    webpFiles = [await encodedSample("image/webp", "pngtoolbox-sample.webp")];
+    await firstRatio();
+    renderQueue();
+  } catch (error) {
+    webpStatus.textContent = error instanceof Error ? error.message : "The sample could not be created.";
+  } finally {
+    sampleWebpBtn.disabled = false;
+  }
+});
 webpWidthInput.addEventListener("input", () => updateResize("width"));
 webpHeightInput.addEventListener("input", () => updateResize("height"));
 
@@ -378,6 +426,18 @@ resetTransparentBtn.addEventListener("click", () => {
 
 converterTab.addEventListener("click", () => selectTool("converter"));
 backgroundTab.addEventListener("click", () => selectTool("background"));
+sampleBackgroundBtn.addEventListener("click", async () => {
+  sampleBackgroundBtn.disabled = true;
+  transparentStatus.textContent = "Creating a local background sample...";
+  try {
+    selectTool("background");
+    await loadBackgroundFile(await encodedSample("image/jpeg", "solid-background-sample.jpg"));
+  } catch (error) {
+    transparentStatus.textContent = error instanceof Error ? error.message : "The sample could not be created.";
+  } finally {
+    sampleBackgroundBtn.disabled = false;
+  }
+});
 document.querySelectorAll<HTMLAnchorElement>("[data-tool-target]").forEach((link) => {
   link.addEventListener("click", () => {
     const target = link.dataset.toolTarget;
