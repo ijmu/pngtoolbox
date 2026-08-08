@@ -378,6 +378,12 @@ resetTransparentBtn.addEventListener("click", () => {
 
 converterTab.addEventListener("click", () => selectTool("converter"));
 backgroundTab.addEventListener("click", () => selectTool("background"));
+document.querySelectorAll<HTMLAnchorElement>("[data-tool-target]").forEach((link) => {
+  link.addEventListener("click", () => {
+    const target = link.dataset.toolTarget;
+    if (target === "converter" || target === "background") selectTool(target);
+  });
+});
 bindDropzone(webpDropzone, webpInput, addWebpFiles);
 bindDropzone(pngDropzone, pngInput, (files) => { void loadBackgroundFile(files[0]).catch((error) => { transparentStatus.textContent = error.message; }); });
 [bgColorInput, toleranceInput, featherInput].forEach((control) => control.addEventListener("input", () => { toleranceOutput.textContent = toleranceInput.value; featherOutput.textContent = featherInput.value; processBackground(); }));

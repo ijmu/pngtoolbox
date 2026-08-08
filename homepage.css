@@ -1460,3 +1460,180 @@ body {
   .intro-copy > p:last-child { margin-top: 18px; }
   .hero-cta { margin-top: 20px; }
 }
+
+/* First-party visual evidence and source-specific workflows add utility, not filler. */
+.transparency-lab,
+.source-guide {
+  margin-top: 76px;
+}
+
+.transparency-lab {
+  background: #1d1d1f;
+  border-radius: var(--apple-radius);
+  color: #f5f5f7;
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 56px);
+}
+
+.transparency-lab-head h2 {
+  color: #f5f5f7;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.transparency-lab-head > p:last-child { color: #b9b9bf; }
+
+.lab-figures {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 36px;
+}
+
+.lab-figures figure {
+  background: #fff;
+  border-radius: var(--apple-control-radius);
+  margin: 0;
+  overflow: hidden;
+}
+
+.lab-figures img {
+  aspect-ratio: 16 / 9;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  width: 100%;
+}
+
+.lab-figures figcaption { border-top: 1px solid #d2d2d7; padding: 18px 20px 20px; }
+.lab-figures strong { color: #1d1d1f; display: block; font-size: 0.92rem; }
+.lab-figures span { color: #6e6e73; display: block; font-size: 0.76rem; line-height: 1.55; margin-top: 6px; }
+.lab-link { color: #5ac8a2; display: inline-block; font-size: 0.8rem; font-weight: 650; margin-top: 22px; text-underline-offset: 4px; }
+.lab-link:focus-visible { outline: 3px solid #5ac8a2; outline-offset: 5px; }
+
+.source-guide {
+  display: grid;
+  gap: 44px;
+  grid-template-columns: minmax(260px, 0.62fr) minmax(0, 1fr);
+}
+
+.source-rows { border-top: 1px solid var(--apple-line); }
+.source-rows > a {
+  align-items: center;
+  border-bottom: 1px solid var(--apple-line);
+  color: inherit;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 76px minmax(0, 1fr) auto;
+  min-height: 124px;
+  padding: 20px 0;
+  text-decoration: none;
+}
+.source-rows > a:hover strong { color: var(--apple-green); }
+.source-rows > a:focus-visible { outline: 3px solid var(--apple-green); outline-offset: 5px; }
+.source-rows strong { color: var(--apple-ink); display: block; font-size: 0.94rem; transition: color 160ms ease; }
+.source-rows small { color: var(--apple-muted); display: block; font-size: 0.76rem; line-height: 1.55; margin-top: 6px; }
+.source-rows em { color: var(--apple-green); font-size: 0.72rem; font-style: normal; font-weight: 650; white-space: nowrap; }
+
+.source-mark { align-items: center; background: #ececf0; border-radius: 10px; color: #515154; display: flex; font-size: 0.67rem; font-weight: 750; height: 68px; justify-content: center; overflow: hidden; width: 68px; }
+.source-mark-webp { background: #e4f4ee; color: var(--apple-green-dark); }
+.source-mark-product i { background: #fff; border-radius: 50% 50% 42% 42%; box-shadow: 0 14px 0 -10px #8e8e93; height: 30px; width: 38px; }
+.source-mark-photo i { background: linear-gradient(145deg, #82c9b2 0 46%, #d7e7ff 47% 100%); height: 38px; transform: rotate(-4deg); width: 48px; }
+.source-mark-motion { gap: 3px; }
+.source-mark-motion i { background: #0a7c5d; height: 28px; opacity: 0.25; width: 8px; }
+.source-mark-motion i:nth-child(2) { height: 42px; opacity: 0.55; }
+.source-mark-motion i:nth-child(3) { height: 34px; opacity: 0.9; }
+
+@media (max-width: 900px) {
+  .source-guide { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .transparency-lab,
+  .source-guide { margin-top: 56px; }
+  .lab-figures { grid-template-columns: 1fr; }
+  .source-rows > a { align-items: start; gap: 14px; grid-template-columns: 58px minmax(0, 1fr); min-height: 0; }
+  .source-rows em { grid-column: 2; }
+  .source-mark { height: 52px; width: 52px; }
+}
+
+/* Final mobile containment: keep every interactive surface inside the viewport. */
+@media (max-width: 640px) {
+  html,
+  body { max-width: 100%; overflow-x: clip; }
+
+  .topbar {
+    align-items: center;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 0;
+    padding: 9px 12px 8px;
+  }
+
+  .topbar nav {
+    display: grid;
+    flex: 0 0 100%;
+    gap: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+    padding: 2px 0 0;
+    width: 100%;
+  }
+
+  .topbar nav a {
+    font-size: 0.7rem;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 2px;
+    white-space: nowrap;
+  }
+
+  main,
+  .workspace-page,
+  .product-intro,
+  .product-intro .intro-copy,
+  .app-workspace,
+  .app-workspace .tool-grid,
+  .app-workspace .editor-grid,
+  .app-workspace .app-sidebar,
+  .app-workspace .app-canvas {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  main,
+  .workspace-page { padding-inline: 12px; }
+  .product-intro { padding-inline: 0; }
+
+  .product-intro h1 {
+    font-size: clamp(2rem, 9vw, 2.55rem);
+    letter-spacing: -0.025em;
+    overflow-wrap: anywhere;
+  }
+
+  .intro-copy > p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .app-workspace .tool-grid,
+  .app-workspace .editor-grid {
+    grid-template-columns: minmax(0, 1fr);
+    margin-inline: 0;
+  }
+
+  .app-workspace .tool-tabs {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .app-workspace .tool-tab {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .source-rows > a,
+  .lab-figures figure { min-width: 0; }
+}

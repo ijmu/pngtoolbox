@@ -144,6 +144,24 @@
         </div>
       </section>
 
+      <section class="transparency-lab" aria-labelledby="transparency-lab-title">
+        <div class="section-head transparency-lab-head">
+          <h2 id="transparency-lab-title">White pixels and transparent pixels are not the same</h2>
+          <p>A checkerboard is only a preview convention. The exported PNG must contain an alpha channel for another background to show through.</p>
+        </div>
+        <div class="lab-figures">
+          <figure>
+            <img src="./assets/transparent-vs-white.svg" width="640" height="360" alt="Comparison of a white-background image and an image with real transparent pixels">
+            <figcaption><strong>White background vs real transparency</strong><span>A white fill remains visible. Transparent pixels reveal whatever sits behind the PNG.</span></figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/alpha-opacity-scale.svg" width="640" height="360" alt="Alpha opacity scale from fully opaque to fully transparent pixels">
+            <figcaption><strong>Alpha controls edge opacity</strong><span>Feathering creates partially transparent edge pixels; too much can soften small details.</span></figcaption>
+          </figure>
+        </div>
+        <a class="lab-link" href="./png-transparent-background.html">Read the illustrated transparency guide</a>
+      </section>
+
       <section class="evidence-section" aria-labelledby="evidence-title">
         <div class="section-head">
           <p class="eyebrow">A result you can inspect</p>
@@ -180,6 +198,35 @@
           <div class="decision-row" role="row"><strong role="cell">Connected to edges</strong><span role="cell">The subject is surrounded by one background color</span><span role="cell">Safer for white details enclosed inside the subject</span></div>
           <div class="decision-row" role="row"><strong role="cell">Everywhere</strong><span role="cell">The same unwanted color appears in separate areas</span><span role="cell">Can remove matching colors that belong to the subject</span></div>
           <div class="decision-row" role="row"><strong role="cell">Feathering</strong><span role="cell">Edges look jagged or retain a light halo</span><span role="cell">Too much can make fine details translucent</span></div>
+        </div>
+      </section>
+
+      <section class="source-guide" aria-labelledby="source-guide-title">
+        <div class="section-head">
+          <h2 id="source-guide-title">Choose the workflow from the source image</h2>
+          <p>The right operation depends on what you start with, not simply on wanting a PNG at the end.</p>
+        </div>
+        <div class="source-rows">
+          <a href="#tool" data-tool-target="converter">
+            <span class="source-mark source-mark-webp" aria-hidden="true">WebP</span>
+            <span><strong>A WebP file that already looks correct</strong><small>Convert it to PNG. Keep the dimensions unless the receiving app requires another size.</small></span>
+            <em>Use converter</em>
+          </a>
+          <a href="#tool" data-tool-target="background">
+            <span class="source-mark source-mark-product" aria-hidden="true"><i></i></span>
+            <span><strong>A product photo on white or one flat color</strong><small>Sample the actual background, start with edge-connected removal, then inspect the outline.</small></span>
+            <em>Remove background</em>
+          </a>
+          <a href="./png-file-size.html">
+            <span class="source-mark source-mark-photo" aria-hidden="true"><i></i></span>
+            <span><strong>A full photo with no transparency need</strong><small>PNG may be unnecessarily large. Compare JPG or WebP before choosing a lossless export.</small></span>
+            <em>Compare formats</em>
+          </a>
+          <a href="./webp-to-png-troubleshooting.html">
+            <span class="source-mark source-mark-motion" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span><strong>An animated WebP</strong><small>This tool is designed for still images. Browser decoding may expose only one frame.</small></span>
+            <em>Check limitations</em>
+          </a>
         </div>
       </section>
 
