@@ -26,6 +26,16 @@
       "source": "/zh/:path*",
       "destination": "/:path*",
       "permanent": true
+    },
+    {
+      "source": "/webp-to-png-troubleshooting.html",
+      "destination": "/webp-to-png.html#troubleshooting",
+      "permanent": true
+    },
+    {
+      "source": "/transparent-background-product-images.html",
+      "destination": "/png-for-ecommerce.html",
+      "permanent": true
     }
   ]
 }
