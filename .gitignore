@@ -17,3 +17,6 @@ dist/
 .vercel/
 .DS_Store
 Thumbs.db
+
+.npmcache/
+node_modules/
