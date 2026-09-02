@@ -55,6 +55,22 @@
               <div class="field-row"><label>Width <input id="webpPageWidth" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label><label>Height <input id="webpPageHeight" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label></div>
               <label class="check-row"><input id="webpPageLock" type="checkbox" checked /> Keep each image ratio</label>
             </fieldset>
+            <fieldset id="webpFormatControls" class="webp-size-controls">
+              <legend>Output format</legend>
+              <div class="field-row">
+                <label>Convert to
+                  <select id="webpPageFormat">
+                    <option value="png" selected>PNG — lossless, keeps transparency</option>
+                    <option value="jpg">JPG — smallest files for photos</option>
+                  </select>
+                </label>
+              </div>
+              <div class="range-line" id="webpQualityRow" hidden>
+                <label for="webpPageQuality">JPG quality</label>
+                <input id="webpPageQuality" type="range" min="40" max="95" value="85" />
+                <output id="webpQualityValue">85%</output>
+              </div>
+            </fieldset>
             <button id="webpPageConvert" class="primary-button" type="button" disabled>Convert selected files</button>
             <button id="webpPageClear" class="secondary-button" type="button" disabled>Clear</button>
             <progress id="webpPageProgress" max="100" value="0" hidden>0%</progress>
@@ -62,7 +78,7 @@
           </aside>
           <div class="webp-results" aria-live="polite">
             <div class="webp-results-head"><div><strong>Conversion report</strong><span>Measured in your browser</span></div><span id="webpPageCount">0 files</span></div>
-            <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your measured results appear here</h3><p>Each row reports source dimensions, PNG dimensions, source size, output size, and a direct download.</p></div>
+            <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your measured results appear here</h3><p>Each row reports source dimensions, output dimensions, source size, output size, and a direct download.</p></div>
             <div id="webpPageResults" class="webp-result-list"></div>
             <button id="webpPageZip" class="primary-button webp-zip" type="button" hidden>Download all PNGs as ZIP</button>
           </div>
@@ -72,7 +88,7 @@
         <div class="section-head"><p class="eyebrow">What is measured</p><h2 id="method-title">A result you can check, not a promised conversion</h2></div>
         <div class="evidence-grid">
           <article><span class="evidence-number">01</span><h3>Decoded input</h3><p>The browser reads the actual WebP dimensions and file bytes. A filename alone is not treated as evidence.</p></article>
-          <article><span class="evidence-number">02</span><h3>Rendered PNG</h3><p>The image is drawn to a canvas at the requested dimensions and encoded as PNG. No JPG compression is added.</p></article>
+          <article><span class="evidence-number">02</span><h3>Rendered output</h3><p>The image is drawn to a canvas at the requested dimensions and encoded as PNG by default — or as JPG at your chosen quality when you select that format.</p></article>
           <article><span class="evidence-number">03</span><h3>Measured output</h3><p>The report uses the generated PNG blob, so the displayed size is the size of the file available for download.</p></article>
         </div>
       </section>
@@ -99,6 +115,7 @@
         <details><summary>Are my images uploaded?</summary><p>Normal conversion happens locally in this browser. The tool reads selected files with browser APIs and does not need to send them to a conversion server.</p></details>
         <details><summary>Does conversion improve quality?</summary><p>No. PNG avoids adding another lossy compression stage, but it cannot reconstruct detail that is missing from the source WebP.</p></details>
         <details><summary>Can I resize a batch?</summary><p>Yes. One width or height can be applied to the whole batch. With ratio lock enabled, each file keeps its own aspect ratio during conversion.</p></details>
+        <details><summary>Can I output JPG instead?</summary><p>Yes. Choose JPG in the output format panel and set a quality level. Transparent pixels are filled with white because JPG has no alpha channel.</p></details>
       </section>
     </main>
     <footer class="site-footer">

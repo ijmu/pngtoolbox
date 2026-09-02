@@ -23,9 +23,14 @@ const status = get<HTMLElement>("#webpPageStatus");
 const count = get<HTMLElement>("#webpPageCount");
 const empty = get<HTMLElement>("#webpPageEmpty");
 const results = get<HTMLElement>("#webpPageResults");
+// Optional format controls: pages without them keep the original PNG-only behaviour.
+const formatSelect = document.querySelector<HTMLSelectElement>("#webpPageFormat");
+const qualityRow = document.querySelector<HTMLElement>("#webpQualityRow");
+const qualityInput = document.querySelector<HTMLInputElement>("#webpPageQuality");
+const qualityOutput = document.querySelector<HTMLElement>("#webpQualityValue");
 
 type Source = { file: File; width: number; height: number };
-type Output = Source & { blob: Blob; outputWidth: number; outputHeight: number; filename: string };
+type Output = Source & { blob: Blob; outputWidth: number; outputHeight: number; filename: string; format: "png" | "jpg" };
 let sources: Source[] = [];
 let outputs: Output[] = [];
 let objectUrls: string[] = [];
@@ -46,9 +51,29 @@ function fileToImage(file: File): Promise<HTMLImageElement> {
   });
 }
 
-function toPng(canvas: HTMLCanvasElement): Promise<Blob> {
-  return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("The browser could not encode PNG.")), "image/png"));
+function encode(canvas: HTMLCanvasElement, mime: string, quality?: number): Promise<Blob> {
+  const label = mime === "image/jpeg" ? "JPG" : "PNG";
+  return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error(`The browser could not encode ${label}.`)), mime, quality));
 }
+
+function flattenToWhite(canvas: HTMLCanvasElement): HTMLCanvasElement {
+  const flat = document.createElement("canvas");
+  flat.width = canvas.width;
+  flat.height = canvas.height;
+  const context = flat.getContext("2d");
+  if (context) {
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, flat.width, flat.height);
+    context.drawImage(canvas, 0, 0);
+  }
+  return flat;
+}
+
+function currentFormat(): "png" | "jpg" {
+  return formatSelect && formatSelect.value === "jpg" ? "jpg" : "png";
+}
+
+function formatLabel(format: "png" | "jpg"): string { return format === "jpg" ? "JPG" : "PNG"; }
 
 function baseName(name: string): string { return name.replace(/\.[^.]+$/, "") || "converted"; }
 
@@ -90,9 +115,12 @@ async function convert(source: Source): Promise<Output> {
   outputCanvas.height = dimensions.height;
   if (dimensions.width === source.width && dimensions.height === source.height) outputCanvas.getContext("2d")?.drawImage(sourceCanvas, 0, 0);
   else await pica.resize(sourceCanvas, outputCanvas, { quality: 3, alpha: true });
-  const blob = await toPng(outputCanvas);
+  const format = currentFormat();
+  const paint = format === "jpg" ? flattenToWhite(outputCanvas) : outputCanvas;
+  const quality = format === "jpg" ? Math.min(0.95, Math.max(0.4, Number(qualityInput?.value || 85) / 100)) : undefined;
+  const blob = await encode(paint, format === "jpg" ? "image/jpeg" : "image/png", quality);
   const suffix = dimensions.width === source.width && dimensions.height === source.height ? "" : `-${dimensions.width}x${dimensions.height}`;
-  return { ...source, blob, outputWidth: dimensions.width, outputHeight: dimensions.height, filename: `${baseName(source.file.name)}${suffix}.png` };
+  return { ...source, blob, outputWidth: dimensions.width, outputHeight: dimensions.height, format, filename: `${baseName(source.file.name)}${suffix}.${format}` };
 }
 
 function resetOutputs(): void {
@@ -159,11 +187,11 @@ function renderOutput(output: Output): void {
   const outputMeta = document.createElement("p");
   title.textContent = output.filename;
   sourceMeta.textContent = `Input: ${output.width} × ${output.height} · ${formatBytes(output.file.size)}`;
-  outputMeta.textContent = `PNG: ${output.outputWidth} × ${output.outputHeight} · ${formatBytes(output.blob.size)}`;
+  outputMeta.textContent = `${formatLabel(output.format)}: ${output.outputWidth} × ${output.outputHeight} · ${formatBytes(output.blob.size)}`;
   const action = document.createElement("button");
   action.type = "button";
   action.className = "secondary-button";
-  action.textContent = "Download PNG";
+  action.textContent = `Download ${formatLabel(output.format)}`;
   action.addEventListener("click", () => download(output.blob, output.filename));
   detail.append(title, sourceMeta, outputMeta, action); row.append(image, detail); results.append(row);
 }
@@ -186,7 +214,9 @@ convertButton.addEventListener("click", async () => {
       outputs.push(output); renderOutput(output); progress.value = ((index + 1) / sources.length) * 100;
     }
     zipButton.hidden = outputs.length < 2;
-    status.textContent = `${outputs.length} PNG file${outputs.length === 1 ? " is" : "s are"} ready to download.`;
+    zipButton.textContent = `Download all ${formatLabel(outputs[0]?.format ?? "png")}s as ZIP`;
+    const doneLabel = formatLabel(outputs[0]?.format ?? "png");
+    status.textContent = `${outputs.length} ${doneLabel} file${outputs.length === 1 ? " is" : "s are"} ready to download.`;
   } catch (error) {
     status.textContent = error instanceof Error ? error.message : "Conversion failed.";
   } finally {
@@ -197,9 +227,9 @@ convertButton.addEventListener("click", async () => {
 zipButton.addEventListener("click", async () => {
   const zip = new JSZip();
   outputs.forEach((output) => zip.file(output.filename, output.blob));
-  status.textContent = "Packaging the measured PNG outputs...";
+  status.textContent = "Packaging the measured output files...";
   const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
-  download(blob, `pngtoolbox-${outputs.length}-png-files.zip`);
+  download(blob, `pngtoolbox-${outputs.length}-${(outputs[0]?.format ?? "png")}-files.zip`);
   status.textContent = "ZIP downloaded.";
 });
 
@@ -215,6 +245,14 @@ sampleButton.addEventListener("click", async () => {
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.88));
   if (!blob) { status.textContent = "This browser could not create the WebP sample."; return; }
   await addFiles([new File([blob], "pngtoolbox-sample.webp", { type: "image/webp" })]);
+});
+
+formatSelect?.addEventListener("change", () => {
+  if (qualityRow) qualityRow.hidden = formatSelect?.value !== "jpg";
+  if (outputs.length > 1) zipButton.textContent = `Download all ${formatLabel(currentFormat())}s as ZIP`;
+});
+qualityInput?.addEventListener("input", () => {
+  if (qualityOutput && qualityInput) qualityOutput.textContent = `${qualityInput.value}%`;
 });
 
 renderSources();
