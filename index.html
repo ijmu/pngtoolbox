@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f6f5f2" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f5f2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14130f" />
     <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>WebP to PNG &amp; JPG Converter — Free &amp; Private | PNGToolbox</title>
     <meta
       name="description"
@@ -315,6 +317,8 @@
         <div class="footer-col">
           <strong>Resources</strong>
           <a href="./what-is-png.html">PNG format basics</a>
+          <a href="./convert-webp-iphone.html">WebP on iPhone</a>
+          <a href="./convert-webp-android.html">WebP on Android</a>
           <a href="./webp-vs-png.html">WebP vs PNG</a>
           <a href="./png-file-size.html">Why PNG files get large</a>
           <a href="./png-output-testing.html">Output testing method</a>
@@ -334,5 +338,8 @@
     </footer>
 
     <script type="module" src="./src/webp-tool.ts"></script>
+    <script>
+      if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {})); }
+    </script>
   </body>
 </html>

@@ -1,0 +1,12 @@
+{
+  "name": "PNGToolbox — WebP to PNG & JPG Converter",
+  "short_name": "PNGToolbox",
+  "description": "Free browser-based WebP to PNG and JPG converter with batch ZIP export. Files never leave your device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f5f2",
+  "theme_color": "#f6f5f2",
+  "icons": [
+    { "src": "/site-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
