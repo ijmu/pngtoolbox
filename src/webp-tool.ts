@@ -1,258 +1,300 @@
-import JSZip from "jszip";
-import picaFactory from "pica";
+import type { Job, OutFormat, Result } from "./convert-core";
+import { convertJob, decodeJobs, downloadBlob, formatBytes, zipResults } from "./convert-core";
 
-const pica = picaFactory({ features: ["js", "wasm", "ww"] });
-const get = <T extends Element>(selector: string): T => {
-  const element = document.querySelector<T>(selector);
-  if (!element) throw new Error(`Missing interface element: ${selector}`);
-  return element;
+type Ui = {
+  input: HTMLInputElement;
+  dropzone: HTMLElement;
+  widthInput: HTMLInputElement;
+  heightInput: HTMLInputElement;
+  lockInput: HTMLInputElement;
+  sizeControls: HTMLFieldSetElement;
+  convertButton: HTMLButtonElement;
+  clearButton: HTMLButtonElement;
+  sampleButton: HTMLButtonElement;
+  zipButton: HTMLButtonElement;
+  progress: HTMLProgressElement;
+  status: HTMLElement;
+  count: HTMLElement;
+  empty: HTMLElement;
+  results: HTMLElement;
+  formatSelect: HTMLSelectElement;
+  qualityRow: HTMLElement | null;
+  qualityInput: HTMLInputElement | null;
+  qualityOutput: HTMLElement | null;
+  note: HTMLElement | null;
 };
 
-const input = get<HTMLInputElement>("#webpPageInput");
-const dropzone = get<HTMLElement>("#webpPageDropzone");
-const widthInput = get<HTMLInputElement>("#webpPageWidth");
-const heightInput = get<HTMLInputElement>("#webpPageHeight");
-const lockInput = get<HTMLInputElement>("#webpPageLock");
-const sizeControls = get<HTMLFieldSetElement>("#webpSizeControls");
-const convertButton = get<HTMLButtonElement>("#webpPageConvert");
-const clearButton = get<HTMLButtonElement>("#webpPageClear");
-const sampleButton = get<HTMLButtonElement>("#webpSampleBtn");
-const zipButton = get<HTMLButtonElement>("#webpPageZip");
-const progress = get<HTMLProgressElement>("#webpPageProgress");
-const status = get<HTMLElement>("#webpPageStatus");
-const count = get<HTMLElement>("#webpPageCount");
-const empty = get<HTMLElement>("#webpPageEmpty");
-const results = get<HTMLElement>("#webpPageResults");
-// Optional format controls: pages without them keep the original PNG-only behaviour.
-const formatSelect = document.querySelector<HTMLSelectElement>("#webpPageFormat");
-const qualityRow = document.querySelector<HTMLElement>("#webpQualityRow");
-const qualityInput = document.querySelector<HTMLInputElement>("#webpPageQuality");
-const qualityOutput = document.querySelector<HTMLElement>("#webpQualityValue");
-
-type Source = { file: File; width: number; height: number };
-type Output = Source & { blob: Blob; outputWidth: number; outputHeight: number; filename: string; format: "png" | "jpg" };
-let sources: Source[] = [];
-let outputs: Output[] = [];
-let objectUrls: string[] = [];
-
-function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
-}
-
-function fileToImage(file: File): Promise<HTMLImageElement> {
-  const url = URL.createObjectURL(file);
-  const image = new Image();
-  return new Promise((resolve, reject) => {
-    image.onload = () => { URL.revokeObjectURL(url); resolve(image); };
-    image.onerror = () => { URL.revokeObjectURL(url); reject(new Error(`Could not decode ${file.name}.`)); };
-    image.src = url;
-  });
-}
-
-function encode(canvas: HTMLCanvasElement, mime: string, quality?: number): Promise<Blob> {
-  const label = mime === "image/jpeg" ? "JPG" : "PNG";
-  return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error(`The browser could not encode ${label}.`)), mime, quality));
-}
-
-function flattenToWhite(canvas: HTMLCanvasElement): HTMLCanvasElement {
-  const flat = document.createElement("canvas");
-  flat.width = canvas.width;
-  flat.height = canvas.height;
-  const context = flat.getContext("2d");
-  if (context) {
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, flat.width, flat.height);
-    context.drawImage(canvas, 0, 0);
-  }
-  return flat;
-}
-
-function currentFormat(): "png" | "jpg" {
-  return formatSelect && formatSelect.value === "jpg" ? "jpg" : "png";
-}
-
-function formatLabel(format: "png" | "jpg"): string { return format === "jpg" ? "JPG" : "PNG"; }
-
-function baseName(name: string): string { return name.replace(/\.[^.]+$/, "") || "converted"; }
-
-function download(blob: Blob, filename: string): void {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  window.setTimeout(() => URL.revokeObjectURL(url), 1500);
-}
-
-function outputSize(source: Source): { width: number; height: number } {
-  const requestedWidth = Number(widthInput.value);
-  const requestedHeight = Number(heightInput.value);
-  const ratio = source.width / source.height;
-  if (lockInput.checked) {
-    if (requestedWidth > 0) return { width: requestedWidth, height: Math.max(1, Math.round(requestedWidth / ratio)) };
-    if (requestedHeight > 0) return { width: Math.max(1, Math.round(requestedHeight * ratio)), height: requestedHeight };
-  }
-  return {
-    width: requestedWidth > 0 ? requestedWidth : source.width,
-    height: requestedHeight > 0 ? requestedHeight : source.height,
+/**
+ * Wire one converter workspace. The same behaviour backs the full WebP page and
+ * the compact homepage panel, so the two never drift apart.
+ */
+export function createConverter(options: { root?: ParentNode; accept: (file: File) => boolean; maxEdge: number }): void {
+  const root = options.root ?? document;
+  const q = <T extends Element>(selector: string): T => {
+    const element = root.querySelector<T>(selector);
+    if (!element) throw new Error(`Missing interface element: ${selector}`);
+    return element;
   };
-}
+  const ui: Ui = {
+    input: q<HTMLInputElement>("#webpPageInput"),
+    dropzone: q<HTMLElement>("#webpPageDropzone"),
+    widthInput: q<HTMLInputElement>("#webpPageWidth"),
+    heightInput: q<HTMLInputElement>("#webpPageHeight"),
+    lockInput: q<HTMLInputElement>("#webpPageLock"),
+    sizeControls: q<HTMLFieldSetElement>("#webpSizeControls"),
+    convertButton: q<HTMLButtonElement>("#webpPageConvert"),
+    clearButton: q<HTMLButtonElement>("#webpPageClear"),
+    sampleButton: q<HTMLButtonElement>("#webpSampleBtn"),
+    zipButton: q<HTMLButtonElement>("#webpPageZip"),
+    progress: q<HTMLProgressElement>("#webpPageProgress"),
+    status: q<HTMLElement>("#webpPageStatus"),
+    count: q<HTMLElement>("#webpPageCount"),
+    empty: q<HTMLElement>("#webpPageEmpty"),
+    results: q<HTMLElement>("#webpPageResults"),
+    formatSelect: q<HTMLSelectElement>("#webpPageFormat"),
+    qualityRow: root.querySelector<HTMLElement>("#webpQualityRow"),
+    qualityInput: root.querySelector<HTMLInputElement>("#webpPageQuality"),
+    qualityOutput: root.querySelector<HTMLElement>("#webpQualityValue"),
+    note: root.querySelector<HTMLElement>("#webpFormatNote"),
+  };
 
-async function convert(source: Source): Promise<Output> {
-  const image = await fileToImage(source.file);
-  const sourceCanvas = document.createElement("canvas");
-  sourceCanvas.width = source.width;
-  sourceCanvas.height = source.height;
-  sourceCanvas.getContext("2d")?.drawImage(image, 0, 0);
-  const dimensions = outputSize(source);
-  if (dimensions.width > 12000 || dimensions.height > 12000) throw new Error("Output dimensions must be 12,000 px or less.");
-  const outputCanvas = document.createElement("canvas");
-  outputCanvas.width = dimensions.width;
-  outputCanvas.height = dimensions.height;
-  if (dimensions.width === source.width && dimensions.height === source.height) outputCanvas.getContext("2d")?.drawImage(sourceCanvas, 0, 0);
-  else await pica.resize(sourceCanvas, outputCanvas, { quality: 3, alpha: true });
-  const format = currentFormat();
-  const paint = format === "jpg" ? flattenToWhite(outputCanvas) : outputCanvas;
-  const quality = format === "jpg" ? Math.min(0.95, Math.max(0.4, Number(qualityInput?.value || 85) / 100)) : undefined;
-  const blob = await encode(paint, format === "jpg" ? "image/jpeg" : "image/png", quality);
-  const suffix = dimensions.width === source.width && dimensions.height === source.height ? "" : `-${dimensions.width}x${dimensions.height}`;
-  return { ...source, blob, outputWidth: dimensions.width, outputHeight: dimensions.height, format, filename: `${baseName(source.file.name)}${suffix}.${format}` };
-}
+  let jobs: Job[] = [];
+  let outputs: Result[] = [];
+  const objectUrls: string[] = [];
+  let busy = false;
 
-function resetOutputs(): void {
-  objectUrls.forEach((url) => URL.revokeObjectURL(url));
-  objectUrls = [];
-  outputs = [];
-  results.replaceChildren();
-  zipButton.hidden = true;
-  empty.hidden = sources.length > 0;
-}
+  const currentFormat = (): OutFormat => {
+    const value = ui.formatSelect.value;
+    return value === "jpg" || value === "webp" ? value : "png";
+  };
 
-function renderSources(): void {
-  resetOutputs();
-  count.textContent = `${sources.length} file${sources.length === 1 ? "" : "s"}`;
-  const enabled = sources.length > 0;
-  sizeControls.disabled = !enabled;
-  convertButton.disabled = !enabled;
-  clearButton.disabled = !enabled;
-  status.textContent = enabled ? `${sources.length} valid WebP file${sources.length === 1 ? " is" : "s are"} ready.` : "Choose WebP files to start.";
-  if (!enabled) return;
-  sources.forEach((source, index) => {
-    const row = document.createElement("div");
-    row.className = "webp-source-row";
-    const text = document.createElement("div");
-    const title = document.createElement("strong");
-    const meta = document.createElement("span");
-    title.textContent = source.file.name;
-    meta.textContent = `${source.width} × ${source.height} · ${formatBytes(source.file.size)}`;
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "file-remove";
-    remove.textContent = "×";
-    remove.setAttribute("aria-label", `Remove ${source.file.name}`);
-    remove.addEventListener("click", () => { sources.splice(index, 1); renderSources(); });
-    text.append(title, meta); row.append(text, remove); results.append(row);
-  });
-}
-
-async function addFiles(files: File[]): Promise<void> {
-  const candidates = files.filter((file) => (file.type === "image/webp" || file.name.toLowerCase().endsWith(".webp")) && file.size <= 20 * 1024 * 1024);
-  const decoded: Source[] = [];
-  for (const file of candidates) {
-    try {
-      const image = await fileToImage(file);
-      decoded.push({ file, width: image.naturalWidth, height: image.naturalHeight });
-    } catch { /* A single damaged file does not block the rest of the batch. */ }
+  function releaseUrls(): void {
+    while (objectUrls.length) URL.revokeObjectURL(objectUrls.pop() as string);
   }
-  sources = [...sources, ...decoded];
-  renderSources();
-  if (decoded.length !== files.length) status.textContent = `${decoded.length} file${decoded.length === 1 ? "" : "s"} added. Unsupported, damaged, or oversized files were skipped.`;
-}
 
-function renderOutput(output: Output): void {
-  const row = document.createElement("article");
-  row.className = "webp-output-row";
-  const previewUrl = URL.createObjectURL(output.blob);
-  objectUrls.push(previewUrl);
-  const image = document.createElement("img");
-  image.src = previewUrl;
-  image.alt = `Converted preview of ${output.file.name}`;
-  const detail = document.createElement("div");
-  const title = document.createElement("h3");
-  const sourceMeta = document.createElement("p");
-  const outputMeta = document.createElement("p");
-  title.textContent = output.filename;
-  sourceMeta.textContent = `Input: ${output.width} × ${output.height} · ${formatBytes(output.file.size)}`;
-  outputMeta.textContent = `${formatLabel(output.format)}: ${output.outputWidth} × ${output.outputHeight} · ${formatBytes(output.blob.size)}`;
-  const action = document.createElement("button");
-  action.type = "button";
-  action.className = "secondary-button";
-  action.textContent = `Download ${formatLabel(output.format)}`;
-  action.addEventListener("click", () => download(output.blob, output.filename));
-  detail.append(title, sourceMeta, outputMeta, action); row.append(image, detail); results.append(row);
-}
-
-input.addEventListener("change", () => { if (input.files) void addFiles(Array.from(input.files)); input.value = ""; });
-dropzone.addEventListener("click", () => input.click());
-dropzone.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); input.click(); } });
-dropzone.addEventListener("dragover", (event) => { event.preventDefault(); dropzone.classList.add("dragover"); });
-dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
-dropzone.addEventListener("drop", (event) => { event.preventDefault(); dropzone.classList.remove("dragover"); if (event.dataTransfer) void addFiles(Array.from(event.dataTransfer.files)); });
-
-clearButton.addEventListener("click", () => { sources = []; widthInput.value = ""; heightInput.value = ""; renderSources(); });
-convertButton.addEventListener("click", async () => {
-  resetOutputs(); empty.hidden = true; progress.hidden = false; progress.value = 0;
-  convertButton.disabled = true; clearButton.disabled = true;
-  try {
-    for (let index = 0; index < sources.length; index += 1) {
-      status.textContent = `Converting ${index + 1} of ${sources.length}: ${sources[index].file.name}`;
-      const output = await convert(sources[index]);
-      outputs.push(output); renderOutput(output); progress.value = ((index + 1) / sources.length) * 100;
+  function syncFormatRow(): void {
+    const format = currentFormat();
+    if (ui.qualityRow) ui.qualityRow.hidden = format === "png";
+    if (ui.note) {
+      ui.note.hidden = format !== "webp";
     }
-    zipButton.hidden = outputs.length < 2;
-    zipButton.textContent = `Download all ${formatLabel(outputs[0]?.format ?? "png")}s as ZIP`;
-    const doneLabel = formatLabel(outputs[0]?.format ?? "png");
-    status.textContent = `${outputs.length} ${doneLabel} file${outputs.length === 1 ? " is" : "s are"} ready to download.`;
-  } catch (error) {
-    status.textContent = error instanceof Error ? error.message : "Conversion failed.";
-  } finally {
-    convertButton.disabled = false; clearButton.disabled = false; window.setTimeout(() => { progress.hidden = true; }, 500);
+    if (ui.qualityInput && ui.qualityInput.disabled && format !== "png") ui.qualityInput.disabled = false;
   }
-});
 
-zipButton.addEventListener("click", async () => {
-  const zip = new JSZip();
-  outputs.forEach((output) => zip.file(output.filename, output.blob));
-  status.textContent = "Packaging the measured output files...";
-  const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
-  download(blob, `pngtoolbox-${outputs.length}-${(outputs[0]?.format ?? "png")}-files.zip`);
-  status.textContent = "ZIP downloaded.";
-});
+  function resetOutputs(): void {
+    releaseUrls();
+    outputs = [];
+    ui.results.replaceChildren();
+    ui.zipButton.hidden = true;
+  }
 
-sampleButton.addEventListener("click", async () => {
-  const canvas = document.createElement("canvas");
-  canvas.width = 960; canvas.height = 640;
-  const context = canvas.getContext("2d");
-  if (!context) return;
-  context.fillStyle = "#eff8f4"; context.fillRect(0, 0, 960, 640);
-  context.fillStyle = "#087d5b"; context.fillRect(120, 110, 720, 420);
-  context.fillStyle = "#fff"; context.font = "700 86px Arial"; context.textAlign = "center"; context.fillText("WEBP", 480, 330);
-  context.font = "400 34px Arial"; context.fillText("local sample", 480, 390);
-  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.88));
-  if (!blob) { status.textContent = "This browser could not create the WebP sample."; return; }
-  await addFiles([new File([blob], "pngtoolbox-sample.webp", { type: "image/webp" })]);
-});
+  function renderJobs(): void {
+    resetOutputs();
+    const count = jobs.length;
+    ui.count.textContent = `${count} file${count === 1 ? "" : "s"}`;
+    const enabled = count > 0;
+    ui.sizeControls.disabled = !enabled;
+    ui.convertButton.disabled = !enabled || busy;
+    ui.clearButton.disabled = !enabled || busy;
+    ui.empty.hidden = enabled;
+    if (!enabled) {
+      ui.status.textContent = "Choose WebP files to start.";
+      return;
+    }
+    ui.status.textContent = `${count} valid file${count === 1 ? " is" : "s are"} ready. Pick an output format, then convert.`;
+    jobs.forEach((job) => {
+      const row = document.createElement("div");
+      row.className = "webp-queue-row";
+      const text = document.createElement("div");
+      const title = document.createElement("strong");
+      const meta = document.createElement("span");
+      title.textContent = job.file.name;
+      meta.textContent = `${job.width} × ${job.height} · ${formatBytes(job.file.size)}`;
+      text.append(title, meta);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "file-remove";
+      remove.textContent = "×";
+      remove.setAttribute("aria-label", `Remove ${job.file.name}`);
+      remove.addEventListener("click", () => {
+        jobs = jobs.filter((item) => item !== job);
+        renderJobs();
+      });
+      row.append(text, remove);
+      ui.results.append(row);
+    });
+  }
 
-formatSelect?.addEventListener("change", () => {
-  if (qualityRow) qualityRow.hidden = formatSelect?.value !== "jpg";
-  if (outputs.length > 1) zipButton.textContent = `Download all ${formatLabel(currentFormat())}s as ZIP`;
-});
-qualityInput?.addEventListener("input", () => {
-  if (qualityOutput && qualityInput) qualityOutput.textContent = `${qualityInput.value}%`;
-});
+  async function addFiles(files: File[]): Promise<void> {
+    const { jobs: decoded, skipped } = await decodeJobs(files, options.accept);
+    jobs = [...jobs, ...decoded];
+    renderJobs();
+    // Report a partial load explicitly. Silence here is how a user concludes the
+    // tool "ignored" their file, or worse, that it succeeded.
+    const added = decoded.length === 0 ? "No usable files were added." : `${decoded.length} file${decoded.length === 1 ? "" : "s"} added.`;
+    if (skipped.length) {
+      ui.status.textContent = `${added} ${skipped.length} file${skipped.length === 1 ? " was" : "s were"} skipped (unsupported format, unreadable, or over 20 MB).`;
+    } else if (decoded.length === 0) {
+      ui.status.textContent = `${added} Choose WebP files to start.`;
+    }
+  }
 
-renderSources();
+  function renderOutput(output: Result): void {
+    const row = document.createElement("article");
+    row.className = "webp-output-row";
+    const previewUrl = URL.createObjectURL(output.blob);
+    objectUrls.push(previewUrl);
+    const image = document.createElement("img");
+    image.src = previewUrl;
+    image.alt = `Converted preview of ${output.file.name}`;
+    const detail = document.createElement("div");
+    const title = document.createElement("h3");
+    title.textContent = output.filename;
+    const sourceMeta = document.createElement("p");
+    sourceMeta.textContent = `Input: ${output.width} × ${output.height} · ${formatBytes(output.file.size)}`;
+    const outputMeta = document.createElement("p");
+    const delta = output.blob.size - output.file.size;
+    const change = delta === 0 ? "same size" : `${delta < 0 ? "−" : "+"}${formatBytes(Math.abs(delta))}`;
+    // Label from the blob's ACTUAL type, not the requested format: when the
+    // browser substitutes PNG for an unsupported WebP the row must not claim
+    // WebP while handing over a PNG.
+    const actual = output.blob.type === "image/png" ? "PNG" : output.blob.type === "image/webp" ? "WebP" : "JPG";
+    outputMeta.textContent = `${actual}: ${output.outputWidth} × ${output.outputHeight} · ${formatBytes(output.blob.size)} (${change})`;
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "secondary-button";
+    action.textContent = `Download ${actual}`;
+    action.addEventListener("click", () => downloadBlob(output.blob, output.filename));
+    detail.append(title, sourceMeta, outputMeta);
+    if (output.substituted) {
+      const warn = document.createElement("p");
+      warn.className = "format-warning";
+      warn.textContent = "This browser cannot encode WebP, so the file was saved as PNG instead.";
+      detail.append(warn);
+    }
+    detail.append(action);
+    row.append(image, detail);
+    ui.results.append(row);
+  }
+
+  function setBusy(value: boolean): void {
+    busy = value;
+    ui.convertButton.disabled = value || jobs.length === 0;
+    ui.clearButton.disabled = value || jobs.length === 0;
+    ui.input.disabled = value;
+  }
+
+  ui.input.addEventListener("change", () => {
+    if (ui.input.files) void addFiles(Array.from(ui.input.files));
+    ui.input.value = "";
+  });
+  ui.dropzone.addEventListener("click", () => ui.input.click());
+  ui.dropzone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); ui.input.click(); }
+  });
+  ui.dropzone.addEventListener("dragover", (event) => { event.preventDefault(); ui.dropzone.classList.add("dragover"); });
+  ui.dropzone.addEventListener("dragleave", () => ui.dropzone.classList.remove("dragover"));
+  ui.dropzone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    ui.dropzone.classList.remove("dragover");
+    if (event.dataTransfer) void addFiles(Array.from(event.dataTransfer.files));
+  });
+
+  ui.clearButton.addEventListener("click", () => {
+    jobs = [];
+    ui.widthInput.value = "";
+    ui.heightInput.value = "";
+    renderJobs();
+  });
+
+  ui.convertButton.addEventListener("click", async () => {
+    resetOutputs();
+    ui.empty.hidden = true;
+    ui.progress.hidden = false;
+    ui.progress.value = 0;
+    setBusy(true);
+    const format = currentFormat();
+    const settings = {
+      format,
+      width: Number(ui.widthInput.value),
+      height: Number(ui.heightInput.value),
+      lockRatio: ui.lockInput.checked,
+      quality: Number(ui.qualityInput?.value ?? 85) / 100,
+      matte: "#ffffff",
+      maxEdge: options.maxEdge,
+    };
+    let substituted = 0;
+    try {
+      for (let index = 0; index < jobs.length; index += 1) {
+        ui.status.textContent = `Converting ${index + 1} of ${jobs.length}: ${jobs[index].file.name}`;
+        const output = await convertJob(jobs[index], settings);
+        if (output.substituted) substituted += 1;
+        outputs.push(output);
+        renderOutput(output);
+        ui.progress.value = ((index + 1) / jobs.length) * 100;
+      }
+      ui.zipButton.hidden = outputs.length < 2;
+      ui.zipButton.textContent = `Download all ${outputs.length} files as ZIP`;
+      const unit = outputs.length === 1 ? "is" : "are";
+      ui.status.textContent = `${outputs.length} file${outputs.length === 1 ? "" : "s"} ${unit} ready. Each row reports the measured output size.`;
+      if (substituted) {
+        ui.status.textContent += ` ${substituted} file${substituted === 1 ? "" : "s"} could not be saved as WebP by this browser and fell back to PNG.`;
+      }
+    } catch (error) {
+      ui.status.textContent = error instanceof Error ? error.message : "Conversion failed.";
+    } finally {
+      setBusy(false);
+      window.setTimeout(() => { ui.progress.hidden = true; }, 500);
+    }
+  });
+
+  ui.zipButton.addEventListener("click", async () => {
+    ui.status.textContent = "Packaging the measured output files…";
+    try {
+      const blob = await zipResults(outputs, "converted.zip");
+      downloadBlob(blob, `converted-${outputs.length}-files.zip`);
+      ui.status.textContent = "ZIP downloaded.";
+    } catch {
+      ui.status.textContent = "This browser could not build the ZIP archive.";
+    }
+  });
+
+  ui.sampleButton.addEventListener("click", async () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 960;
+    canvas.height = 640;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.fillStyle = "#eff8f4";
+    context.fillRect(0, 0, 960, 640);
+    context.fillStyle = "#087d5b";
+    context.fillRect(120, 110, 720, 420);
+    context.fillStyle = "#ffffff";
+    context.font = "700 86px Arial";
+    context.textAlign = "center";
+    context.fillText("WEBP", 480, 330);
+    context.font = "400 34px Arial";
+    context.fillText("local sample", 480, 390);
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.88));
+    if (!blob) {
+      ui.status.textContent = "This browser cannot create a WebP sample, but you can still choose your own files.";
+      return;
+    }
+    await addFiles([new File([blob], "pngtoolbox-sample.webp", { type: "image/webp" })]);
+  });
+
+  ui.formatSelect.addEventListener("change", syncFormatRow);
+  ui.qualityInput?.addEventListener("input", () => {
+    if (ui.qualityOutput && ui.qualityInput) ui.qualityOutput.textContent = `${ui.qualityInput.value}%`;
+  });
+
+  syncFormatRow();
+  renderJobs();
+}
+
+// Both the homepage panel and the dedicated converter page use the same code,
+// so a behaviour fix lands in both places at once.
+createConverter({
+  accept: (file) => file.type === "image/webp" || file.name.toLowerCase().endsWith(".webp"),
+  maxEdge: 12000,
+});

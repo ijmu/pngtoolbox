@@ -89,6 +89,13 @@ nav a {
 nav a:hover { color: var(--accent); }
 
 /* ---------- Shared bits ---------- */
+.page-meta {
+  margin: -2px 0 ;
+  font-size: 0.85rem;
+  color: var(--ink-3);
+  letter-spacing: 0.01em;
+}
+
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -802,10 +809,10 @@ details p { margin: 12px 0 0; color: var(--ink-2); font-size: 0.95rem; }
 
 .webp-result-list { display: grid; gap: 10px; }
 
-.webp-result-list .webp-result,
-.webp-result-list > div {
+/* One queued source file: name and measurements on the left, remove on the right. */
+.webp-result-list .webp-queue-row {
   display: grid;
-  grid-template-columns: 56px 1fr auto auto;
+  grid-template-columns: 1fr auto;
   gap: 14px;
   align-items: center;
   background: var(--surface);
@@ -815,6 +822,48 @@ details p { margin: 12px 0 0; color: var(--ink-2); font-size: 0.95rem; }
   font-size: 0.88rem;
 }
 
+.webp-queue-row div { display: grid; gap: 3px; min-width: 0; }
+.webp-queue-row strong { overflow-wrap: anywhere; }
+.webp-queue-row span { color: var(--ink-3); font-size: 0.82rem; }
+
+/* One converted result: thumbnail, measured detail, then the download button. */
+.webp-result-list .webp-output-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.88rem;
+}
+
+.webp-result-list .webp-output-row > div { display: grid; gap: 4px; min-width: 0; }
+.webp-result-list .webp-output-row > div > p { margin: 0; color: var(--ink-3); font-size: 0.82rem; }
+.webp-result-list .webp-output-row > div > p + p { color: var(--ink-2); }
+.webp-output-row h3 { margin: 0; font-size: 0.95rem; overflow-wrap: anywhere; }
+.webp-output-row .primary-button,
+.webp-output-row .secondary-button { justify-self: end; white-space: nowrap; }
+.format-warning { color: #8a5a00; font-weight: 600; }
+
+.file-remove {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.file-remove:hover { border-color: var(--accent); color: var(--accent); }
+
+body.dark .format-warning { color: #f0c76a; }
+
 .webp-result-list img {
   width: 56px;
   height: 56px;
@@ -822,6 +871,13 @@ details p { margin: 12px 0 0; color: var(--ink-2); font-size: 0.95rem; }
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--checker);
+}
+
+@media (max-width: 720px) {
+  .webp-result-list .webp-output-row { grid-template-columns: 48px 1fr; }
+  .webp-result-list .webp-output-row > .primary-button,
+  .webp-result-list .webp-output-row > .secondary-button { grid-column: 1 / -1; justify-self: start; }
+  .webp-result-list img { width: 48px; height: 48px; }
 }
 
 .webp-zip { justify-self: start; }

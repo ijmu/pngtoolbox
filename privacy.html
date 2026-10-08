@@ -31,7 +31,10 @@
     </script>
       <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
-</head>
+<script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "WebPage", "name": "Privacy Policy - PNGToolbox", "description": "How PNGToolbox handles images, cookies, AdSense advertising, analytics, and data requests.", "url": "https://www.pngtoolbox.com/privacy.html", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "datePublished": "2026-09-06", "dateModified": "2026-10-08"}
+    </script>
+  </head>
   <body>
     <header class="topbar">
       <a class="brand" href="./"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
@@ -45,31 +48,71 @@
     <main class="page article-page">
       <p class="eyebrow">Privacy</p>
       <h1>Privacy Policy</h1>
+      <p class="page-meta">Last reviewed: 8 October 2026</p>
+
       <section>
-        <h2>Image processing</h2>
-        <p>WebP to PNG conversion and PNG transparent background processing happen in your browser for normal use. PNGToolbox does not intentionally upload, store, or inspect the image files you choose in the tool.</p>
-        <p>Your browser reads the selected files locally so it can render them, convert them, and prepare the download result.</p>
+        <h2>What PNGToolbox does with your images</h2>
+        <p>PNGToolbox converts WebP files to PNG or JPG and removes solid-colour backgrounds from PNG and JPG images. Every one of those operations runs inside your browser using the Canvas API. Your files are read from your device, decoded, re-encoded, and handed back to you as a download. They are not uploaded to a PNGToolbox server, and there is no PNGToolbox server that accepts image uploads.</p>
+        <p>This is a technical property of how the tool is built, not a promise about intent: the page contains no upload endpoint, and the conversion code calls <code>URL.createObjectURL</code> on your local file rather than <code>fetch</code>. You can confirm this yourself by opening your browser's network panel while converting a file and observing that no request carries your image.</p>
       </section>
+
       <section>
-        <h2>Information you may send</h2>
-        <p>If you contact PNGToolbox by email, you may choose to send your email address, page URL, browser details, and a description of the issue. Do not send sensitive image files unless they are required for troubleshooting.</p>
+        <h2>What is never collected</h2>
+        <ul>
+          <li><strong>Image contents</strong> — pixel data never leaves your device.</li>
+          <li><strong>Filenames</strong> — the tool uses the name only to label your download, locally.</li>
+          <li><strong>File counts or sizes</strong> — batch size and output measurements are displayed to you and not transmitted.</li>
+          <li><strong>Accounts</strong> — there is no sign-up, login, or user profile anywhere on this site.</li>
+        </ul>
       </section>
+
+      <section>
+        <h2>What is stored on your device</h2>
+        <p>PNGToolbox stores a single preference in your browser's <code>localStorage</code>: your light or dark theme choice. It contains no identifier and is not readable by any other site. Clearing site data in your browser removes it.</p>
+        <p>The site registers a service worker that caches page HTML and static assets so repeat visits load quickly and the tools keep working on a poor connection. That cache holds only PNGToolbox's own files — never the images you open. Unregistering the service worker or clearing site data removes it.</p>
+      </section>
+
       <section>
         <h2>Advertising and cookies</h2>
-        <p>This site may use Google AdSense. Google and its partners may use cookies or similar technologies to show ads, measure ad performance, limit frequency, and help prevent abuse.</p>
-        <p>You can manage cookies in your browser settings and through Google advertising controls where available.</p>
-        <p>Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this and other sites. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" rel="noopener">Google Ads Settings</a>. To learn more about how Google uses data when you use our partners' sites or apps, see <a href="https://policies.google.com/technologies/ads" rel="noopener">policies.google.com/technologies/ads</a>.</p>
+        <p>This site displays ads through Google AdSense. Google and its partners may use cookies or similar technologies to show ads, measure ad performance, limit how often you see a given ad, and help prevent abuse.</p>
+        <p>Google's use of advertising cookies enables it and its partners to serve ads based on your visits to this site and other sites. You can opt out of personalised advertising by visiting <a href="https://adssettings.google.com" rel="noopener nofollow">Google Ads Settings</a>. To understand how Google uses data from partner sites, see <a href="https://policies.google.com/technologies/ads" rel="noopener nofollow">How Google uses information from sites or apps that use its services</a>. Third-party vendors and ad networks may also serve ads on this site, and may set their own cookies subject to their own policies.</p>
+        <p>Your browser settings let you block or delete cookies, and ads will still display; they will simply be less relevant to you. Declining or blocking advertising cookies does not affect the image tools, which do not depend on cookies at all.</p>
       </section>
+
       <section>
-        <h2>Third-party services</h2>
-        <p>PNGToolbox is hosted by third-party infrastructure providers and may use third-party advertising or measurement services. Those providers may process technical information such as IP address, browser type, request time, and page URL according to their own policies.</p>
-        <p>We use Google Analytics (measurement ID G-XDE7CN1DH1) to understand aggregate site usage — pages viewed, approximate region, and device type. Google Analytics relies on cookies and may process technical data such as your IP address (truncated) under Google's privacy policy. Your files themselves are never uploaded or measured — all conversion processing stays in your browser.</p>
+        <h2>Analytics</h2>
+        <p>We use Google Analytics (measurement ID G-XDE7CN1DH1) to understand aggregate usage: which pages are visited, approximate region, and device type. This helps decide which guides to expand. Analytics data is aggregated; we do not use it to identify individuals, and we do not combine it with any other data. Google Analytics uses cookies and may process technical information such as a truncated IP address under <a href="https://policies.google.com/privacy" rel="noopener nofollow">Google's privacy policy</a>. You can opt out with the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener nofollow">Google Analytics opt-out browser add-on</a>.</p>
       </section>
+
+      <section>
+        <h2>Hosting and server logs</h2>
+        <p>PNGToolbox is served as static files by a third-party hosting provider. Like any web host, that provider may record standard request data such as IP address, browser type, the page requested, and a timestamp, for security and reliability purposes. This happens at the infrastructure level and is governed by the provider's own policy.</p>
+      </section>
+
+      <section>
+        <h2>Data retention</h2>
+        <p>Because images and file details are never transmitted, there is nothing of that kind for us to retain or delete. Aggregate analytics data is retained for the standard Google Analytics period. You can request information about or deletion of any data associated with your use of this site by writing to the address below.</p>
+      </section>
+
+      <section>
+        <h2>Children's privacy</h2>
+        <p>PNGToolbox is a general-purpose image utility. It is not directed at children under 13, and we do not knowingly collect personal information from children. If you believe a child has provided personal information through the contact address, write to us and we will delete it.</p>
+      </section>
+
+      <section>
+        <h2>Your rights</h2>
+        <p>Depending on where you live, you may have rights to access, correct, delete, or restrict processing of personal data, and to object to processing based on legitimate interests. Because this site does not collect personal data from the tools themselves, most requests will concern analytics or correspondence you initiated. Write to the address below and we will respond within a reasonable period.</p>
+      </section>
+
+      <section>
+        <h2>Changes to this policy</h2>
+        <p>If this policy changes, the "Last reviewed" date at the top of this page will change with it. Material changes affecting how data is handled will be described here rather than applied silently.</p>
+      </section>
+
       <section>
         <h2>Contact</h2>
-        <p>For privacy questions, contact <a href="mailto:5202013@gmail.com">5202013@gmail.com</a> or use the <a href="./contact.html">contact page</a>.</p>
+        <p>For privacy questions, email <a href="mailto:5202013@gmail.com">5202013@gmail.com</a> or use the <a href="./contact.html">contact page</a>. Please do not send image files unless they are genuinely required to describe a problem.</p>
       </section>
-    </main>
     <footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-brand">

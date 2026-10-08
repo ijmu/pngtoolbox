@@ -8,6 +8,12 @@ const entries = await readdir(root, { withFileTypes: true });
 const excluded = new Set([
   "index.html",
   "how-to-make-png-background-transparent.html",
+  // Internal docs and build tooling: producing these into dist/ publishes
+  // DESIGN.md, PRODUCT.md and the build scripts to the live site.
+  "DESIGN.md",
+  "PRODUCT.md",
+  "README.md",
+  "scripts",
   "node_modules",
   "dist",
   "zh",

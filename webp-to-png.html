@@ -24,7 +24,7 @@
     <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@type":"Article","headline":"WebP to PNG Converter - Batch, Resize & Compare","description":"Convert one or many WebP files to PNG in your browser. Resize output, compare measured dimensions and file sizes, then download PNG files or one ZIP.","url":"https://www.pngtoolbox.com/webp-to-png.html","inLanguage":"en","author":{"@type":"Organization","name":"PNGToolbox"},"publisher":{"@type":"Organization","name":"PNGToolbox"}}
+      {"@context": "https://schema.org", "@type": "Article", "headline": "WebP to PNG Converter - Batch, Resize & Compare", "description": "Convert one or many WebP files to PNG in your browser. Resize output, compare measured dimensions and file sizes, then download PNG files or one ZIP.", "url": "https://www.pngtoolbox.com/webp-to-png.html", "inLanguage": "en", "author": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "dateModified": "2026-10-08", "datePublished": "2026-09-06"}
     </script>
       <script type="application/ld+json">
       {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.pngtoolbox.com/"},{"@type":"ListItem","position":2,"name":"WebP to PNG Converter - Batch, Resize &amp; Compare","item":"https://www.pngtoolbox.com/webp-to-png.html"}]}
@@ -46,6 +46,7 @@
       <section class="webp-intro" aria-labelledby="page-title">
         <p class="eyebrow">Local batch converter</p>
         <h1 id="page-title">Convert WebP to PNG and inspect the real output</h1>
+      <p class="page-meta">Last reviewed: 8 October 2026</p>
         <p>Choose one file or a batch, optionally resize it, then compare the decoded dimensions and measured file sizes before downloading. Files stay in this browser.</p>
         <ul class="webp-trust" aria-label="Tool features"><li>Batch ZIP export</li><li>Exact pixel sizes</li><li>No account</li><li>Local processing</li></ul>
       </section>
@@ -72,6 +73,7 @@
                   <select id="webpPageFormat">
                     <option value="png" selected>PNG — lossless, keeps transparency</option>
                     <option value="jpg">JPG — smallest files for photos</option>
+                    <option value="webp">WebP — smallest files for the web</option>
                   </select>
                 </label>
               </div>
@@ -80,9 +82,10 @@
                 <input id="webpPageQuality" type="range" min="40" max="95" value="85" />
                 <output id="webpQualityValue">85%</output>
               </div>
+              <p class="field-help" id="webpFormatNote" hidden>Some browsers cannot re-encode WebP. If that happens the file is saved as PNG instead and every affected row says so.</p>
             </fieldset>
             <button id="webpPageConvert" class="primary-button" type="button" disabled>Convert selected files</button>
-            <button id="webpPageClear" class="secondary-button" type="button" disabled>Clear</button>
+            <button id="webpPageClear" class="secondary-button" type="button" disabled>Clear queue</button>
             <progress id="webpPageProgress" max="100" value="0" hidden>0%</progress>
             <div id="webpPageStatus" class="status" role="status">Choose WebP files to start.</div>
           </aside>
