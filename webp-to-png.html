@@ -133,7 +133,67 @@
         <details><summary>Can I output JPG instead?</summary><p>Yes. Choose JPG in the output format panel and set a quality level. Transparent pixels are filled with white because JPG has no alpha channel.</p></details>
       </section>
     
-      <section class="guide-cta-band">
+      <section class="guide-extra" aria-label="Additional guidance">
+<div class="prose">
+<h2 id="what-actually-changes-when-a-webp-file-becomes-a-png">What actually changes when a WebP file becomes a PNG</h2>
+<p>A conversion is not a repair. WebP is usually stored lossily: the encoder already decided which frequencies mattered and discarded the rest. Converting that file to PNG changes the container, not the contents — the pixels you get in the PNG are exactly the pixels WebP decoded to.</p>
+<p>Two consequences:</p>
+<p><strong>The file gets much larger.</strong> PNG stores the decoded pixels losslessly, so it has to describe detail the WebP encoder had already thrown away — as well as detail it kept. On our published corpus the PNG output was 7.3x to 18.2x the size of the source WebP, depending on image type; a photograph went from 60.7 KB to 1,106.8 KB.</p>
+<p><strong>The image does not get better.</strong> Nothing recovers the discarded frequencies. If the source WebP looked good, the PNG looks identical and five to twenty times larger.</p>
+<p>So the honest question is not "is PNG higher quality" but "does my destination accept WebP". That single fact decides most conversions.</p>
+<div class="callout"><strong>Before you convert, check the destination</strong><p>Many tools and platforms still reject WebP — older desktop editors, some content management systems, print workflows, and plenty of upload forms. When a destination accepts WebP, keeping it saves most of the file size. Convert when something requires PNG, or when you need an exact, lossless copy of the decoded image for further editing.</p></div>
+<h2 id="transparency-what-survives-and-what-does-not">Transparency: what survives and what does not</h2>
+<p>PNG carries an alpha channel with full 8-bit precision per pixel, and our tests found the conversion preserved every transparent pixel exactly — 229,211 fully transparent pixels in the logo test image and 1,056,057 in the product cutout came out identical, with no pixel differing by more than 1/255.</p>
+<p>Two caveats sit either side of that:</p>
+<ul><li>If the WebP file itself stored a <strong>lossy</strong> alpha channel (WebP can compress alpha independently), the alpha you get in the PNG is the alpha WebP decoded to — accurate to the source file, not to the original artwork.</li><li>JPEG has no alpha channel at all, so exporting a transparent image as JPEG flattens it onto a matte colour. Any transparent region becomes solid, usually white, and semi-transparent edges take on a visible fringe.</li></ul>
+<h2 id="animated-webp-is-not-animated-png">Animated WebP is not animated PNG</h2>
+<p>An animated WebP holds a sequence of frames. Pillow, browsers' canvas APIs and most converters expose only the first frame, so an animation converted by a still-image pipeline becomes a single static image. That is not a bug in the converter; it is a different file format being asked for a frame.</p>
+<p>If the animation matters, check whether the destination accepts animated WebP or APNG before converting. If it must be a static image, choose the frame deliberately rather than accepting frame one.</p>
+<h2 id="why-conversions-fail-and-what-to-do">Why conversions fail, and what to do</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>What to try</th>
+</tr></thead><tbody>
+<tr>
+<td>"Unsupported file" on a WebP you did not create</td>
+<td>The file is an animated WebP, or is truncated</td>
+<td>Open it in a browser first; if it animates, treat it as an animation</td>
+</tr>
+<tr>
+<td>Conversion succeeds, output looks washed out</td>
+<td>Source had a colour profile browsers ignore</td>
+<td>Compare in two browsers; the profile is the difference</td>
+</tr>
+<tr>
+<td>Very large output, unexpected for the content</td>
+<td>Source was a photograph; lossless storage of decoded pixels is expensive</td>
+<td>Ask whether the destination needs PNG at all; if yes, resize before converting</td>
+</tr>
+<tr>
+<td>Output is blank or partly grey</td>
+<td>Decode failed part-way (corrupt or truncated download)</td>
+<td>Re-download the source; browsers are stricter than desktop viewers</td>
+</tr>
+<tr>
+<td>Colours shift after conversion, edges look noisy</td>
+<td>The WebP was recompressed multiple times before you got it</td>
+<td>Nothing to fix in conversion — the damage predates it</td>
+</tr>
+</tbody></table></div>
+<h2 id="device-differences-worth-knowing">Device differences worth knowing</h2>
+<p>WebP decoding is effectively universal in current browsers, but <em>encoding</em> is not symmetric across platforms, and phone workflows differ in where the conversion happens:</p>
+<ul><li>On <strong>Android</strong>, the file system and the share sheet often pass WebP through without conversion; the practical route is a browser-based converter rather than an installed app.</li><li>On <strong>iPhone</strong>, Safari and Files handle WebP for viewing; saving a WebP to Photos may keep it as-is, and sharing it to an app that expects JPEG triggers a silent conversion with loss.</li><li>On <strong>desktop browsers</strong>, converting in a page gives the same encoder across platforms, which makes the output more predictable than asking three different operating systems to save the same file.</li></ul>
+<p>Because the conversion on this site runs in your browser rather than on a server, the result does not depend on a queue, an account, or a file-size limit imposed by an upload form — and your file never leaves the device.</p>
+<h2 id="batch-conversions-and-keeping-them-tidy">Batch conversions, and keeping them tidy</h2>
+<p>Converting a folder is mostly a naming problem:</p>
+<ol><li>Convert in one pass, with output names derived from the input names rather than generic counters.</li><li>Keep the originals. A lossless conversion cannot improve the image, but it can change how later tools treat it.</li><li>Spot-check the largest two outputs at 100% — the biggest files are where an unexpected colour profile or a stray alpha channel shows up first.</li><li>If the destination has a byte limit, resize before converting rather than converting and then compressing: the second compression throws away detail you just paid five times the bytes to keep.</li></ol>
+<div class="stat-grid"><div class="stat"><b>7.3x to 18.2x</b><span>PNG output vs WebP source</span></div><div class="stat"><b>100% of pixels</b><span>Alpha preserved</span></div><div class="stat"><b>first frame only</b><span>Animated WebP-&gt;PNG</span></div><div class="stat"><b>your device</b><span>Where it runs</span></div></div>
+<p>Source: file-size multipliers measured on 22 October 2026 with Pillow 11.0.0; raw CSV and the test corpus are published at ./assets/bench/.</p>
+</div>
+</section>
+<section class="guide-cta-band">
         <h2>Ready to convert?</h2>
         <p>Batch-convert WebP files to PNG or JPG in your browser — measured, private, and free.</p>
         <a class="primary-button" href="./#tool">Open the converter</a>
