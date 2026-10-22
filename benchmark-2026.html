@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <title>WebP to PNG size benchmark 2026: measured on 6 image types | PNGToolbox</title>
+    <meta name="description" content="We converted six image types with the same encoder and recorded every file size, quality metric and alpha pixel. See how much bigger PNG gets, and when converting is still worth it." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://www.pngtoolbox.com/benchmark-2026.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/benchmark-2026.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.pngtoolbox.com/benchmark-2026.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PNGToolbox" />
+    <meta property="og:title" content="WebP to PNG size benchmark 2026: measured on 6 image types" />
+    <meta property="og:description" content="We converted six image types with the same encoder and recorded every file size, quality metric and alpha pixel. See how much bigger PNG gets, and when converting is still worth it." />
+    <meta property="og:url" content="https://www.pngtoolbox.com/benchmark-2026.html" />
+    <meta property="og:image" content="https://www.pngtoolbox.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./identity-png.css" />
+    <script>(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.add(d?"dark":"light");window.__setTheme=function(x){r.classList.remove("dark","light");r.classList.add(x);try{localStorage.setItem("theme",x)}catch(e){};var b=document.querySelectorAll(".theme-toggle");for(var i=0;i<b.length;i++)b[i].textContent=x==="dark"?"\u2600\uFE0F":"\uD83C\uDF19";};window.__setTheme(d?"dark":"light");}catch(e){}})();</script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "Article", "headline": "WebP to PNG size benchmark 2026: measured on 6 image types", "description": "We converted six image types with the same encoder and recorded every file size, quality metric and alpha pixel. See how much bigger PNG gets, and when converting is still worth it.", "url": "https://www.pngtoolbox.com/benchmark-2026.html", "inLanguage": "en", "datePublished": "2026-10-22", "dateModified": "2026-10-22", "author": {"@type": "Organization", "name": "PNGToolbox Editorial", "url": "https://www.pngtoolbox.com/editorial-standards.html"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "isPartOf": {"@type": "WebSite", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.pngtoolbox.com/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.pngtoolbox.com/guides.html"}, {"@type": "ListItem", "position": 3, "name": "Benchmark", "item": "https://www.pngtoolbox.com/benchmark-2026.html"}]}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XDE7CN1DH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-XDE7CN1DH1");
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="./#tool">Converter</a><a href="./guides.html">Guides</a><a href="./benchmark-2026.html">Benchmark</a><a href="./about.html">About</a></nav>
+      <button class="theme-toggle" type="button" onclick="__setTheme(document.documentElement.classList.contains('dark')?'light':'dark')" aria-label="Toggle dark mode">🌙</button>
+    </header>
+<nav class="crumb" aria-label="Breadcrumb"><a href="./">Home</a><span aria-hidden="true">/</span><a href="./guides.html">Guides</a><span aria-hidden="true">/</span><span>Benchmark</span></nav>
+    <div class="wrap">
+      <div class="layout">
+        <main>
+          <p class="eyebrow">Benchmark</p>
+          <h1 class="article-title">What actually happens to your file size when you convert WebP to PNG</h1>
+          <p class="deck">A reproducible WebP to PNG and WebP to JPG benchmark: output sizes, transparency survival, and the cases where converting is the right call rather than the reflex.</p>
+          <div class="authorline">
+            <span><strong>By PNGToolbox Editorial</strong></span>
+            <span>Published 2026-10-22</span>
+            <span>Last reviewed 2026-10-22</span>
+            <span><a href="./editorial-standards.html">How we test</a></span>
+          </div>
+          <div class="prose">
+<div class="keyfacts"><h2>At a glance</h2><ul><li>Test corpus: six images that cover the shapes people actually convert — photo, screenshot, logo, flat art, product cutout and a smooth gradient.</li><li>Output PNG came out <strong>7.3x to 18.2x larger</strong> than the WebP file it was converted from.</li><li>Output JPG stayed closer: <strong>2.1x to 7.8x</strong> the WebP size, because JPG is lossy like WebP.</li><li>Transparency survived perfectly in PNG: transparent pixel counts matched exactly, and every alpha value was preserved within 1/255.</li><li>JPG has no alpha channel at all — transparent areas are flattened onto a matte colour you choose.</li><li>The whole test is published: test-image generator, benchmark scripts and raw CSV results are linked at the end of this page.</li></ul></div>
+<h2 id="why-we-ran-this-benchmark">Why we ran this benchmark</h2>
+<p>People convert WebP to PNG for a reason that has nothing to do with file size: they need a format that every application, printer, marketplace and old desktop tool accepts, or they need transparency that survives a round trip through an editing app. The size increase is the bill for that, and almost every guide mentions it without ever measuring it.</p>
+<p>So we measured it. Six images, one encoder build, the same quality settings for every file, and the raw output published so anyone can check the numbers or re-run the test.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Setting</th>
+<th>Value used in this benchmark</th>
+</tr></thead><tbody>
+<tr>
+<td>Encoder</td>
+<td>Pillow 11.0.0 (libwebp, libjpeg-turbo, zlib 9)</td>
+</tr>
+<tr>
+<td>Source WebP</td>
+<td>quality 80, <code>method=4</code> (the setting most tools use by default)</td>
+</tr>
+<tr>
+<td>PNG output</td>
+<td>lossless, <code>optimize=True</code></td>
+</tr>
+<tr>
+<td>JPG output</td>
+<td>quality 85 and 92, chroma 4:4:4</td>
+</tr>
+<tr>
+<td>Metrics</td>
+<td>file size in KB, PSNR, SSIM, transparent pixel count</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>22 October 2026</td>
+</tr>
+</tbody></table></div>
+<h2 id="the-headline-result-png-output-is-7x-to-18x-the-webp-it-came">The headline result: PNG output is 7x to 18x the WebP it came from</h2>
+<p>Every source image was first encoded as a WebP at quality 80 — the same kind of file you would download from a modern site — then decoded and written back out as PNG, JPG and WebP. Sizes are the full files on disk.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Image (pixels)</th>
+<th>WebP q80 source</th>
+<th>PNG output</th>
+<th>JPG q85</th>
+<th>JPG q92</th>
+<th>PNG / source</th>
+<th>JPG85 / source</th>
+</tr></thead><tbody>
+<tr>
+<td>Photo 1600x1200</td>
+<td>60.7 KB</td>
+<td>1106.8 KB</td>
+<td>140.3 KB</td>
+<td>230.3 KB</td>
+<td><strong class="best">18.2x</strong></td>
+<td>2.3x</td>
+</tr>
+<tr>
+<td>Screenshot 1920x1080</td>
+<td>157.7 KB</td>
+<td>1157.2 KB</td>
+<td>331.9 KB</td>
+<td>439.8 KB</td>
+<td>7.3x</td>
+<td>2.1x</td>
+</tr>
+<tr>
+<td>Logo 800x800 (alpha)</td>
+<td>7.9 KB</td>
+<td>70.3 KB</td>
+<td>31.1 KB</td>
+<td>39.1 KB</td>
+<td>8.9x</td>
+<td>3.9x</td>
+</tr>
+<tr>
+<td>Flat art 1200x1200</td>
+<td>24.7 KB</td>
+<td>190.2 KB</td>
+<td>78.9 KB</td>
+<td>99.8 KB</td>
+<td>7.7x</td>
+<td>3.2x</td>
+</tr>
+<tr>
+<td>Product cutout 1400x1400 (alpha)</td>
+<td>25.0 KB</td>
+<td>401.5 KB</td>
+<td>82.8 KB</td>
+<td>118.5 KB</td>
+<td>16.1x</td>
+<td>3.3x</td>
+</tr>
+<tr>
+<td>Gradient 1600x900</td>
+<td>9.3 KB</td>
+<td>136.9 KB</td>
+<td>72.9 KB</td>
+<td>103.0 KB</td>
+<td><strong class="best">14.7x</strong></td>
+<td>7.8x</td>
+</tr>
+</tbody></table></div>
+<figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" font-family="ui-sans-serif,system-ui,Segoe UI,Helvetica,Arial" aria-label="Same images, three formats: output size">
+<text x="4" y="20" font-size="15" font-weight="700" fill="#17181c">Same images, three formats: output size</text>
+<line x1="58" y1="288.0" x2="704" y2="288.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="292.0" font-size="11" text-anchor="end" fill="#8b8e98">0</text>
+<line x1="58" y1="227.0" x2="704" y2="227.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="231.0" font-size="11" text-anchor="end" fill="#8b8e98">324</text>
+<line x1="58" y1="166.0" x2="704" y2="166.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="170.0" font-size="11" text-anchor="end" fill="#8b8e98">648</text>
+<line x1="58" y1="105.0" x2="704" y2="105.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="109.0" font-size="11" text-anchor="end" fill="#8b8e98">972</text>
+<line x1="58" y1="44.0" x2="704" y2="44.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="48.0" font-size="11" text-anchor="end" fill="#8b8e98">1,296</text>
+<rect x="77.4" y="79.6" width="27.5" height="208.4" rx="3" fill="#1d7a5c"/>
+<text x="91.1" y="74.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">1,107</text>
+<rect x="107.3" y="261.6" width="27.5" height="26.4" rx="3" fill="#c98a3c"/>
+<text x="121.0" y="256.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">140</text>
+<rect x="137.2" y="276.6" width="27.5" height="11.4" rx="3" fill="#3f63c4"/>
+<text x="151.0" y="271.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">61</text>
+<text x="111.8" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">photo</text>
+<rect x="185.0" y="70.1" width="27.5" height="217.9" rx="3" fill="#1d7a5c"/>
+<text x="198.8" y="65.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">1,157</text>
+<rect x="215.0" y="225.5" width="27.5" height="62.5" rx="3" fill="#c98a3c"/>
+<text x="228.7" y="220.5" font-size="10.5" text-anchor="middle" fill="#4c4f58">332</text>
+<rect x="244.9" y="258.3" width="27.5" height="29.7" rx="3" fill="#3f63c4"/>
+<text x="258.6" y="253.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">158</text>
+<text x="219.5" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">screenshot</text>
+<rect x="292.7" y="274.8" width="27.5" height="13.2" rx="3" fill="#1d7a5c"/>
+<text x="306.5" y="269.8" font-size="10.5" text-anchor="middle" fill="#4c4f58">70</text>
+<rect x="322.6" y="282.1" width="27.5" height="5.9" rx="3" fill="#c98a3c"/>
+<text x="336.4" y="277.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">31</text>
+<rect x="352.5" y="286.5" width="27.5" height="1.5" rx="3" fill="#3f63c4"/>
+<text x="366.3" y="281.5" font-size="10.5" text-anchor="middle" fill="#4c4f58">8</text>
+<text x="327.2" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">logo</text>
+<rect x="400.4" y="252.2" width="27.5" height="35.8" rx="3" fill="#1d7a5c"/>
+<text x="414.1" y="247.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">190</text>
+<rect x="430.3" y="273.1" width="27.5" height="14.9" rx="3" fill="#c98a3c"/>
+<text x="444.0" y="268.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">79</text>
+<rect x="460.2" y="283.3" width="27.5" height="4.7" rx="3" fill="#3f63c4"/>
+<text x="474.0" y="278.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">25</text>
+<text x="434.8" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">flat-art</text>
+<rect x="508.0" y="212.4" width="27.5" height="75.6" rx="3" fill="#1d7a5c"/>
+<text x="521.8" y="207.4" font-size="10.5" text-anchor="middle" fill="#4c4f58">402</text>
+<rect x="538.0" y="272.4" width="27.5" height="15.6" rx="3" fill="#c98a3c"/>
+<text x="551.7" y="267.4" font-size="10.5" text-anchor="middle" fill="#4c4f58">83</text>
+<rect x="567.9" y="283.3" width="27.5" height="4.7" rx="3" fill="#3f63c4"/>
+<text x="581.6" y="278.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">25</text>
+<text x="542.5" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">product-cutout</text>
+<rect x="615.7" y="262.2" width="27.5" height="25.8" rx="3" fill="#1d7a5c"/>
+<text x="629.5" y="257.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">137</text>
+<rect x="645.6" y="274.3" width="27.5" height="13.7" rx="3" fill="#c98a3c"/>
+<text x="659.4" y="269.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">73</text>
+<rect x="675.5" y="286.2" width="27.5" height="1.8" rx="3" fill="#3f63c4"/>
+<text x="689.3" y="281.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">9</text>
+<text x="650.2" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">gradient</text>
+<rect x="58" y="345" width="11" height="11" rx="2" fill="#1d7a5c"/>
+<text x="74" y="354" font-size="11.5" fill="#4c4f58">PNG output</text>
+<rect x="150" y="345" width="11" height="11" rx="2" fill="#c98a3c"/>
+<text x="166" y="354" font-size="11.5" fill="#4c4f58">JPG q85</text>
+<rect x="221" y="345" width="11" height="11" rx="2" fill="#3f63c4"/>
+<text x="237" y="354" font-size="11.5" fill="#4c4f58">WebP q80 source</text>
+<text x="704" y="354" font-size="11" text-anchor="end" fill="#8b8e98">KB</text>
+</svg><figcaption>Output size for the same six images, one bar per format. Source bars are the WebP files the conversion started from.</figcaption></figure>
+<p>Two rows deserve a comment before the general pattern.</p>
+<p>The <strong>gradient</strong> is the worst case for the ratio: a smooth blend costs almost nothing in a lossy codec (9.3 KB) and a lot in a lossless one (136.9 KB), because PNG has to store the exact value of every pixel rather than "a smooth run that trends downward".</p>
+<p>The <strong>product cutout</strong> shows the same effect with transparency attached. Its WebP was only 25 KB because the alpha channel lets the codec skip most of the image, while PNG still has to describe all 1.96 million pixels plus the alpha plane.</p>
+<h2 id="why-png-grows-so-much-in-one-paragraph">Why PNG grows so much, in one paragraph</h2>
+<p>WebP at quality 80 is lossy. It drops high-frequency detail the eye is unlikely to miss, and it stores what remains in a format designed to be small. PNG is lossless and, more importantly, it is <em>not</em> trying to be small in the same way: it stores every channel of every pixel at 8 or 16 bits, then squeezes the result with filters and DEFLATE. There is no quality knob and no concept of "close enough", which is exactly why PNG is accepted everywhere and why it costs more bytes. The compression guide linked below walks through the filters and colour types; the short version is that PNG pays for guarantees.</p>
+<p>A detail that surprises people: the PNG output here is often <strong>smaller than the original PNG</strong> of the same image. Our photo started life as a 3167.5 KB PNG, went through a lossy WebP at quality 80, and came back as a 1106.8 KB PNG. Nothing was recovered — the pixels came back exactly as the lossy WebP had left them, noise and grain smoothed away. That is a concrete illustration of what quality 80 does to an image.</p>
+<h2 id="transparency-survives-png-byte-for-byte">Transparency survives PNG byte for byte</h2>
+<p>Two test images carried real alpha: a logo with fully transparent corners and a product cutout with a soft-edged mask. We compared the alpha plane of the source against the alpha plane of the PNG output.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Image</th>
+<th>Transparent pixels in source</th>
+<th>Transparent pixels in PNG</th>
+<th>Pixels within 1/255 of the original</th>
+<th>Result</th>
+</tr></thead><tbody>
+<tr>
+<td>Logo 800x800</td>
+<td>229,211 of 640,000</td>
+<td>229,211</td>
+<td>100%</td>
+<td>identical</td>
+</tr>
+<tr>
+<td>Product cutout 1400x1400</td>
+<td>1,056,057 of 1,960,000</td>
+<td>1,056,057</td>
+<td>100%</td>
+<td>identical</td>
+</tr>
+</tbody></table></div>
+<p>For the JPG output of the same two images, the transparent pixels came out as the matte colour, 0.12 to 0.36 levels away from pure white on average — invisible in practice, but a hard edge everywhere the alpha ended. If a transparent pixel sits next to a dark shape, converting to JPG is what produces the pale fringe everyone blames on "bad exporting".</p>
+<div class="callout"><strong>If you need transparency and a small file</strong><p>Convert WebP to PNG for the master copy, then use the PNG where transparency is required and a JPG where it is not. Converting a transparent image to JPG does not "keep" transparency in any hidden form; it decides for you what colour the transparency becomes.</p></div>
+<h2 id="the-quality-question-does-converting-lose-anything">The quality question: does converting lose anything?</h2>
+<p>Converting a WebP to PNG is a decode followed by a lossless encode, so the PNG contains exactly the pixels the decoder produced. No detail is invented and none is thrown away — the loss, if any, happened when the WebP was created.</p>
+<p>That changes what the useful question is. It is not "does PNG lose quality" (it does not) but "what was already lost in the WebP, and does a lossless container make that visible". Two signs in the data suggest the answer:</p>
+<ul><li>The photo's measured PSNR after JPG re-encoding at quality 85 was 38.9 dB, high enough that the remaining error is dominated by the WebP that came before it.</li><li>The screenshot's PSNR barely moved between quality 40 and quality 95 (26.7 dB at both ends) while the file grew from 170.9 KB to 752 KB. When a metric refuses to improve as you spend four times the bytes, the metric has hit a floor set by something else in the pipeline — here, flat UI panels that JPG handles badly at any quality.</li></ul>
+<h2 id="when-converting-webp-to-png-is-the-right-call">When converting WebP to PNG is the right call</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Situation</th>
+<th>Convert to PNG?</th>
+<th>Why</th>
+</tr></thead><tbody>
+<tr>
+<td>Upload rejected by a form, marketplace or printer that only accepts PNG/JPG</td>
+<td>Yes</td>
+<td>Compatibility is the entire point; the size increase is the cost of being accepted</td>
+</tr>
+<tr>
+<td>Logo, icon or UI asset with transparency</td>
+<td>Yes, PNG</td>
+<td>JPG flattens alpha onto a matte colour, and the fringe shows on any non-white background</td>
+</tr>
+<tr>
+<td>Master copy you will edit repeatedly</td>
+<td>Yes, PNG</td>
+<td>Each re-save of a lossy format loses more; a lossless master stops the slide</td>
+</tr>
+<tr>
+<td>Flat illustration or screenshot going straight to the web</td>
+<td>Usually no</td>
+<td>WebP is smaller and every current browser reads it; keep the WebP</td>
+</tr>
+<tr>
+<td>Photograph you are publishing online</td>
+<td>No</td>
+<td>PNG is 7x to 18x the size in our test and browsers already support WebP</td>
+</tr>
+<tr>
+<td>Animated WebP</td>
+<td>Depends</td>
+<td>PNG cannot hold an animation; you need APNG, GIF or an animated WebP</td>
+</tr>
+</tbody></table></div>
+<h2 id="when-you-should-not-convert">When you should not convert</h2>
+<p>If the only reason for the conversion is "PNG feels safer", check the actual requirement first. A browser-based workflow that starts from a WebP and ends in a PNG for the web has spent 7x to 18x the bytes to arrive at a file the browser already understood. If you need to cut file size instead, resize first — dimensions dominate the arithmetic — and only then choose a format.</p>
+<h2 id="reproduce-the-test">Reproduce the test</h2>
+<p>Everything is published:</p>
+<ul><li><a href="./assets/bench/study-a-format.csv">study-a-format.csv</a> — the full size table above with every column</li><li><a href="./assets/bench/study-b-jpeg-quality.csv">study-b-jpeg-quality.csv</a> — the quality sweep used further down this file</li><li><a href="./assets/bench/study-c-resize.csv">study-c-resize.csv</a> — the resampling comparison</li><li><a href="./assets/bench/bench_kit.py">bench_kit.py</a> — regenerates the six test images pixel for pixel</li><li><a href="./assets/bench/bench_kit.py">bench_kit.py</a> — re-runs the study and rewrites the CSVs</li><li><a href="./assets/bench/README.txt">README.txt</a> — the exact command order</li></ul>
+<h2 id="what-this-test-does-not-cover">What this test does not cover</h2>
+<p>The corpus is synthetic and regenerable, which is what makes the numbers checkable, but it is smoother than most camera files. Real photographs carry sensor noise that costs PNG even more bytes and costs JPG more as well, so the direction of every conclusion here holds while individual multipliers will move. We used one encoder build (Pillow 11.0.0); browser canvas encoders differ by a few percent because they run different library versions. The point of publishing the scripts is that you can re-run this on your own files, with your own encoder, and compare.</p>
+<div class="cta-band"><div><h2>Convert WebP files to PNG or JPG — in your browser</h2><p>Batch conversion, ZIP download, transparency kept. No upload.</p></div><a class="btn" href="./#tool">Open the converter</a></div>
+<h2 id="sources">Sources</h2>
+<ul><li>PNG specification (W3C / ISO 15948) — https://www.w3.org/TR/png-3/</li><li>WebP container and compression overview (Google) — https://developers.google.com/speed/webp/docs/compression</li><li>Pillow image format and save-option documentation — https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html</li><li>Technical details of the test: measured 22 October 2026, Pillow 11.0.0, scripts in <code>./assets/bench/</code>.</li></ul>
+          </div>
+<div class="related"><h2>Related reading</h2><div class="related-grid"><a href="./webp-to-png.html"><strong>WebP to PNG converter guide</strong><span>What the converter does, step by step, and what to expect from the output</span></a><a href="./png-file-size.html"><strong>Why PNG files get large</strong><span>The mechanics behind the multipliers in this benchmark</span></a><a href="./png-compression-guide.html"><strong>How PNG compression works</strong><span>Filters, DEFLATE and colour types, explained without the spec jargon</span></a><a href="./alpha-transparency-guide.html"><strong>Alpha channels and mattes</strong><span>Why transparency survives PNG and dies in JPG</span></a></div></div>
+        </main>
+<aside class="rail" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#why-we-ran-this-benchmark">Why we ran this benchmark</a></li><li><a href="#the-headline-result-png-output-is-7x-to-18x-the-webp-it-came">The headline result: PNG output is 7x to 18x the WebP it came from</a></li><li><a href="#why-png-grows-so-much-in-one-paragraph">Why PNG grows so much, in one paragraph</a></li><li><a href="#transparency-survives-png-byte-for-byte">Transparency survives PNG byte for byte</a></li><li><a href="#the-quality-question-does-converting-lose-anything">The quality question: does converting lose anything?</a></li><li><a href="#when-converting-webp-to-png-is-the-right-call">When converting WebP to PNG is the right call</a></li><li><a href="#when-you-should-not-convert">When you should not convert</a></li><li><a href="#reproduce-the-test">Reproduce the test</a></li><li><a href="#what-this-test-does-not-cover">What this test does not cover</a></li><li><a href="#sources">Sources</a></li></ol></aside>
+      </div>
+    </div>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <p>PNGToolbox builds browser-based WebP and PNG tools and publishes the measurements behind them.</p>
+    </div>
+    <div class="footer-col">
+      <strong>Tools</strong>
+      <a href="./#tool">WebP to PNG &amp; JPG converter</a>
+      <a href="./how-to-make-png-background-transparent.html">Make a PNG background transparent</a>
+      <a href="./convert-multiple-webp-to-png.html">Batch WebP conversion</a>
+    </div>
+    <div class="footer-col">
+      <strong>Guides</strong>
+      <a href="./guides.html">All guides</a>
+      <a href="./benchmark-2026.html">Format benchmark (measured)</a>
+      <a href="./png-compression-guide.html">How PNG compression works</a>
+      <a href="./alpha-transparency-guide.html">Alpha and transparency</a>
+      <a href="./image-formats-compared.html">Choosing an image format</a>
+    </div>
+    <div class="footer-col">
+      <strong>Reference</strong>
+      <a href="./webp-vs-png.html">WebP vs PNG</a>
+      <a href="./what-is-png.html">What is PNG</a>
+      <a href="./png-file-size.html">Why PNG files get large</a>
+      <a href="./png-output-testing.html">PNG output testing method</a>
+    </div>
+    <div class="footer-col">
+      <strong>Site</strong>
+      <a href="./about.html">About &amp; how we test</a>
+      <a href="./editorial-standards.html">Editorial standards</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 PNGToolbox. All rights reserved.</span>
+    <span>All processing happens locally in your browser.</span>
+  </div>
+</footer>
+  </body>
+</html>

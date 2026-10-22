@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <title>Alpha channels, mattes and ugly edges: fixing PNG transparency | PNGToolbox</title>
+    <meta name="description" content="How PNG stores transparency, why straight alpha beats premultiplied for editing, and where the white fringe on a cutout really comes from — with checks that catch it." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://www.pngtoolbox.com/alpha-transparency-guide.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/alpha-transparency-guide.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.pngtoolbox.com/alpha-transparency-guide.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PNGToolbox" />
+    <meta property="og:title" content="Alpha channels, mattes and ugly edges: fixing PNG transparency" />
+    <meta property="og:description" content="How PNG stores transparency, why straight alpha beats premultiplied for editing, and where the white fringe on a cutout really comes from — with checks that catch it." />
+    <meta property="og:url" content="https://www.pngtoolbox.com/alpha-transparency-guide.html" />
+    <meta property="og:image" content="https://www.pngtoolbox.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./identity-png.css" />
+    <script>(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.add(d?"dark":"light");window.__setTheme=function(x){r.classList.remove("dark","light");r.classList.add(x);try{localStorage.setItem("theme",x)}catch(e){};var b=document.querySelectorAll(".theme-toggle");for(var i=0;i<b.length;i++)b[i].textContent=x==="dark"?"\u2600\uFE0F":"\uD83C\uDF19";};window.__setTheme(d?"dark":"light");}catch(e){}})();</script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "Article", "headline": "Alpha channels, mattes and ugly edges: fixing PNG transparency", "description": "How PNG stores transparency, why straight alpha beats premultiplied for editing, and where the white fringe on a cutout really comes from \u2014 with checks that catch it.", "url": "https://www.pngtoolbox.com/alpha-transparency-guide.html", "inLanguage": "en", "datePublished": "2026-10-22", "dateModified": "2026-10-22", "author": {"@type": "Organization", "name": "PNGToolbox Editorial", "url": "https://www.pngtoolbox.com/editorial-standards.html"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "isPartOf": {"@type": "WebSite", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.pngtoolbox.com/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.pngtoolbox.com/guides.html"}, {"@type": "ListItem", "position": 3, "name": "Transparency", "item": "https://www.pngtoolbox.com/alpha-transparency-guide.html"}]}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XDE7CN1DH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-XDE7CN1DH1");
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="./#tool">Converter</a><a href="./guides.html">Guides</a><a href="./benchmark-2026.html">Benchmark</a><a href="./about.html">About</a></nav>
+      <button class="theme-toggle" type="button" onclick="__setTheme(document.documentElement.classList.contains('dark')?'light':'dark')" aria-label="Toggle dark mode">🌙</button>
+    </header>
+<nav class="crumb" aria-label="Breadcrumb"><a href="./">Home</a><span aria-hidden="true">/</span><a href="./guides.html">Guides</a><span aria-hidden="true">/</span><span>Transparency</span></nav>
+    <div class="wrap">
+      <div class="layout">
+        <main>
+          <p class="eyebrow">Transparency</p>
+          <h1 class="article-title">Alpha channels, mattes and ugly edges: why transparent PNGs go wrong</h1>
+          <p class="deck">Transparency is a fourth channel with its own rules. Get the matte wrong and a cutout looks perfect on white and broken on dark. Here is what is actually happening.</p>
+          <div class="authorline">
+            <span><strong>By PNGToolbox Editorial</strong></span>
+            <span>Published 2026-10-22</span>
+            <span>Last reviewed 2026-10-22</span>
+            <span><a href="./editorial-standards.html">How we test</a></span>
+          </div>
+          <div class="prose">
+<div class="keyfacts"><h2>At a glance</h2><ul><li>Alpha is a separate, unassociated channel: zero means fully transparent, the maximum sample value means fully opaque, and PNG deliberately does not premultiply it.</li><li>Colour types 4 and 6 carry a real alpha channel; colour types 0, 2 and 3 use a <code>tRNS</code> chunk for one transparent colour or a per-palette alpha table.</li><li>Compositing is <code>alpha x foreground + (1 - alpha) x background</code>, computed on intensity samples rather than gamma-encoded ones. PNG defines the foreground and the mask, never the background.</li><li>Converting a transparent image to JPG does not hide the transparency: our test put transparent pixels 0.12 to 0.36 levels from pure white on average, which reads as a hard edge.</li><li>Halos are a colour problem, not an alpha problem. The semi-transparent pixels around a cutout still carry the background they were matted against.</li><li>Alpha is 8 or 16 bits and always shares the sample depth of the colour channels in the same image.</li></ul></div>
+<h2 id="what-an-alpha-channel-actually-stores">What an alpha channel actually stores</h2>
+<p>An alpha channel is a coverage value, not a colour. In an 8-bit PNG it holds 0 to 255; in a 16-bit PNG, 0 to 65535. "An alpha value of zero represents full transparency, and a value of 2^sampledepth - 1 represents full opacity", with everything between meaning partially transparent — pixels that get blended with whatever is behind them.</p>
+<p>PNG's choice not to premultiply is deliberate and it is the single fact that explains most transparency bugs. The specification says samples "are not premultiplied by the alpha value assigned to the pixel. This rule is sometimes called 'unassociated' or 'non-premultiplied' alpha", and justifies it in the same sentence: an image editor can take a PNG and change its transparency easily. A premultiplied pixel — one whose colour values have already been scaled by its own alpha — is, in the spec's words, "already composited against a black background". You cannot undo that cleanly. You can only guess at the original colour.</p>
+<p>That gives PNG its two useful properties: transparency is editable after the fact, and a colour that happens to be stored under a transparent pixel is still a real colour that can be revealed later. It also creates the situation described in the next three sections, where a colour survives inside pixels nobody can see and then reappears as a fringe when the image is composited somewhere new.</p>
+<h2 id="how-png-records-transparency-by-colour-type">How PNG records transparency, by colour type</h2>
+<p>Only two of PNG's five image types have a true alpha channel. The rest encode transparency as a special case, and the difference matters when you edit the file:</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Colour type</th>
+<th>Image type</th>
+<th>How transparency is stored</th>
+<th>Limitation</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>Greyscale</td>
+<td><code>tRNS</code> names one grey sample value that becomes fully transparent</td>
+<td>Every other pixel is fully opaque</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Truecolour</td>
+<td><code>tRNS</code> names one RGB value that becomes fully transparent</td>
+<td>No partial transparency anywhere; the value is exact, so a colour close to it stays opaque</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Indexed-colour</td>
+<td><code>tRNS</code> supplies one alpha byte per palette entry, where "0 is fully transparent, 255 is fully opaque, regardless of image bit depth"</td>
+<td>At most 256 alpha values, one per palette entry</td>
+</tr>
+<tr>
+<td><strong class="best">4</strong></td>
+<td>Greyscale with alpha</td>
+<td>A real second channel beside each sample</td>
+<td>Two channels per pixel instead of one</td>
+</tr>
+<tr>
+<td><strong class="best">6</strong></td>
+<td>Truecolour with alpha</td>
+<td>A real fourth channel beside R, G and B</td>
+<td>Four channels per pixel instead of three</td>
+</tr>
+</tbody></table></div>
+<p>Two <code>tRNS</code> details cause real damage. For indexed images the chunk may be shorter than the palette, and any entry it does not cover is assumed fully opaque — so a tool that trims the chunk silently changes what is transparent. And for greyscale and truecolour images the transparent value is matched exactly: anti-aliased text on a background you chroma-keyed will leave an opaque halo one shade off your key colour. A <code>tRNS</code> chunk "shall not appear for color types 4 and 6", because those types already carry transparency in every pixel.</p>
+<p>The practical read: if you need partial transparency, you need colour type 4 or 6, which means the file carries two or four channels of data per pixel whether or not most of the image is opaque. An indexed PNG with <code>tRNS</code> is far cheaper — one byte per pixel plus a small table — but its transparency is categorical. Pixels are opaque or transparent or one of the palette's alpha values, never a smooth gradient.</p>
+<h2 id="straight-versus-premultiplied-alpha">Straight versus premultiplied alpha</h2>
+<p>Straight alpha (PNG's default) keeps colour and coverage independent: RGB is the colour the pixel would have if it were fully opaque, and A says how much of it to show. Premultiplied alpha multiplies RGB by A at storage time, which makes compositing cheaper — the standard "over" operation is a single add instead of a multiply-add per channel — and is why renderers, video compositing tools and graphics APIs often work in premultiplied space.</p>
+<p>Both encodings describe the same pictures, but converting between them is lossy in one direction, and asymmetrically so:</p>
+<ol><li><strong>Premultiplied to straight</strong> divides each colour sample by its alpha and rescales to the bit depth, and "if the alpha value is zero, output black (zeroes)". Fully transparent pixels have no recoverable colour, so all of them become black — or whatever else a tool decides to invent.</li><li><strong>Straight to premultiplied</strong> multiplies instead. That is exact per pixel but throws away precision: at alpha 3/255 a colour channel has four representable values left, so a soft shadow quantises into a handful of steps.</li></ol>
+<p>The failure mode shows up after a round trip. A logo with a soft glow pushed through a pipeline that premultiplied and unpremultiplied it comes back with a grey haze in the faintest parts, because the colour that used to sit under an alpha of 2/255 is now a quantised guess. Writing premultiplied data into a PNG without the dividing step produces a file that looks correct on screen and wrong the moment someone paints a different background behind it.</p>
+<p>If you cannot tell which convention a tool uses, run one test. Fill a canvas with pure red, draw a soft-edged white shape, save as PNG, and sample a pixel on the edge: high stored red with low alpha means straight alpha; red falling in proportion to alpha means premultiplied.</p>
+<h2 id="the-matte-problem-where-white-fringes-come-from">The matte problem: where white fringes come from</h2>
+<p>Every image without an alpha channel has to be flattened onto something. JPG is that case by definition — it has no alpha channel at all — so exporting a transparent PNG to JPG must pick a background colour, and white is the usual default. Our benchmark measured what that costs: for both transparent test images, the transparent pixels came out of the JPG encode "0.12 to 0.36 levels away from pure white on average". On a white page that is invisible. On anything else it is a pale rectangle with a hard edge exactly where the alpha ended.</p>
+<p>That is the first fringe: the <em>area</em> fringe, visible on every background that is not the matte colour. The second one is subtler and survives the conversion back to PNG.</p>
+<p>Consider a cutout prepared by flattening a transparent product shot onto white and then removing the background with a colour-based selection. The pixels that were semi-transparent — the ones along a feathered edge — were blended with white before the selection tool ever saw them. If the tool only decides "background or not background", those pixels become opaque pixels whose colour is white mixed with the product. Ship that PNG on a dark blue page and every soft edge glows pale. Nothing is wrong with the alpha channel; the alpha channel was never the problem.</p>
+<p>Compare that with what PNG preserved in the same benchmark: for both RGBA sources, transparent pixel counts matched exactly, and every alpha value came back within 1/255 of the original — 229,211 transparent pixels of 640,000 for the logo, and 1,056,057 of 1,960,000 for the product cutout. PNG kept the mask perfectly in both directions. The damage happened upstream, in whatever produced the matte colour that the edge pixels still carry.</p>
+<h2 id="soft-edges-halos-and-defringing">Soft edges, halos and defringing</h2>
+<p>Once you know the fringe is colour trapped inside low-alpha pixels, the fixes get obvious and ordered.</p>
+<ul><li><strong>Keep colour and alpha together from the start.</strong> Cut out from the original unflattened source. If the only file you have is a JPEG of the product on white, you are reconstructing, not extracting — expect to spend time on the edge.</li><li><strong>Refine the mask, do not just threshold it.</strong> A hard threshold turns feathered pixels binary and leaves the matte colour attached to whatever survives. Selecting a slightly wider edge and feathering inward replaces contaminated pixels with a blend the compositor can work with.</li><li><strong>Use a defringe or "remove white matte" step.</strong> These operations subtract a scaled copy of the light background from edge pixels, which is the right idea mathematically and easy to over-apply; run it at low strength and check the result on both a white and a dark background.</li><li><strong>Set the colour of fully transparent pixels deliberately.</strong> The specification's encoder guidance is explicit here: transparent pixels "should all be assigned the same color value for best compression", and "the colors assigned to transparent pixels should be reasonable background colors whenever feasible". This is also exactly what oxipng's <code>--alpha</code> option does at a purely mechanical level, which its own documentation flags as technically lossy: it rewrites colour values under pixels you cannot see.</li><li><strong>Check the alpha, not the preview.</strong> Editors that show a checkerboard are telling you which pixels are transparent, not how transparent they are. Any pixel between 1 and 254 is a candidate fringe, and a soft-edged cutout has thousands of them.</li></ul>
+<p>The compressed-size angle is worth knowing too. The specification notes that "alpha is typically either zero or one for the vast majority of pixels in an image" and uses that as an argument for fast compositing paths. It applies to encoding as well: a hard-edged mask is nearly free in bytes, while a feathered mask turns a fourth channel into a near-photographic plane that DEFLATE cannot predict. Feathering everything as a habit costs real size on products, avatars and icon sets.## 8-bit versus 16-bit alpha</p>
+<p>The alpha channel uses the same sample depth as the colour channels it sits beside, so an 8-bit PNG has 256 alpha levels per pixel and a 16-bit PNG has 65,536. Both are legal for colour types 4 and 6; indexed images are restricted to 8-bit alpha values in <code>tRNS</code> anyway.</p>
+<p>Where the difference shows is smooth coverage over a large area: a soft drop shadow, glass, smoke, a vignette fading to nothing. At 8 bits the steps between adjacent alpha values are 1/255, so a shallow ramp across 900 pixels changes roughly three levels per step — visible as banding on a dark background, and worse after any resampling or compositing that stretches the ramp. A 16-bit alpha plane cuts those steps by a factor of 256.</p>
+<p>Where it does not show is anything with hard edges. A logo mask of 0s and 255s gains nothing from 16 bits, and the cost is real: 16-bit RGBA is eight bytes per pixel before compression, double the 8-bit version, and the extra precision is often false — interpolated by an editor from 8-bit data in the first place. Masters and print-bound art can reasonably be 16-bit; anything destined for a screen should be 8-bit. The screen is 8-bit per channel anyway.</p>
+<h2 id="resizing-and-compositing-transparent-images">Resizing and compositing transparent images</h2>
+<p>Scaling is where straight alpha gets punished. A resize filter treats each channel as an independent plane and averages neighbours, so around a soft edge the colour plane blends the product's colours with whatever colour the transparent pixels contain, while the alpha plane blends coverage. The two no longer describe the same pixel: you get a rim of colour that belongs to neither the object nor the background.</p>
+<p>The standard fix is to premultiply, resize, then unpremultiply — the compositing operation is linear in premultiplied space, which is exactly what an interpolation filter assumes. Adobe's tools, GIMP's "resize with premultiplied alpha" options and most libraries that expose an alpha-aware resize all do this. If you resize a straight-alpha PNG in a tool that does not, expect a one- or two-pixel dark or light rim; it is most obvious on a logo scaled down by a non-integer factor.</p>
+<p>Resampling kernels matter as much as alpha handling. In our own resampling measurements, upscaling a hard edge 4x left bilinear and nearest-neighbour with no overshoot at all, while bicubic overshot the edge by 10/255 on each side and Lanczos by 15/255 — a visible halo around every high-contrast boundary, which is precisely the artefact people blame on "transparency". Downscaling showed the mirror-image problem: against an area-average reference, nearest-neighbour left a halftone pattern with 6.85 standard deviations of noise where an ideal downscale leaves only 1.2. The full table is in the <a href="./screenshot-image-formats.html">screenshot and text guide</a>.</p>
+<p>There is also a straightforward ordering rule for the whole pipeline: crop, scale, adjust colour, and only then apply or refine the mask. Working on the mask last means the expensive edge work is not resampled afterwards, and it avoids the situation where a resize quietly recontaminates an edge you just cleaned.</p>
+<h2 id="a-pre-ship-checklist-for-transparent-pngs">A pre-ship checklist for transparent PNGs</h2>
+<p>Work through this before a cutout goes anywhere near a client, a marketplace or a store listing. Every item takes seconds and catches a different class of bug:</p>
+<ol><li><strong>View the file on two backgrounds.</strong> A white page and a dark page, side by side. Fringes that survive both are in the data, not in the preview.</li><li><strong>Check that transparent really is transparent.</strong> In a file manager or editor, transparency should show as a checkerboard, not as white, black or a solid colour block. A "transparent" PNG that displays on white has been flattened.</li><li><strong>Sample a few edge pixels.</strong> Look for any pixel with alpha between 1 and 254 whose colour matches an old background rather than the object. Those are the pixels that will halo.</li><li><strong>Confirm the colour type.</strong> An indexed PNG with a <code>tRNS</code> chunk cannot hold partial transparency; if the design needs a soft edge, the file has to be colour type 4 or 6.</li><li><strong>Resize once, from a premultiplied copy.</strong> Never iteratively rescale the same cutout; each pass compounds edge error on a file you cannot reconstitute.</li><li><strong>Keep a master.</strong> Save the layered or 16-bit version somewhere, because the exported PNG is a delivery format, not an archive. Editing it later means editing its current matte.</li><li><strong>Test the conversion target before you ship.</strong> If the consumer is a JPG-only upload form, a print pipeline or an old desktop tool, the matte colour is your decision to make deliberately rather than the tool's.</li><li><strong>Re-check the alpha after any conversion.</strong> Our benchmark shows PNG preserves it exactly, but that is a property of PNG, not of every tool that writes a <code>.png</code> file.</li></ol>
+<p>If the file in your hand is a WebP with a transparent background and the destination wants PNG, the transparent-tool flow in <a href="./#tool">the converter</a> decodes and re-encodes without touching the alpha plane, and the <a href="./png-transparent-background.html">transparent-background guide</a> covers the cases where the background itself has to be removed. When the question is which format should carry the transparency in the first place — PNG, WebP, AVIF or JPEG XL — that comparison, with current browser support, is <a href="./image-formats-compared.html">here</a>.</p>
+<div class="cta-band"><div><h2>Convert WebP files to PNG or JPG — in your browser</h2><p>Batch conversion, ZIP download, transparency kept. No upload.</p></div><a class="btn" href="./#tool">Open the converter</a></div>
+<h2 id="sources">Sources</h2>
+<ul><li>PNG Specification, Third Edition — alpha representation and unassociated alpha, <code>tRNS</code> semantics, compositing equation, encoder guidance on transparent pixel colour — https://www.w3.org/TR/png-3/</li><li>MDN: Image file format guide — JPEG has no alpha channel; alpha support in AVIF, WebP and JPEG XL — https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types</li><li>WebP compression documentation (Google) — lossy RGB with a lossless 8-bit alpha channel — https://developers.google.com/speed/webp/docs/compression</li><li>Oxipng documentation — <code>--alpha</code> rewrites the colour of fully transparent pixels and is flagged as technically lossy — https://github.com/oxipng/oxipng</li><li>Measured alpha and matte results: study-a-format.csv, study-c-resize.csv — ./assets/bench/</li></ul>
+          </div>
+<div class="related"><h2>Related reading</h2><div class="related-grid"><a href="./how-to-make-png-background-transparent.html"><strong>Making a PNG background transparent</strong><span>The editing steps behind a clean cutout</span></a><a href="./png-transparent-background.html"><strong>Transparent backgrounds explained</strong><span>When a PNG has to carry its own background</span></a><a href="./image-formats-compared.html"><strong>PNG vs WebP vs AVIF</strong><span>Which formats keep alpha and which destroy it</span></a><a href="./benchmark-2026.html"><strong>Alpha survival, measured</strong><span>Transparent pixel counts before and after conversion</span></a></div></div>
+        </main>
+<aside class="rail" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#what-an-alpha-channel-actually-stores">What an alpha channel actually stores</a></li><li><a href="#how-png-records-transparency-by-colour-type">How PNG records transparency, by colour type</a></li><li><a href="#straight-versus-premultiplied-alpha">Straight versus premultiplied alpha</a></li><li><a href="#the-matte-problem-where-white-fringes-come-from">The matte problem: where white fringes come from</a></li><li><a href="#soft-edges-halos-and-defringing">Soft edges, halos and defringing</a></li><li><a href="#resizing-and-compositing-transparent-images">Resizing and compositing transparent images</a></li><li><a href="#a-pre-ship-checklist-for-transparent-pngs">A pre-ship checklist for transparent PNGs</a></li><li><a href="#sources">Sources</a></li></ol></aside>
+      </div>
+    </div>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <p>PNGToolbox builds browser-based WebP and PNG tools and publishes the measurements behind them.</p>
+    </div>
+    <div class="footer-col">
+      <strong>Tools</strong>
+      <a href="./#tool">WebP to PNG &amp; JPG converter</a>
+      <a href="./how-to-make-png-background-transparent.html">Make a PNG background transparent</a>
+      <a href="./convert-multiple-webp-to-png.html">Batch WebP conversion</a>
+    </div>
+    <div class="footer-col">
+      <strong>Guides</strong>
+      <a href="./guides.html">All guides</a>
+      <a href="./benchmark-2026.html">Format benchmark (measured)</a>
+      <a href="./png-compression-guide.html">How PNG compression works</a>
+      <a href="./alpha-transparency-guide.html">Alpha and transparency</a>
+      <a href="./image-formats-compared.html">Choosing an image format</a>
+    </div>
+    <div class="footer-col">
+      <strong>Reference</strong>
+      <a href="./webp-vs-png.html">WebP vs PNG</a>
+      <a href="./what-is-png.html">What is PNG</a>
+      <a href="./png-file-size.html">Why PNG files get large</a>
+      <a href="./png-output-testing.html">PNG output testing method</a>
+    </div>
+    <div class="footer-col">
+      <strong>Site</strong>
+      <a href="./about.html">About &amp; how we test</a>
+      <a href="./editorial-standards.html">Editorial standards</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 PNGToolbox. All rights reserved.</span>
+    <span>All processing happens locally in your browser.</span>
+  </div>
+</footer>
+  </body>
+</html>

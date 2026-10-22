@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <title>PNG vs WebP vs JPEG vs AVIF vs JPEG XL: how to choose in 2026 | PNGToolbox</title>
+    <meta name="description" content="Verified 2026 browser support for WebP, AVIF and JPEG XL, what each format costs in bytes on our test images, and a decision table for what you are shipping." />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://www.pngtoolbox.com/image-formats-compared.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/image-formats-compared.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.pngtoolbox.com/image-formats-compared.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PNGToolbox" />
+    <meta property="og:title" content="PNG vs WebP vs JPEG vs AVIF vs JPEG XL: how to choose in 2026" />
+    <meta property="og:description" content="Verified 2026 browser support for WebP, AVIF and JPEG XL, what each format costs in bytes on our test images, and a decision table for what you are shipping." />
+    <meta property="og:url" content="https://www.pngtoolbox.com/image-formats-compared.html" />
+    <meta property="og:image" content="https://www.pngtoolbox.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./identity-png.css" />
+    <script>(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.add(d?"dark":"light");window.__setTheme=function(x){r.classList.remove("dark","light");r.classList.add(x);try{localStorage.setItem("theme",x)}catch(e){};var b=document.querySelectorAll(".theme-toggle");for(var i=0;i<b.length;i++)b[i].textContent=x==="dark"?"\u2600\uFE0F":"\uD83C\uDF19";};window.__setTheme(d?"dark":"light");}catch(e){}})();</script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "Article", "headline": "PNG vs WebP vs JPEG vs AVIF vs JPEG XL: how to choose in 2026", "description": "Verified 2026 browser support for WebP, AVIF and JPEG XL, what each format costs in bytes on our test images, and a decision table for what you are shipping.", "url": "https://www.pngtoolbox.com/image-formats-compared.html", "inLanguage": "en", "datePublished": "2026-10-22", "dateModified": "2026-10-22", "author": {"@type": "Organization", "name": "PNGToolbox Editorial", "url": "https://www.pngtoolbox.com/editorial-standards.html"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "isPartOf": {"@type": "WebSite", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.pngtoolbox.com/"}, {"@type": "ListItem", "position": 2, "name": "Guides", "item": "https://www.pngtoolbox.com/guides.html"}, {"@type": "ListItem", "position": 3, "name": "Formats", "item": "https://www.pngtoolbox.com/image-formats-compared.html"}]}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XDE7CN1DH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-XDE7CN1DH1");
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="./#tool">Converter</a><a href="./guides.html">Guides</a><a href="./benchmark-2026.html">Benchmark</a><a href="./about.html">About</a></nav>
+      <button class="theme-toggle" type="button" onclick="__setTheme(document.documentElement.classList.contains('dark')?'light':'dark')" aria-label="Toggle dark mode">🌙</button>
+    </header>
+<nav class="crumb" aria-label="Breadcrumb"><a href="./">Home</a><span aria-hidden="true">/</span><a href="./guides.html">Guides</a><span aria-hidden="true">/</span><span>Formats</span></nav>
+    <div class="wrap">
+      <div class="layout">
+        <main>
+          <p class="eyebrow">Formats</p>
+          <h1 class="article-title">PNG, WebP, JPEG, AVIF or JPEG XL: how to choose a format in 2026</h1>
+          <p class="deck">Support data goes stale faster than advice about it. Here is where WebP, AVIF and JPEG XL actually stand in October 2026, and what each one costs you in bytes and compatibility.</p>
+          <div class="authorline">
+            <span><strong>By PNGToolbox Editorial</strong></span>
+            <span>Published 2026-10-22</span>
+            <span>Last reviewed 2026-10-22</span>
+            <span><a href="./editorial-standards.html">How we test</a></span>
+          </div>
+          <div class="prose">
+<div class="keyfacts"><h2>At a glance</h2><ul><li>WebP is effectively universal: caniuse puts full support at 97.08% of global usage, with full support from Chrome 32, Firefox 65 and Safari 16.</li><li>AVIF reaches 96.33%: Chrome 85, Edge 121, Firefox 93, Safari 16.4 — with Safari 16.1 to 16.3 partial and macOS 13 or later required.</li><li>JPEG XL shipped in Chrome 155 and Firefox 158; Safari 17 decodes still files but cannot stream them progressively, and caniuse still lists Edge and Samsung Internet as unsupported while MDN lists Edge 155.</li><li>JPEG is still the only format every upload form, printer and photo lab accepts without questions.</li><li>PNG is still the only format that guarantees exact pixels and full alpha everywhere, on every platform.</li><li>Measured cost of choosing lossless for a photograph: 1106.8 KB as PNG against 60.7 KB for the WebP at quality 80 the same pixels came from.</li></ul></div>
+<h2 id="where-the-formats-stand-in-2026">Where the formats stand in 2026</h2>
+<p>Support is the first question, because it decides whether any of the size arguments matter. These version numbers come from caniuse's feature data and MDN's format guide, read on 22 October 2026.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Format</th>
+<th>MIME type</th>
+<th>First full support</th>
+<th>Global usage (caniuse)</th>
+<th>Caveats worth knowing</th>
+</tr></thead><tbody>
+<tr>
+<td>JPEG</td>
+<td><code>image/jpeg</code></td>
+<td>All versions of every major browser</td>
+<td>—</td>
+<td>No alpha channel at all</td>
+</tr>
+<tr>
+<td>PNG</td>
+<td><code>image/png</code></td>
+<td>All versions of every major browser</td>
+<td>—</td>
+<td>Lossless, so large on photographic content</td>
+</tr>
+<tr>
+<td>WebP</td>
+<td><code>image/webp</code></td>
+<td>Chrome 32, Firefox 65, Safari 16, Edge 18</td>
+<td><strong class="best">97.08%</strong></td>
+<td>Chrome 9–31 was partial: no lossless, alpha or animation before 32; Safari 14–15.6 needed macOS 11 Big Sur</td>
+</tr>
+<tr>
+<td>AVIF</td>
+<td><code>image/avif</code></td>
+<td>Chrome 85, Firefox 93, Safari 16.4, Edge 121</td>
+<td>96.33%</td>
+<td>No progressive rendering; Safari 16.1–16.3 still images only and macOS 13+; Firefox needed 113 for animated sequences</td>
+</tr>
+<tr>
+<td>JPEG XL</td>
+<td><code>image/jxl</code></td>
+<td>Chrome 155, Firefox 158, Safari 17</td>
+<td>43.26% full, 16.93% partial</td>
+<td>Safari decodes stills but not progressively; caniuse lists Edge and Samsung Internet as unsupported, MDN lists Edge 155</td>
+</tr>
+<tr>
+<td>GIF</td>
+<td><code>image/gif</code></td>
+<td>All versions of every major browser</td>
+<td>—</td>
+<td>256-colour palette, one transparent colour</td>
+</tr>
+</tbody></table></div>
+<p>Two entries in that table deserve more than a line.</p>
+<p><strong>JPEG XL has two supporters that disagree.</strong> Caniuse's Edge row stays at "not supported" through Edge 155, while MDN's browser compatibility for JPEG XL lists "Chrome 155, Edge 155, Firefox 158, and Safari 17". Since Edge tracks Chromium's engine, the likely explanation is that caniuse has not picked up a Chromium flag change in the Edge channel — but we are not going to declare one of them wrong. Test it: drag a <code>.jxl</code> into Edge on your own machine before betting a build pipeline on it. The Safari caveat is better documented and more consequential: Safari "does not support progressive download of JPEG XL files", so the file has to arrive complete before anything appears.</p>
+<p><strong>AVIF's support is broad but its feature set is not uniform.</strong> Caniuse's notes for Safari 16.1 through 16.3 read "supports still images. Animated image sequences are not supported", and Safari 16.1 requires macOS 13 Ventura or later, not the older macOS versions AVIF arrived for. Firefox 93 decoded still AVIF; animated sequences needed a preference in 111 and were on by default in 113. Chrome has carried full support since 85 with no qualifiers. So "AVIF works" is true, and "AVIF works the same way everywhere" is not.</p>
+<h2 id="what-actually-changed-since-the-last-round-of-format-article">What actually changed since the last round of format articles</h2>
+<p>Three things, and they point in different directions.</p>
+<ol><li><strong>WebP stopped being a decision.</strong> At 97.08% it is in the same category as JPEG and PNG for practical purposes. If you are choosing a lossy format today, WebP is the safe default and AVIF is the upgrade, not the other way around.</li><li><strong>JPEG XL went from "shipping soon" to shipping.</strong> Chrome 155 and Firefox 158 both decode it by default, after years of flag-gated experiments in both engines — caniuse's Chrome row alone shows the sequence: <code>enable-jxl</code> flag at 91, then 145 with progressive decoding still missing behind the flag, then a clean yes at 155. Firefox's path ran through Firefox Labs opt-in before 158. What has not changed is reachability: 43.26% full plus 16.93% partial is a two-browser story, and Apple's implementation renders stills without progressive display.</li><li><strong>AVIF is where WebP was in 2020.</strong> Every engine has shipped it, and the deployment question has moved from "is it supported" to "have you wired up fallbacks".</li></ol>
+<p>The direction of travel is clear: lossless is a niche for assets that need guarantees, and the interesting competition is between lossy codecs. That does not make PNG obsolete — it makes PNG's job narrower and more specific, which is what the rest of this guide is about.</p>
+<p>One more thing has not changed, and it is the one that costs people the most time: the format a browser can decode is not the same as the format a destination accepts. A CMS, a marketplace listing form, a print pipeline, an email client or a colleague's older editor each make their own decision, and none of them consult caniuse. Support percentages tell you what is safe to <em>serve</em>; the rules of the platform tell you what is safe to <em>submit</em>. When the destination has handed you a folder of WebP files, <a href="./convert-multiple-webp-to-png.html">converting several at once</a> is faster than working through them one by one.</p>
+<h2 id="format-choice-by-use-case">Format choice by use case</h2>
+<p>If you only read one table on this page, read this one. "Bytes" means what our own conversion benchmark measured on the same six images; "risk" means what breaks when the destination does not cooperate.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>What you are shipping</th>
+<th>First choice</th>
+<th>Fallback</th>
+<th>Avoid</th>
+</tr></thead><tbody>
+<tr>
+<td>Photograph on a website</td>
+<td>AVIF</td>
+<td>WebP, then JPEG q80–85</td>
+<td>PNG (18.2x the WebP in our test)</td>
+</tr>
+<tr>
+<td>Photograph going to print or a lab</td>
+<td>JPEG at high quality, 4:4:4</td>
+<td>TIFF/PNG for masters</td>
+<td>Repeated JPEG re-saves</td>
+</tr>
+<tr>
+<td>Logo, icon or UI asset with alpha</td>
+<td>PNG</td>
+<td>WebP</td>
+<td>JPEG (no alpha)</td>
+</tr>
+<tr>
+<td>Screenshot of an app or web page</td>
+<td>PNG</td>
+<td>WebP lossless, AVIF</td>
+<td>JPEG q95 (752.0 KB for the same pixels)</td>
+</tr>
+<tr>
+<td>Image in an email</td>
+<td>JPEG or PNG</td>
+<td>—</td>
+<td>AVIF and JXL</td>
+</tr>
+<tr>
+<td>Marketplace, job board or form that validates uploads</td>
+<td>PNG or JPEG</td>
+<td>WebP last, and only if listed</td>
+<td>Anything "modern" without a fallback</td>
+</tr>
+<tr>
+<td>Master copy you will edit repeatedly</td>
+<td>PNG (or JXL if your tools read it)</td>
+<td>TIFF</td>
+<td>Any lossy format</td>
+</tr>
+<tr>
+<td>Animation</td>
+<td>APNG or animated WebP</td>
+<td>GIF when something old must read it</td>
+<td>Stills in a sprite sheet you have to maintain</td>
+</tr>
+<tr>
+<td>Art with fine smooth gradients</td>
+<td>AVIF</td>
+<td>WebP</td>
+<td>PNG</td>
+</tr>
+</tbody></table></div>
+<p>The pattern: transparency and repeat editing pull you toward PNG; continuous-tone photography pulls you toward AVIF or WebP; the destination's rules override both.</p>
+<p>A thirty-second version of the same decision, in order. Ask who has to open this file. If the answer is "a browser I control", choose the smallest format that keeps what matters — AVIF for photographs, PNG for flat art, WebP when you want one format to cover both. If the answer is "a form, an app or a person", read that destination's documented requirements first, because they are not negotiable and they are usually a short list. If the answer is "I do not know yet", PNG and JPEG are the only two answers that have never caused a rejected upload.</p>
+<h2 id="what-lossy-formats-buy-you-on-a-photograph">What lossy formats buy you on a photograph</h2>
+<p>On continuous-tone images the case for lossy is not subtle, and our measurements match the claims the format owners publish. The same 1600x1200 photograph came out as 1106.8 KB in PNG, 140.3 KB as JPEG at quality 85 and 54.5 KB re-encoded as WebP at quality 80 — against a source WebP of 60.7 KB.</p>
+<p>MDN's format guide summarises the encoder-side claims: "lossy WebP images are on average 25–35% smaller than JPEG images of visually similar compression levels", "lossless WebP images are typically 26% smaller than the same images in PNG format", and for AVIF, that "lossy AVIF images are around 50% smaller than JPEG images". Google's own WebP documentation rounds that to "typically 30% smaller than comparable JPEGs and PNGs". Treat vendor figures as directional rather than exact — they are measured on the vendor's corpus with the vendor's encoder, which is why we publish ours.</p>
+<p>There is also a niche inside PNG worth knowing about before you abandon it: if the photograph has few enough distinct colours to fit a 256-entry palette, an indexed-colour PNG can be dramatically smaller than an unindexed one, and pngquant does exactly that as a lossy step, "often as much as 70%" according to its documentation. That is a lossy PNG, so the guarantees are gone — but if you wanted guarantees, you would not be palette-quantising a photograph.</p>
+<figure class="figure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" font-family="ui-sans-serif,system-ui,Segoe UI,Helvetica,Arial" aria-label="Same images, three formats: output size">
+<text x="4" y="20" font-size="15" font-weight="700" fill="#17181c">Same images, three formats: output size</text>
+<line x1="58" y1="288.0" x2="704" y2="288.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="292.0" font-size="11" text-anchor="end" fill="#8b8e98">0</text>
+<line x1="58" y1="227.0" x2="704" y2="227.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="231.0" font-size="11" text-anchor="end" fill="#8b8e98">324</text>
+<line x1="58" y1="166.0" x2="704" y2="166.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="170.0" font-size="11" text-anchor="end" fill="#8b8e98">648</text>
+<line x1="58" y1="105.0" x2="704" y2="105.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="109.0" font-size="11" text-anchor="end" fill="#8b8e98">972</text>
+<line x1="58" y1="44.0" x2="704" y2="44.0" stroke="#e7e4de" stroke-width="1"/>
+<text x="50" y="48.0" font-size="11" text-anchor="end" fill="#8b8e98">1,296</text>
+<rect x="77.4" y="79.6" width="27.5" height="208.4" rx="3" fill="#1d7a5c"/>
+<text x="91.1" y="74.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">1,107</text>
+<rect x="107.3" y="261.6" width="27.5" height="26.4" rx="3" fill="#c98a3c"/>
+<text x="121.0" y="256.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">140</text>
+<rect x="137.2" y="276.6" width="27.5" height="11.4" rx="3" fill="#3f63c4"/>
+<text x="151.0" y="271.6" font-size="10.5" text-anchor="middle" fill="#4c4f58">61</text>
+<text x="111.8" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">photo</text>
+<rect x="185.0" y="70.1" width="27.5" height="217.9" rx="3" fill="#1d7a5c"/>
+<text x="198.8" y="65.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">1,157</text>
+<rect x="215.0" y="225.5" width="27.5" height="62.5" rx="3" fill="#c98a3c"/>
+<text x="228.7" y="220.5" font-size="10.5" text-anchor="middle" fill="#4c4f58">332</text>
+<rect x="244.9" y="258.3" width="27.5" height="29.7" rx="3" fill="#3f63c4"/>
+<text x="258.6" y="253.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">158</text>
+<text x="219.5" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">screenshot</text>
+<rect x="292.7" y="274.8" width="27.5" height="13.2" rx="3" fill="#1d7a5c"/>
+<text x="306.5" y="269.8" font-size="10.5" text-anchor="middle" fill="#4c4f58">70</text>
+<rect x="322.6" y="282.1" width="27.5" height="5.9" rx="3" fill="#c98a3c"/>
+<text x="336.4" y="277.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">31</text>
+<rect x="352.5" y="286.5" width="27.5" height="1.5" rx="3" fill="#3f63c4"/>
+<text x="366.3" y="281.5" font-size="10.5" text-anchor="middle" fill="#4c4f58">8</text>
+<text x="327.2" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">logo</text>
+<rect x="400.4" y="252.2" width="27.5" height="35.8" rx="3" fill="#1d7a5c"/>
+<text x="414.1" y="247.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">190</text>
+<rect x="430.3" y="273.1" width="27.5" height="14.9" rx="3" fill="#c98a3c"/>
+<text x="444.0" y="268.1" font-size="10.5" text-anchor="middle" fill="#4c4f58">79</text>
+<rect x="460.2" y="283.3" width="27.5" height="4.7" rx="3" fill="#3f63c4"/>
+<text x="474.0" y="278.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">25</text>
+<text x="434.8" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">flat-art</text>
+<rect x="508.0" y="212.4" width="27.5" height="75.6" rx="3" fill="#1d7a5c"/>
+<text x="521.8" y="207.4" font-size="10.5" text-anchor="middle" fill="#4c4f58">402</text>
+<rect x="538.0" y="272.4" width="27.5" height="15.6" rx="3" fill="#c98a3c"/>
+<text x="551.7" y="267.4" font-size="10.5" text-anchor="middle" fill="#4c4f58">83</text>
+<rect x="567.9" y="283.3" width="27.5" height="4.7" rx="3" fill="#3f63c4"/>
+<text x="581.6" y="278.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">25</text>
+<text x="542.5" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">product-cutout</text>
+<rect x="615.7" y="262.2" width="27.5" height="25.8" rx="3" fill="#1d7a5c"/>
+<text x="629.5" y="257.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">137</text>
+<rect x="645.6" y="274.3" width="27.5" height="13.7" rx="3" fill="#c98a3c"/>
+<text x="659.4" y="269.3" font-size="10.5" text-anchor="middle" fill="#4c4f58">73</text>
+<rect x="675.5" y="286.2" width="27.5" height="1.8" rx="3" fill="#3f63c4"/>
+<text x="689.3" y="281.2" font-size="10.5" text-anchor="middle" fill="#4c4f58">9</text>
+<text x="650.2" y="306.0" font-size="11.5" text-anchor="middle" fill="#17181c">gradient</text>
+<rect x="58" y="345" width="11" height="11" rx="2" fill="#1d7a5c"/>
+<text x="74" y="354" font-size="11.5" fill="#4c4f58">PNG output</text>
+<rect x="150" y="345" width="11" height="11" rx="2" fill="#c98a3c"/>
+<text x="166" y="354" font-size="11.5" fill="#4c4f58">JPG q85</text>
+<rect x="221" y="345" width="11" height="11" rx="2" fill="#3f63c4"/>
+<text x="237" y="354" font-size="11.5" fill="#4c4f58">WebP q80 source</text>
+<text x="704" y="354" font-size="11" text-anchor="end" fill="#8b8e98">KB</text>
+</svg><figcaption>The same six test images encoded as PNG, JPG q85 and WebP q80, against the WebP source each was decoded from.</figcaption></figure>
+<h2 id="where-lossless-still-wins-outright">Where lossless still wins outright</h2>
+<p>Screenshots, UI assets, diagrams, text on flat colour and line art invert the picture completely, because their information lives in exactly the places a block-based lossy codec handles worst: hard edges, high-contrast type and large single-colour areas. Our screenshot test made the point twice — the PNG output was 1157.2 KB, the lossy WebP re-encode of the same pixels was 152.8 KB, and JPEG's quality dial went from 170.9 KB at quality 40 to 752.0 KB at quality 95 while SSIM moved only from 0.9173 to 0.9345 and PSNR stayed within 0.05 dB of 26.7. You can spend four times the bytes and get the same picture back.</p>
+<p>The same logic covers logos and icons, which additionally need alpha. If the least confident part of this decision is which lossy format to fall back on, the <a href="./screenshot-image-formats.html">screenshot and text-heavy guide</a> works through the numbers in detail, and the <a href="./png-compression-guide.html">PNG compression guide</a> explains what to change, and <a href="./png-file-size.html">why PNG files get large</a> is the same argument as a checklist.</p>
+<h2 id="transparency-format-by-format">Transparency, format by format</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Format</th>
+<th>Alpha support</th>
+<th>How it behaves</th>
+</tr></thead><tbody>
+<tr>
+<td>PNG</td>
+<td><strong class="best">Full, 8- or 16-bit per sample</strong></td>
+<td>Unassociated alpha, preserved exactly; colour types 4 and 6, or a <code>tRNS</code> chunk</td>
+</tr>
+<tr>
+<td>WebP</td>
+<td>Full, 8-bit</td>
+<td>Google's documentation highlights "lossy RGB with lossless alpha", a combination no older format offers</td>
+</tr>
+<tr>
+<td>AVIF</td>
+<td>Full</td>
+<td>Listed by MDN among AVIF's features; carries alpha in the AVIF/HEIF container</td>
+</tr>
+<tr>
+<td>JPEG XL</td>
+<td>Full</td>
+<td>MDN lists transparency alongside HDR, wide gamut and animation</td>
+</tr>
+<tr>
+<td>JPEG</td>
+<td><strong class="best">None</strong></td>
+<td>Transparency must be flattened onto a matte colour you choose</td>
+</tr>
+<tr>
+<td>GIF</td>
+<td>One index</td>
+<td>One palette entry may be fully transparent; no partial coverage</td>
+</tr>
+</tbody></table></div>
+<p>Our benchmark put numbers on the difference: PNG preserved the alpha plane exactly in both transparent test images — transparent pixel counts matched and every alpha value landed within 1/255 of the original — while the JPEG encode put transparent pixels 0.12 to 0.36 levels from pure white on average.</p>
+<p>One consequence is easy to miss. WebP's lossy-RGB-with-lossless-alpha mode is often the smallest way to <em>deliver</em> a transparent product shot, and it is a poor way to <em>edit</em> one, because the colour data has already been quantised and every editing step starts from that. The normal workflow is to keep a PNG master and export a WebP for the page. If the WebP is all you have — a supplier sent it, or it came off a marketplace listing whose copy you no longer control — converting it back to PNG does not recover the lost colour detail, but it does give you a file your editor can cut, resize and mask without compounding the loss further.</p>
+<h2 id="animation-gif-apng-animated-webp-animated-avif">Animation: GIF, APNG, animated WebP, animated AVIF</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr>
+<th>Format</th>
+<th>Colour depth</th>
+<th>Alpha</th>
+<th>Browser support</th>
+</tr></thead><tbody>
+<tr>
+<td>GIF</td>
+<td>8-bit indexed, 256 colours</td>
+<td>One transparent index</td>
+<td>All versions of every major browser</td>
+</tr>
+<tr>
+<td>APNG</td>
+<td>Same depths as PNG, including 24-bit</td>
+<td>Full</td>
+<td>Chrome 59, Edge 12, Firefox 3, Opera 46, Safari 8</td>
+</tr>
+<tr>
+<td>Animated WebP</td>
+<td>True colour</td>
+<td>Full, 8-bit</td>
+<td>Full WebP support: Chrome 32, Firefox 65, Safari 16</td>
+</tr>
+<tr>
+<td>Animated AVIF</td>
+<td>High bit depth, HDR</td>
+<td>Full</td>
+<td>Firefox 113+, Chrome 85+, Safari 16.4+; Safari 16.1–16.3 did not support sequences</td>
+</tr>
+</tbody></table></div>
+<p>APNG's advantage over GIF is not subtle: the PNG specification positions it as "a replacement for simple animated images that have traditionally used the GIF format, while adding support for 24-bit images and 8-bit transparency, which GIF lacks". Because APNG files are PNG files, an old decoder that ignores the animation chunks still shows the static image instead of failing — which is why it is a safe replacement for GIF in contexts that already accept PNG.</p>
+<p>Size is the catch. Every APNG frame is a lossless image, so a long animation is expensive in a way GIF's palette trickery at least kept small. If both the delivery target and the artefact allow it, an animated WebP or AVIF is smaller, and for short UI animations the difference is usually worth the extra conversion step.</p>
+<h2 id="shipping-a-modern-format-without-breaking-old-clients">Shipping a modern format without breaking old clients</h2>
+<p>A format choice you cannot fall back from is not a choice, it is a bet. Every one of the newer formats has a cheap fallback mechanism, and it costs you one extra element in the markup:</p>
+<pre><code class="language-html">&lt;picture&gt;
+  &lt;source srcset=&quot;photo.avif&quot; type=&quot;image/avif&quot;&gt;
+  &lt;source srcset=&quot;photo.webp&quot; type=&quot;image/webp&quot;&gt;
+  &lt;img src=&quot;photo.jpg&quot; alt=&quot;Product on a workbench&quot;
+       width=&quot;1600&quot; height=&quot;1200&quot; loading=&quot;lazy&quot;&gt;
+&lt;/picture&gt;</code></pre>
+<p>The browser walks the sources in order and uses the first type it understands, so AVIF-capable clients never download the JPEG and nothing older than AVIF ever sees the <code>.avif</code>. Keep the <code>width</code> and <code>height</code> attributes on the <code>img</code> so layout does not jump while the file downloads, and keep the <code>img</code> source a real, reasonably compressed JPEG rather than a placeholder.</p>
+<p>Four rules that stop fallbacks from becoming their own problem:</p>
+<ul><li><strong>Encode every format from the master, not from each other.</strong> An AVIF made from a WebP made from a JPEG compounds three generations of loss before anything reaches a screen.</li><li><strong>Do not mix dimensions between sources of the same picture.</strong> A 1600px AVIF beside a 4000px JPEG means the fallback silently becomes the heavy path for older devices.</li><li><strong>Serve the right MIME type.</strong> <code>image/avif</code>, <code>image/webp</code>, <code>image/jxl</code> are what the <code>type</code> attribute and content negotiation match against; a misconfigured server that sends <code>image/png</code> for a WebP file defeats the whole mechanism.</li><li><strong>Verify what was actually fetched.</strong> The network panel shows the file that landed, with its type and size. Checking it takes ten seconds and it is the only proof the <code>&lt;picture&gt;</code> element did what you intended.</li></ul>
+<p>CSS background images have no <code>&lt;picture&gt;</code> equivalent with the same reach. If a background is a modern-format file, either accept a single format for all clients, or handle the swap in script after testing for decoder support — but test, because a background that silently fails to render is worse than a slightly larger JPEG.</p>
+<p>For anything that is a delivered image rather than a rendered one — a file a person downloads, prints or uploads somewhere else — the compatibility question is answered by the recipient, not the browser. That is the whole reason our converter exists: <a href="./webp-to-png.html">turn a WebP into a PNG or JPG</a> when the destination demands it, rather than assuming the modern format will be understood.</p>
+<div class="cta-band"><div><h2>Convert WebP files to PNG or JPG — in your browser</h2><p>Batch conversion, ZIP download, transparency kept. No upload.</p></div><a class="btn" href="./#tool">Open the converter</a></div>
+<h2 id="sources">Sources</h2>
+<ul><li>Caniuse feature data: WebP, AVIF and JPEG XL support tables and global usage — https://caniuse.com/webp · https://caniuse.com/avif · https://caniuse.com/jpegxl</li><li>MDN: Image file format guide — browser versions, colour depth and feature lists per format — https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types</li><li>PNG Specification, Third Edition — APNG scope, alpha representation, <code>tRNS</code> — https://www.w3.org/TR/png-3/</li><li>Google WebP compression documentation — modes, transparency and typical savings — https://developers.google.com/speed/webp/docs/compression</li><li>JPEG XL overview, JPEG committee — ISO/IEC 18181, lossless JPEG transcoding, progressive coding — https://jpeg.org/jpegxl/</li><li>pngquant — lossy palette quantisation with alpha preserved — https://pngquant.org/</li><li>Measured sizes and scores used above: study-a-format.csv, study-b-jpeg-quality.csv — ./assets/bench/</li></ul>
+          </div>
+<div class="related"><h2>Related reading</h2><div class="related-grid"><a href="./screenshot-image-formats.html"><strong>Best format for screenshots</strong><span>Where lossless beats every lossy codec</span></a><a href="./benchmark-2026.html"><strong>Format benchmark (measured)</strong><span>The size multipliers quoted in this guide, with raw CSV</span></a><a href="./alpha-transparency-guide.html"><strong>Alpha channels and mattes</strong><span>What each format does to transparency</span></a><a href="./webp-to-png-troubleshooting.html"><strong>WebP to PNG troubleshooting</strong><span>When a conversion returns the wrong result</span></a></div></div>
+        </main>
+<aside class="rail" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#where-the-formats-stand-in-2026">Where the formats stand in 2026</a></li><li><a href="#what-actually-changed-since-the-last-round-of-format-article">What actually changed since the last round of format articles</a></li><li><a href="#format-choice-by-use-case">Format choice by use case</a></li><li><a href="#what-lossy-formats-buy-you-on-a-photograph">What lossy formats buy you on a photograph</a></li><li><a href="#where-lossless-still-wins-outright">Where lossless still wins outright</a></li><li><a href="#transparency-format-by-format">Transparency, format by format</a></li><li><a href="#animation-gif-apng-animated-webp-animated-avif">Animation: GIF, APNG, animated WebP, animated AVIF</a></li><li><a href="#shipping-a-modern-format-without-breaking-old-clients">Shipping a modern format without breaking old clients</a></li><li><a href="#sources">Sources</a></li></ol></aside>
+      </div>
+    </div>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <p>PNGToolbox builds browser-based WebP and PNG tools and publishes the measurements behind them.</p>
+    </div>
+    <div class="footer-col">
+      <strong>Tools</strong>
+      <a href="./#tool">WebP to PNG &amp; JPG converter</a>
+      <a href="./how-to-make-png-background-transparent.html">Make a PNG background transparent</a>
+      <a href="./convert-multiple-webp-to-png.html">Batch WebP conversion</a>
+    </div>
+    <div class="footer-col">
+      <strong>Guides</strong>
+      <a href="./guides.html">All guides</a>
+      <a href="./benchmark-2026.html">Format benchmark (measured)</a>
+      <a href="./png-compression-guide.html">How PNG compression works</a>
+      <a href="./alpha-transparency-guide.html">Alpha and transparency</a>
+      <a href="./image-formats-compared.html">Choosing an image format</a>
+    </div>
+    <div class="footer-col">
+      <strong>Reference</strong>
+      <a href="./webp-vs-png.html">WebP vs PNG</a>
+      <a href="./what-is-png.html">What is PNG</a>
+      <a href="./png-file-size.html">Why PNG files get large</a>
+      <a href="./png-output-testing.html">PNG output testing method</a>
+    </div>
+    <div class="footer-col">
+      <strong>Site</strong>
+      <a href="./about.html">About &amp; how we test</a>
+      <a href="./editorial-standards.html">Editorial standards</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 PNGToolbox. All rights reserved.</span>
+    <span>All processing happens locally in your browser.</span>
+  </div>
+</footer>
+  </body>
+</html>
