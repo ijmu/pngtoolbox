@@ -1005,3 +1005,7 @@ html.light {
 }
 .theme-toggle { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--surface); cursor: pointer; font-size: 1.05rem; line-height: 1; transition: border-color 0.2s ease, transform 0.2s ease; }
 .theme-toggle:hover { border-color: var(--accent); transform: rotate(12deg); }
+
+/* Batch summary and before/after toggle in the converter report */
+.webp-summary { margin: 0 0 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-soft); font-size: 0.9rem; font-weight: 600; }
+.webp-output-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }

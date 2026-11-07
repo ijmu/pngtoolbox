@@ -1,5 +1,6 @@
 import type { Job, OutFormat, Result } from "./convert-core";
 import { convertJob, decodeJobs, downloadBlob, formatBytes, zipResults } from "./convert-core";
+import { readImageMeta, type ImageMeta } from "./meta";
 
 type Ui = {
   input: HTMLInputElement;
@@ -22,6 +23,7 @@ type Ui = {
   qualityInput: HTMLInputElement | null;
   qualityOutput: HTMLElement | null;
   note: HTMLElement | null;
+  summary: HTMLElement | null;
 };
 
 /**
@@ -56,11 +58,13 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
     qualityInput: root.querySelector<HTMLInputElement>("#webpPageQuality"),
     qualityOutput: root.querySelector<HTMLElement>("#webpQualityValue"),
     note: root.querySelector<HTMLElement>("#webpFormatNote"),
+    summary: root.querySelector<HTMLElement>("#webpPageSummary"),
   };
 
   let jobs: Job[] = [];
   let outputs: Result[] = [];
   const objectUrls: string[] = [];
+  const jobMeta = new Map<File, ImageMeta>();
   let busy = false;
 
   const currentFormat = (): OutFormat => {
@@ -90,6 +94,10 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
     outputs = [];
     ui.results.replaceChildren();
     ui.zipButton.hidden = true;
+    if (ui.summary) {
+      ui.summary.hidden = true;
+      ui.summary.textContent = "";
+    }
   }
 
   function renderJobs(): void {
@@ -111,10 +119,13 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
       row.className = "webp-queue-row";
       const text = document.createElement("div");
       const title = document.createElement("strong");
-      const meta = document.createElement("span");
+      const metaLine = document.createElement("span");
       title.textContent = job.file.name;
-      meta.textContent = `${job.width} × ${job.height} · ${formatBytes(job.file.size)}`;
-      text.append(title, meta);
+      const meta = jobMeta.get(job.file);
+      const exif = meta ? (meta.hasExif ? ` · EXIF${meta.hasGps ? "+GPS" : ""}` : " · no EXIF") : "";
+      metaLine.textContent = `${job.width} × ${job.height} · ${formatBytes(job.file.size)} · ${meta?.format ?? "image"}${exif}`;
+      if (meta && meta.fields.length) metaLine.title = meta.fields.map((field) => `${field.label}: ${field.value}`).join(" · ");
+      text.append(title, metaLine);
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "file-remove";
@@ -122,6 +133,7 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
       remove.setAttribute("aria-label", `Remove ${job.file.name}`);
       remove.addEventListener("click", () => {
         jobs = jobs.filter((item) => item !== job);
+        jobMeta.delete(job.file);
         renderJobs();
       });
       row.append(text, remove);
@@ -131,6 +143,16 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
 
   async function addFiles(files: File[]): Promise<void> {
     const { jobs: decoded, skipped } = await decodeJobs(files, options.accept);
+    // Inspect container + EXIF presence for the newly added files. Failures are
+    // stored as "Unknown" rather than dropping the file from the queue.
+    for (const job of decoded) {
+      if (jobMeta.has(job.file)) continue;
+      try {
+        jobMeta.set(job.file, await readImageMeta(job.file));
+      } catch {
+        jobMeta.set(job.file, { format: "Unknown", hasExif: false, hasGps: false, fields: [] });
+      }
+    }
     jobs = [...jobs, ...decoded];
     renderJobs();
     // Report a partial load explicitly. Silence here is how a user concludes the
@@ -148,6 +170,8 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
     row.className = "webp-output-row";
     const previewUrl = URL.createObjectURL(output.blob);
     objectUrls.push(previewUrl);
+    const originalUrl = URL.createObjectURL(output.file);
+    objectUrls.push(originalUrl);
     const image = document.createElement("img");
     image.src = previewUrl;
     image.alt = `Converted preview of ${output.file.name}`;
@@ -169,6 +193,24 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
     action.className = "secondary-button";
     action.textContent = `Download ${actual}`;
     action.addEventListener("click", () => downloadBlob(output.blob, output.filename));
+    // Before/after toggle: the original file and the converted result are both
+    // already in memory, so the comparison costs one extra object URL.
+    const compareButton = document.createElement("button");
+    compareButton.type = "button";
+    compareButton.className = "secondary-button";
+    compareButton.textContent = "Show original";
+    compareButton.setAttribute("aria-pressed", "false");
+    let showingOriginal = false;
+    compareButton.addEventListener("click", () => {
+      showingOriginal = !showingOriginal;
+      image.src = showingOriginal ? originalUrl : previewUrl;
+      image.alt = showingOriginal ? `Original ${output.file.name}` : `Converted preview of ${output.file.name}`;
+      compareButton.textContent = showingOriginal ? "Show converted" : "Show original";
+      compareButton.setAttribute("aria-pressed", String(showingOriginal));
+    });
+    const actions = document.createElement("div");
+    actions.className = "webp-output-actions";
+    actions.append(action, compareButton);
     detail.append(title, sourceMeta, outputMeta);
     if (output.substituted) {
       const warn = document.createElement("p");
@@ -176,7 +218,7 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
       warn.textContent = "This browser cannot encode WebP, so the file was saved as PNG instead.";
       detail.append(warn);
     }
-    detail.append(action);
+    detail.append(actions);
     row.append(image, detail);
     ui.results.append(row);
   }
@@ -206,6 +248,7 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
 
   ui.clearButton.addEventListener("click", () => {
     jobs = [];
+    jobMeta.clear();
     ui.widthInput.value = "";
     ui.heightInput.value = "";
     renderJobs();
@@ -228,17 +271,30 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
       maxEdge: options.maxEdge,
     };
     let substituted = 0;
+    let inputTotal = 0;
+    let outputTotal = 0;
     try {
       for (let index = 0; index < jobs.length; index += 1) {
         ui.status.textContent = `Converting ${index + 1} of ${jobs.length}: ${jobs[index].file.name}`;
         const output = await convertJob(jobs[index], settings);
         if (output.substituted) substituted += 1;
         outputs.push(output);
+        inputTotal += output.file.size;
+        outputTotal += output.blob.size;
         renderOutput(output);
         ui.progress.value = ((index + 1) / jobs.length) * 100;
       }
       ui.zipButton.hidden = outputs.length < 2;
       ui.zipButton.textContent = `Download all ${outputs.length} files as ZIP`;
+      // Batch summary: measured totals, not estimates.
+      if (ui.summary) {
+        const totalDelta = outputTotal - inputTotal;
+        const totalChange = inputTotal > 0
+          ? ` (${totalDelta === 0 ? "same size" : `${totalDelta < 0 ? "−" : "+"}${formatBytes(Math.abs(totalDelta))}, ${Math.abs((totalDelta / inputTotal) * 100).toFixed(0)}%`})`
+          : "";
+        ui.summary.hidden = false;
+        ui.summary.textContent = `Batch total: ${outputs.length} file${outputs.length === 1 ? "" : "s"} · input ${formatBytes(inputTotal)} → output ${formatBytes(outputTotal)}${totalChange}`;
+      }
       const unit = outputs.length === 1 ? "is" : "are";
       ui.status.textContent = `${outputs.length} file${outputs.length === 1 ? "" : "s"} ${unit} ready. Each row reports the measured output size.`;
       if (substituted) {
