@@ -74,7 +74,11 @@ export function createConverter(options: { root?: ParentNode; accept: (file: Fil
 
   function syncFormatRow(): void {
     const format = currentFormat();
-    if (ui.qualityRow) ui.qualityRow.hidden = format === "png";
+    if (ui.qualityRow) {
+      ui.qualityRow.hidden = format === "png";
+      const label = ui.qualityRow.querySelector("label");
+      if (label) label.textContent = `${format === "webp" ? "WebP" : "JPG"} quality`;
+    }
     if (ui.note) {
       ui.note.hidden = format !== "webp";
     }
