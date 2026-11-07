@@ -79,7 +79,7 @@
 <tr><td><strong>Transparency</strong></td><td>1-bit or 8-bit alpha via palette</td><td>None</td><td>Full 8-bit alpha</td></tr>
 <tr><td><strong>Best for</strong></td><td>Logos, icons, flat UI graphics, simple charts</td><td>Photos exported as lossless, screenshots with gradients</td><td>Product shots, overlays, anything cut out of its background</td></tr>
 <tr><td><strong>Typical size</strong></td><td>Smallest</td><td>Medium</td><td>Largest per pixel</td></tr>
-<tr><td><strong>Lossless?</strong></td><td>Yes (after palette reduction)</td><td>Yes</td><td>Yes</td></tr>
+<tr><td><strong>Lossless?</strong></td><td>Encoded PNG data is lossless, but reducing truecolor pixels to a palette can discard colors.</td><td>Yes</td><td>Yes</td></tr>
 <tr><td><strong>Watch out for</strong></td><td>Banding on gradients, visible dithering on photos</td><td>Transparency is discarded</td><td>Nobody needs 32 bits on a flat two-color icon</td></tr>
 </tbody></table></div>
 <p>The intuition: PNG-8 stores one palette index per pixel (a single byte or less), while PNG-24/32 store three or four bytes per pixel. For graphics with few distinct colors, storing "color #37" instead of three full channel values wins every time — <em>if</em> the palette itself stays small and the index stream stays regular. The measurement below shows where that logic holds and where it breaks.</p>
