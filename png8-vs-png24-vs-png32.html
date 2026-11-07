@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};window.gtag("consent","default",{ad_storage:"denied",analytics_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",functionality_storage:"granted",security_storage:"granted",wait_for_update:2000});window.gtag("set","ads_data_redaction",true);</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f5f2" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    <title>PNG-8 vs PNG-24 vs PNG-32 — Measured, With Real Numbers | PNGToolbox</title>
+    <meta name="description" content="PNG-8, PNG-24 and PNG-32 explained without jargon: what the terms really mean, measured size differences on our test corpus, and which one your logo, screenshot, or photo should be exported as." />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="PNGToolbox" />
+    <meta property="og:title" content="PNG-8 vs PNG-24 vs PNG-32 — Measured, With Real Numbers" />
+    <meta property="og:description" content="What PNG-8, PNG-24 and PNG-32 really mean, measured on our test corpus — including the image type where PNG-8 is 40% larger than PNG-24." />
+    <meta property="og:url" content="https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html" />
+    <meta property="og:image" content="https://www.pngtoolbox.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html" />
+    <link rel="alternate" hreflang="en" href="https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html" />
+    <link rel="alternate" hreflang="x-default" href="https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5633189368787002" crossorigin="anonymous"></script>
+    <link rel="icon" href="./site-icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./identity-png.css" />
+    <script>(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.add(d?"dark":"light");window.__setTheme=function(x){r.classList.remove("dark","light");r.classList.add(x);try{localStorage.setItem("theme",x)}catch(e){};var b=document.querySelectorAll(".theme-toggle");for(var i=0;i<b.length;i++)b[i].textContent=x==="dark"?"\u2600\uFE0F":"\uD83C\uDF19";};window.__setTheme(d?"dark":"light");}catch(e){}})();</script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "Article", "headline": "PNG-8 vs PNG-24 vs PNG-32 — Measured, With Real Numbers", "description": "PNG-8, PNG-24 and PNG-32 explained without jargon: what the terms really mean, measured size differences on our test corpus, and which one your image should be.", "url": "https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html", "inLanguage": "en", "datePublished": "2026-11-07", "dateModified": "2026-11-07", "author": {"@type": "Organization", "name": "PNGToolbox Editorial", "url": "https://www.pngtoolbox.com/editorial-standards.html"}, "publisher": {"@type": "Organization", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}, "isPartOf": {"@type": "WebSite", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/"}}
+    </script>
+    <script type="application/ld+json">
+      {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is PNG-32 an official format?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a colloquial name for PNG color type 6 (truecolor RGB plus 8-bit alpha). The PNG specification itself never uses the term PNG-32; the label comes from export dialogs in 2000s-era design software."}}, {"@type": "Question", "name": "Does PNG-8 support transparency?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Indexed PNGs can assign an alpha value, including full 8-bit alpha, to each palette entry. Hard-edged transparency always works; soft edges work as long as the anti-aliased edge shades fit within the palette."}}, {"@type": "Question", "name": "Why is my PNG-8 bigger than my JPEG?", "acceptedAnswer": {"@type": "Answer", "text": "Different jobs. JPEG is a lossy photographic codec; PNG-8 is a lossless indexed format. For photographs, JPEG wins on size at equal visual quality — on our corpus, a 256-color PNG-8 of the test photograph was 3.6 times the size of a JPEG encoded from the same source at quality 85."}}, {"@type": "Question", "name": "Can I convert back from PNG-8 to PNG-24 and recover the lost colors?", "acceptedAnswer": {"@type": "Answer", "text": "No. Palette reduction discards the original channel data. Converting upward only inflates the file; the colors are gone. Keep the original."}}, {"@type": "Question", "name": "What palette size should I pick?", "acceptedAnswer": {"@type": "Answer", "text": "Start at 256, check the preview, then walk down (128, 64, 32) while the preview still looks clean. Flat logos often survive at 8 to 16 colors, which shrinks them further."}}], "dateModified": "2026-11-07", "datePublished": "2026-11-07"}
+    </script>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.pngtoolbox.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.pngtoolbox.com/guides.html"},{"@type":"ListItem","position":3,"name":"PNG-8 vs PNG-24 vs PNG-32","item":"https://www.pngtoolbox.com/png8-vs-png24-vs-png32.html"}]}
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XDE7CN1DH1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-XDE7CN1DH1");
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <nav aria-label="Primary navigation"><a href="./#tool">Converter</a><a href="./guides.html">Guides</a><a href="./benchmark-2026.html">Benchmark</a><a href="./about.html">About</a></nav>
+      <button class="theme-toggle" type="button" onclick="__setTheme(document.documentElement.classList.contains('dark')?'light':'dark')" aria-label="Toggle dark mode">🌙</button>
+    </header>
+<nav class="crumb" aria-label="Breadcrumb"><a href="./">Home</a><span aria-hidden="true">/</span><a href="./guides.html">Guides</a><span aria-hidden="true">/</span><span>PNG formats</span></nav>
+    <div class="wrap">
+      <div class="layout">
+        <main>
+          <p class="eyebrow">Formats explained</p>
+          <h1 class="article-title">PNG-8 vs PNG-24 vs PNG-32: which one actually saves you space</h1>
+          <p class="deck">Every PNG is one of three things: an indexed-color image with a fixed palette, full color without transparency, or full color with transparency. Most guides explain this with jargon. This one explains it with the only question that matters — which one should your file be, and how much smaller does the right choice actually make it? Measured, not asserted.</p>
+          <div class="authorline">
+            <span><strong>By PNGToolbox Editorial</strong></span>
+            <span>Published 2026-11-07</span>
+            <span>Last reviewed 2026-11-07</span>
+            <span><a href="./editorial-standards.html">How we test</a></span>
+          </div>
+          <div class="prose">
+<div class="keyfacts"><h2>At a glance</h2><ul><li>"PNG-8", "PNG-24" and "PNG-32" are designer shorthand, not spec terms — the PNG specification defines color types, and none of these names appear in it.</li><li>Measured on our corpus: PNG-8 shrank a 4-color logo by 11% versus PNG-24 and a flat-art graphic by 15% — useful, not magical.</li><li>The trap in the other direction: on our gradient test image, PNG-8 came out <strong>40% larger</strong> than PNG-24. Palette reduction is not always a win.</li><li>A photograph forced into PNG-8 at 256 colors was still 3.6 times the size of a JPEG at quality 85 — that is a format-choice failure, not a PNG failure.</li></ul></div>
+<h2 id="terminology">First, the terminology problem</h2>
+<p>"PNG-8", "PNG-24" and "PNG-32" are designer shorthand. The PNG specification — published as ISO/IEC 15948 and identical to the W3C recommendation — defines <strong>color types</strong>, and the shorthand maps onto them roughly like this:</p>
+<div class="table-scroll"><table class="data">
+<thead><tr><th>Shorthand</th><th>PNG color type</th><th>Colors</th><th>Alpha (transparency)</th></tr></thead><tbody>
+<tr><td>PNG-8</td><td>Type 3 — indexed color</td><td>Up to 256, from a palette</td><td>Yes — palette entries can carry alpha</td></tr>
+<tr><td>PNG-24</td><td>Type 2 — truecolor RGB</td><td>16.7 million (8 bits × 3 channels)</td><td>No</td></tr>
+<tr><td>PNG-32</td><td>Type 6 — truecolor + alpha (RGBA)</td><td>16.7 million</td><td>Yes, full 8-bit alpha</td></tr>
+</tbody></table></div>
+<p>Two things people get wrong immediately:</p>
+<ol><li><strong>"PNG-32" is not an official term.</strong> The specification (and every serious tool) calls it truecolor with alpha, color type 6. The "32" just counts bits: 8 red + 8 green + 8 blue + 8 alpha. You will not find "PNG-32" anywhere in the specification — the term comes from how export dialogs in 2000s design software labeled their options.</li><li><strong>PNG-8 can have transparency too.</strong> The old rule of thumb "need transparency → use PNG-24/32" is outdated. Indexed PNGs support per-palette-entry alpha, so a PNG-8 logo with soft edges is perfectly possible.</li></ol>
+<h2 id="side-by-side">The three modes side by side</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr><th></th><th>PNG-8 (indexed)</th><th>PNG-24 (truecolor)</th><th>PNG-32 (truecolor + alpha)</th></tr></thead><tbody>
+<tr><td><strong>Max colors</strong></td><td>256</td><td>16,777,216</td><td>16,777,216</td></tr>
+<tr><td><strong>Transparency</strong></td><td>1-bit or 8-bit alpha via palette</td><td>None</td><td>Full 8-bit alpha</td></tr>
+<tr><td><strong>Best for</strong></td><td>Logos, icons, flat UI graphics, simple charts</td><td>Photos exported as lossless, screenshots with gradients</td><td>Product shots, overlays, anything cut out of its background</td></tr>
+<tr><td><strong>Typical size</strong></td><td>Smallest</td><td>Medium</td><td>Largest per pixel</td></tr>
+<tr><td><strong>Lossless?</strong></td><td>Encoded PNG data is lossless, but reducing truecolor pixels to a palette can discard colors.</td><td>Yes</td><td>Yes</td></tr>
+<tr><td><strong>Watch out for</strong></td><td>Banding on gradients, visible dithering on photos</td><td>Transparency is discarded</td><td>Nobody needs 32 bits on a flat two-color icon</td></tr>
+</tbody></table></div>
+<p>The intuition: PNG-8 stores one palette index per pixel (a single byte or less), while PNG-24/32 store three or four bytes per pixel. For graphics with few distinct colors, storing "color #37" instead of three full channel values wins every time — <em>if</em> the palette itself stays small and the index stream stays regular. The measurement below shows where that logic holds and where it breaks.</p>
+<h2 id="measured">How much smaller is PNG-8, actually? Measured.</h2>
+<p>We took the six images from our published test corpus and exported each one in every mode with the same encoder and settings (Pillow 12.3.0, zlib optimize on, 7 November 2026). PNG-24 rows are the RGB export, PNG-32 rows the RGBA export; PNG-8 rows quantize to adaptive palettes of 256 and 128 colors. The distinct-color counts come from the source files themselves.</p>
+<div class="table-scroll"><table class="data">
+<thead><tr><th>Test image</th><th>Distinct colors</th><th>PNG-24</th><th>PNG-32</th><th>PNG-8 (256)</th><th>PNG-8 (128)</th></tr></thead><tbody>
+<tr><td>Logo</td><td>4</td><td>5.4 KB</td><td>6.0 KB</td><td><strong>4.8 KB (−11%)</strong></td><td><strong>4.3 KB (−20%)</strong></td></tr>
+<tr><td>Flat artwork</td><td>7</td><td>14.4 KB</td><td>16.5 KB</td><td><strong>12.2 KB (−15%)</strong></td><td><strong>11.7 KB (−19%)</strong></td></tr>
+<tr><td>Gradient</td><td>1,226</td><td><strong>6.3 KB</strong></td><td>7.7 KB</td><td>8.8 KB (+40%)</td><td>8.3 KB (+32%)</td></tr>
+<tr><td>UI screenshot</td><td>~433,000</td><td>1,081.2 KB</td><td>1,234.5 KB</td><td><strong>318.9 KB (−70%)</strong></td><td><strong>247.9 KB (−77%)</strong></td></tr>
+<tr><td>Product cutout</td><td>~648,000</td><td>1,499.0 KB</td><td>1,703.6 KB</td><td><strong>96.7 KB (−94%)</strong></td><td><strong>90.4 KB (−94%)</strong></td></tr>
+<tr><td>Photograph</td><td>~1,087,000</td><td>3,167.5 KB</td><td>3,761.9 KB</td><td><strong>659.7 KB (−79%)</strong></td><td><strong>560.7 KB (−82%)</strong></td></tr>
+</tbody></table></div>
+<p>Three rows deserve a second look, because they contradict the folk wisdom:</p>
+<ul><li><strong>The logo and flat-art rows win less than expected.</strong> With only a handful of colors, PNG-8's savings are real but modest — 11 to 20%. The palette table itself costs bytes, and modern PNG filters already compress flat areas well in truecolor mode. PNG-8 is the right answer here, but it is not a tenfold win.</li><li><strong>The gradient row goes the wrong way.</strong> At 1,226 distinct colors the image does not fit a 256-entry palette, so quantization adds dithering noise — and noise is exactly what PNG's filters cannot compress. PNG-8 came out 40% <em>larger</em> than PNG-24, while also looking worse. When an image has too many colors for the palette, indexed color loses twice.</li><li><strong>The photo row wins on bytes and loses on everything else.</strong> Crushing ~1.1 million colors to 256 cut the file 79% — but the result is visibly dithered and banded. And for perspective: the same photograph encoded directly as JPEG at quality 85 weighs 183.5 KB from the same measurement run, 3.6 times smaller than the PNG-8. (Our published benchmark's 140.3 KB JPEG figure is not comparable — it re-encodes a WebP that has already smoothed the detail.) A photo saved as PNG-8 is a format-choice failure, not a PNG failure.</li></ul>
+<p>Source: measured on 7 November 2026 with Pillow 12.3.0 on the published corpus; raw per-format CSV at ./assets/bench/study-a-format.csv, the JPEG q85 figure from the same run.</p>
+<h2 id="choosing">When to use which</h2>
+<h3>Choose PNG-8 when</h3>
+<ul><li>The image has <strong>fewer than ~256 distinct colors</strong>: logos, icons, flat illustrations, pixel art, simple diagrams.</li><li>You need transparency and the edges are hard (an icon on a button), or you can accept palette-based soft edges.</li><li>You are delivering graphics to environments that reject WebP — see our <a href="./webp-compatibility-2026.html">WebP compatibility guide</a> — and still want the smallest safe file.</li></ul>
+<h3>Choose PNG-24 when</h3>
+<ul><li>The image is photographic or has gradients, <strong>and you cannot use lossy formats</strong> (JPEG/WebP) because the pipeline demands PNG.</li><li>Transparency does not matter. If it does not matter, do not pay for the alpha channel.</li></ul>
+<h3>Choose PNG-32 when</h3>
+<ul><li>You need truecolor <strong>and</strong> full anti-aliased transparency: cut-out product photos, layered UI mockups, overlays.</li><li>Note the trap: an all-opaque image saved as PNG-32 carries an alpha channel that compresses well but still adds bytes — in our corpus run, 15 to 18% on the truecolor rows. If nothing in the file is transparent, export as PNG-24.</li></ul>
+<h2 id="exporting">What this means when you export</h2>
+<p>Our converter works on the truecolor side of the family — it reads any PNG and exports JPG or WebP, and the <a href="./png-white-background.html">white background tool</a> flattens a transparent PNG-32 onto a solid colour, which produces exactly the PNG-24 case: truecolor, no alpha, smaller file, with the background baked in where the transparency used to be. What our tools deliberately do <em>not</em> offer yet is PNG-8 palette reduction: a good quantizer needs careful dithering choices, and a browser canvas export cannot provide the preview-and-tune loop that deciding "will 64 colors still look right?" requires. For palette export, use an editor that shows the palette and a live preview, and judge the result at 100% zoom — the measured table above tells you whether the fight is worth having: near or under 256 distinct colors, try PNG-8; well above, stay truecolor or switch to a lossy format.</p>
+<h2 id="misconceptions">Common misconceptions</h2>
+<ul><li><strong>"PNG-32 is a different, newer PNG format."</strong> It is not. It is ordinary truecolor RGBA PNG (color type 6), present in the spec since 1996. The name is export-dialog folklore.</li><li><strong>"PNG-8 always looks bad."</strong> True only for photographic content. For flat graphics it is visually identical at a fraction of the size.</li><li><strong>"PNG-8 can't have smooth transparency."</strong> Palette PNGs support 8-bit alpha per palette entry. With ≤256 shades needed on the edges, soft transparency works fine for most logos.</li><li><strong>"Converting PNG-24 to PNG-8 is always safe."</strong> Always preview. Gradient-heavy images band; photos dither. The conversion adds no compression artefacts, but the palette reduction itself is a lossy step — and as the gradient row shows, it can even make the file bigger.</li></ul>
+<h2 id="faq">FAQ</h2>
+<details><summary>Is PNG-32 an official format?</summary><p>No. It is a colloquial name for PNG color type 6 (truecolor RGB plus 8-bit alpha). The PNG specification itself never uses the term; the label comes from export dialogs in 2000s design software.</p></details>
+<details><summary>Does PNG-8 support transparency?</summary><p>Yes. Indexed PNGs can assign an alpha value, including full 8-bit alpha, to each palette entry. Hard-edged transparency always works; soft edges work as long as the anti-aliased edge shades fit within the palette.</p></details>
+<details><summary>Why is my PNG-8 bigger than my JPEG?</summary><p>Different jobs. JPEG is a lossy photographic codec; PNG-8 is a lossless indexed format. For photographs, JPEG wins on size at equal visual quality — on our corpus, a 256-color PNG-8 of the test photograph was 3.6 times the size of a JPEG encoded from the same source at quality 85.</p></details>
+<details><summary>Can I convert back from PNG-8 to PNG-24 and recover the lost colors?</summary><p>No. Palette reduction discards the original channel data. Converting upward only inflates the file; the colors are gone. Keep the original.</p></details>
+<details><summary>What palette size should I pick?</summary><p>Start at 256, check the preview, then walk down (128, 64, 32) while the preview still looks clean. Flat logos often survive at 8 to 16 colors, which shrinks them further.</p></details>
+<details><summary>Do PNG-24 and PNG-32 look identical when there is no transparency?</summary><p>Yes — pixel-identical. The 32-bit version just carries a redundant alpha channel. Export opaque images as PNG-24.</p></details>
+<h2 id="sources">Sources</h2>
+<ul><li><a href="https://www.iso.org/standard/29581.html">ISO/IEC 15948</a> (PNG specification, technically identical to the W3C PNG recommendation) — color types, indexed color, palette alpha.</li><li>Size measurements: 7 November 2026, Pillow 12.3.0, published corpus at ./assets/bench/ (raw CSV included).</li></ul>
+<div class="cta-band"><div><h2>Need the truecolor side of the family?</h2><p>Convert PNG to JPG or WebP, or flatten transparency onto a solid background — locally, with measured results.</p></div><a class="btn" href="./#tool">Open the converter</a></div>
+</div>
+<div class="related"><h2>Related reading</h2><div class="related-grid"><a href="./png-compression-guide.html"><strong>How PNG compression works</strong><span>Filters, DEFLATE and the colour-type matrix in depth</span></a><a href="./png-file-size.html"><strong>Why PNG files get large</strong><span>Where the bytes go and what to do about it</span></a><a href="./webp-compatibility-2026.html"><strong>WebP compatibility in 2026</strong><span>Which apps still fail, and the local fixes</span></a><a href="./png-white-background.html"><strong>Add a white background</strong><span>The practical PNG-32-to-flattened case, batch-ready</span></a></div></div>
+        </main>
+<aside class="rail" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#terminology">First, the terminology problem</a></li><li><a href="#side-by-side">The three modes side by side</a></li><li><a href="#measured">How much smaller is PNG-8, actually? Measured.</a></li><li><a href="#choosing">When to use which</a></li><li><a href="#exporting">What this means when you export</a></li><li><a href="#misconceptions">Common misconceptions</a></li><li><a href="#faq">FAQ</a></li><li><a href="#sources">Sources</a></li></ol></aside>
+      </div>
+    </div>
+    <footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="./" aria-label="PNGToolbox home"><img class="brand-icon" src="./site-icon.svg" alt="" aria-hidden="true" /><span>PNGToolbox</span></a>
+      <p>PNGToolbox builds browser-based WebP and PNG tools and publishes the measurements behind them.</p>
+    </div>
+    <div class="footer-col">
+      <strong>Tools</strong>
+      <a href="./#tool">WebP to PNG &amp; JPG converter</a>
+      <a href="./png-to-jpg.html">PNG to JPG</a>
+      <a href="./png-to-webp.html">PNG to WebP</a>
+      <a href="./png-white-background.html">Add a white background</a>
+      <a href="./how-to-make-png-background-transparent.html">Make a PNG background transparent</a>
+      <a href="./convert-multiple-webp-to-png.html">Batch WebP conversion</a>
+    </div>
+    <div class="footer-col">
+      <strong>Guides</strong>
+      <a href="./guides.html">All guides</a>
+      <a href="./benchmark-2026.html">Format benchmark (measured)</a>
+      <a href="./png-compression-guide.html">How PNG compression works</a>
+      <a href="./alpha-transparency-guide.html">Alpha and transparency</a>
+      <a href="./image-formats-compared.html">Choosing an image format</a>
+    </div>
+    <div class="footer-col">
+      <strong>Reference</strong>
+      <a href="./webp-vs-png.html">WebP vs PNG</a>
+      <a href="./what-is-png.html">What is PNG</a>
+      <a href="./png-file-size.html">Why PNG files get large</a>
+      <a href="./png-output-testing.html">PNG output testing method</a>
+    </div>
+    <div class="footer-col">
+      <strong>Site</strong>
+      <a href="./about.html">About &amp; how we test</a>
+      <a href="./editorial-standards.html">Editorial standards</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 PNGToolbox. All rights reserved.</span>
+    <span>All processing happens locally in your browser.</span>
+  </div>
+</footer>
+  </body>
+</html>
