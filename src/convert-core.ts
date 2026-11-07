@@ -140,24 +140,25 @@ export type Options = {
 
 export const MAX_INPUT_BYTES = 20 * 1024 * 1024;
 
-export function decodeJobs(files: File[], accept: (file: File) => boolean): Promise<{ jobs: Job[]; skipped: string[] }> {
+export async function decodeJobs(files: File[], accept: (file: File) => boolean): Promise<{ jobs: Job[]; skipped: string[] }> {
   const skipped: string[] = [];
   const candidates = files.filter((file) => {
     const ok = accept(file) && file.size <= MAX_INPUT_BYTES;
     if (!ok) skipped.push(file.name);
     return ok;
   });
-  return Promise.all(
-    candidates.map(async (file) => {
-      try {
-        const image = await fileToImage(file);
-        return { file, width: image.naturalWidth, height: image.naturalHeight } as Job;
-      } catch {
-        skipped.push(file.name);
-        return null;
-      }
-    }),
-  ).then((decoded) => ({ jobs: decoded.filter((job): job is Job => job !== null), skipped }));
+  const jobs: Job[] = [];
+  // Decode sequentially so a large batch does not hold several browser decoders
+  // and their full pixel buffers in memory at the same time.
+  for (const file of candidates) {
+    try {
+      const image = await fileToImage(file);
+      jobs.push({ file, width: image.naturalWidth, height: image.naturalHeight });
+    } catch {
+      skipped.push(file.name);
+    }
+  }
+  return { jobs, skipped };
 }
 
 function plannedSize(job: Job, options: Options): { width: number; height: number } {
@@ -224,5 +225,5 @@ export async function zipResults(results: Result[], zipName: string): Promise<Bl
     }
     zip.file(name, result.blob);
   });
-  return zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+  return zip.generateAsync({ type: "blob", compression: "STORE" });
 }

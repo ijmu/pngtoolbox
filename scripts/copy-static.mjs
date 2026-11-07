@@ -7,6 +7,7 @@ const out = fileURLToPath(new URL("../dist/", import.meta.url));
 const entries = await readdir(root, { withFileTypes: true });
 const excluded = new Set([
   "index.html",
+  "webp-to-png.html",
   "how-to-make-png-background-transparent.html",
   // Internal docs and build tooling: producing these into dist/ publishes
   // DESIGN.md, PRODUCT.md and the build scripts to the live site.
