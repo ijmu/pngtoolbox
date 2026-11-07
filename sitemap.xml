@@ -79,6 +79,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.pngtoolbox.com/png-to-jpg.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pngtoolbox.com/png-to-webp.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pngtoolbox.com/png-white-background.html</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.pngtoolbox.com/png-file-size.html</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>monthly</changefreq>

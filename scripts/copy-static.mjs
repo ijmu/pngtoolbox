@@ -9,6 +9,9 @@ const excluded = new Set([
   "index.html",
   "webp-to-png.html",
   "how-to-make-png-background-transparent.html",
+  "png-to-jpg.html",
+  "png-to-webp.html",
+  "png-white-background.html",
   // Internal docs and build tooling: producing these into dist/ publishes
   // DESIGN.md, PRODUCT.md and the build scripts to the live site.
   "DESIGN.md",
