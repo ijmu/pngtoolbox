@@ -1038,3 +1038,14 @@ html.light {
 /* Batch summary and before/after toggle in the converter report */
 .webp-summary { margin: 0 0 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-soft); font-size: 0.9rem; font-weight: 600; }
 .webp-output-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.webp-output-actions button {
+  appearance: none;
+  min-height: 38px;
+  padding: 8px 13px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.webp-output-actions .file-remove { margin-left: auto; }
