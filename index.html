@@ -107,9 +107,9 @@
                     <div class="field-row">
                       <label>Convert to
                         <select id="webpPageFormat">
-                          <option value="png" selected>PNG — lossless, keeps transparency</option>
-                          <option value="jpg">JPG — smallest files for photos</option>
-                          <option value="webp">WebP — smallest files for the web</option>
+                          <option value="png" selected>PNG</option>
+                          <option value="jpg">JPG</option>
+                          <option value="webp">WebP</option>
                         </select>
                       </label>
                     </div>
@@ -118,7 +118,8 @@
                       <input id="webpPageQuality" type="range" min="40" max="95" value="85" />
                       <output id="webpQualityValue">85%</output>
                     </div>
-                    <p class="field-help" id="webpFormatNote" hidden>Some browsers cannot re-encode WebP. If that happens the file is saved as PNG instead and every affected row says so.</p>
+                    <p class="field-help format-help">PNG keeps transparency and exact pixels. JPG is for photos; WebP is for web delivery.</p>
+                     <p class="field-help" id="webpFormatNote" hidden>Some browsers cannot re-encode WebP. If that happens the file is saved as PNG instead and every affected row says so.</p>
                   </fieldset>
                   <button id="webpPageConvert" class="primary-button" type="button" disabled>Convert selected files</button>
                   <div class="webp-secondary-actions">
@@ -126,11 +127,11 @@
                     <button id="webpPageClear" class="secondary-button" type="button" disabled>Clear queue</button>
                   </div>
                   <progress id="webpPageProgress" class="progress-bar" max="100" value="0" hidden>0%</progress>
-                  <div id="webpPageStatus" class="status" role="status">Choose WebP files to start.</div>
+                  <div id="webpPageStatus" class="status" role="status">Choose one or more WebP files to see measured results here.</div>
                 </aside>
                 <div class="webp-results" aria-live="polite">
-                  <div class="webp-results-head"><div><strong>Conversion report</strong><span>Measured in your browser</span></div><span id="webpPageCount">0 files</span></div>
-                  <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your measured results appear here</h3><p>Each row reports source dimensions, output dimensions, source size, output size, and a direct download.</p></div>
+                  <div class="webp-results-head"><div><strong>Conversion report</strong><span>Measured in your browser</span></div><span id="webpPageCount">No files yet</span></div>
+                  <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your measured results appear here</h3><p>Choose one or more WebP files to see measured dimensions, file sizes, and downloads here.</p></div>
                   <p id="webpPageSummary" class="webp-summary" hidden></p>
                   <div id="webpPageResults" class="webp-result-list"></div>
                   <button id="webpPageZip" class="primary-button webp-zip" type="button" hidden>Download all PNGs as ZIP</button>
@@ -153,7 +154,7 @@
             <div class="hp-card"><div class="hp-icon">📦</div><h3>True batch conversion</h3><p>Queue as many WebP files as you need and convert them all in one pass — no one-at-a-time limits.</p></div>
             <div class="hp-card"><div class="hp-icon">🗂️</div><h3>One-click ZIP download</h3><p>Batch results are bundled into a single ZIP archive, so you download everything at once.</p></div>
             <div class="hp-card"><div class="hp-icon">🫥</div><h3>Transparency preserved</h3><p>If the WebP source has transparent pixels, the PNG output keeps the alpha channel intact.</p></div>
-            <div class="hp-card"><div class="hp-icon">🎚️</div><h3>PNG or JPG output</h3><p>Choose per batch: PNG for lossless quality and transparency, or JPG with an adjustable quality slider for the smallest photo files.</p></div>
+            <div class="hp-card"><div class="hp-icon">🎚️</div><h3>PNG, JPG, or WebP output</h3><p>Choose per batch: PNG for lossless quality and transparency, JPG for compact photos, or WebP for web delivery.</p></div>
             <div class="hp-card"><div class="hp-icon">📐</div><h3>Optional resizing</h3><p>Keep the original dimensions or set an exact output size with aspect-ratio protection.</p></div>
             <div class="hp-card"><div class="hp-icon">🧾</div><h3>Measured report</h3><p>Every row shows real source and output dimensions plus real file sizes — read from the actual files.</p></div>
             <div class="hp-card"><div class="hp-icon">🔒</div><h3>100% local &amp; private</h3><p>Conversion runs on your device with the browser's own decoders. Nothing is uploaded — ever.</p></div>

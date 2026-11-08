@@ -132,14 +132,14 @@ export function createConverter(options: {
   function renderJobs(): void {
     resetOutputs();
     const count = jobs.length;
-    ui.count.textContent = `${count} file${count === 1 ? "" : "s"}`;
+    ui.count.textContent = count ? `${count} file${count === 1 ? "" : "s"}` : "No files yet";
     const enabled = count > 0;
     ui.sizeControls.disabled = !enabled;
     ui.convertButton.disabled = !enabled || busy;
     ui.clearButton.disabled = !enabled || busy;
     ui.empty.hidden = enabled;
     if (!enabled) {
-      ui.status.textContent = `Choose ${fileLabel} to start.`;
+      ui.status.textContent = "Choose one or more WebP files to see measured results here.";
       return;
     }
     ui.status.textContent = `${count} valid file${count === 1 ? " is" : "s are"} ready. Pick an output format, then convert.`;
