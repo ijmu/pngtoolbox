@@ -252,6 +252,21 @@ export function createConverter(options: {
     ui.results.append(row);
   }
 
+  function renderFailure(file: File, error: unknown): void {
+    const row = document.createElement("article");
+    row.className = "webp-output-row webp-output-failure";
+    const detail = document.createElement("div");
+    const title = document.createElement("h3");
+    title.textContent = `Conversion failed: ${file.name}`;
+    const reason = document.createElement("p");
+    reason.textContent = error instanceof Error ? error.message : "The browser could not convert this file.";
+    const recovery = document.createElement("p");
+    recovery.textContent = "Try this file again separately, reduce its dimensions, or choose PNG/JPG output.";
+    detail.append(title, reason, recovery);
+    row.append(detail);
+    ui.results.append(row);
+  }
+
   function setBusy(value: boolean): void {
     busy = value;
     ui.convertButton.disabled = value || jobs.length === 0;
@@ -300,17 +315,23 @@ export function createConverter(options: {
       maxEdge: options.maxEdge,
     };
     let substituted = 0;
+    let failed = 0;
     let inputTotal = 0;
     let outputTotal = 0;
     try {
       for (let index = 0; index < jobs.length; index += 1) {
         ui.status.textContent = `Converting ${index + 1} of ${jobs.length}: ${jobs[index].file.name}`;
-        const output = await convertJob(jobs[index], settings);
-        if (output.substituted) substituted += 1;
-        outputs.push(output);
-        inputTotal += output.file.size;
-        outputTotal += output.blob.size;
-        renderOutput(output);
+        try {
+          const output = await convertJob(jobs[index], settings);
+          if (output.substituted) substituted += 1;
+          outputs.push(output);
+          inputTotal += output.file.size;
+          outputTotal += output.blob.size;
+          renderOutput(output);
+        } catch (error) {
+          failed += 1;
+          renderFailure(jobs[index].file, error);
+        }
         ui.progress.value = ((index + 1) / jobs.length) * 100;
       }
       ui.zipButton.hidden = outputs.length < 2;
@@ -321,13 +342,22 @@ export function createConverter(options: {
         const totalChange = inputTotal > 0
           ? ` (${totalDelta === 0 ? "same size" : `${totalDelta < 0 ? "−" : "+"}${formatBytes(Math.abs(totalDelta))}, ${Math.abs((totalDelta / inputTotal) * 100).toFixed(0)}%`})`
           : "";
-        ui.summary.hidden = false;
-        ui.summary.textContent = `Batch total: ${outputs.length} file${outputs.length === 1 ? "" : "s"} · input ${formatBytes(inputTotal)} → output ${formatBytes(outputTotal)}${totalChange}`;
+        ui.summary.hidden = outputs.length === 0;
+        if (outputs.length > 0) {
+          ui.summary.textContent = `Batch total: ${outputs.length} file${outputs.length === 1 ? "" : "s"} · input ${formatBytes(inputTotal)} → output ${formatBytes(outputTotal)}${totalChange}`;
+        }
       }
-      const unit = outputs.length === 1 ? "is" : "are";
-      ui.status.textContent = `${outputs.length} file${outputs.length === 1 ? "" : "s"} ${unit} ready. Each row reports the measured output size.`;
+      if (outputs.length > 0) {
+        const unit = outputs.length === 1 ? "is" : "are";
+        ui.status.textContent = `${outputs.length} file${outputs.length === 1 ? "" : "s"} ${unit} ready. Each successful row reports the measured output size.`;
+      } else {
+        ui.status.textContent = "No files were converted.";
+      }
       if (substituted) {
         ui.status.textContent += ` ${substituted} file${substituted === 1 ? "" : "s"} could not be saved as WebP by this browser and fell back to PNG.`;
+      }
+      if (failed) {
+        ui.status.textContent += ` ${failed} file${failed === 1 ? "" : "s"} failed; see the marked row for the reason and recovery options.`;
       }
     } catch (error) {
       ui.status.textContent = error instanceof Error ? error.message : "Conversion failed.";
@@ -349,32 +379,37 @@ export function createConverter(options: {
   });
 
   ui.sampleButton.addEventListener("click", async () => {
-    if (options.makeSample) {
-      const file = await options.makeSample();
-      if (file) await addFiles([file]);
-      return;
+    ui.sampleButton.disabled = true;
+    try {
+      if (options.makeSample) {
+        const file = await options.makeSample();
+        if (file) await addFiles([file]);
+        else ui.status.textContent = "Sample unavailable; choose your own WebP file.";
+        return;
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = 960;
+      canvas.height = 640;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("This browser cannot create a sample canvas.");
+      context.fillStyle = "#eff8f4";
+      context.fillRect(0, 0, 960, 640);
+      context.fillStyle = "#087d5b";
+      context.fillRect(120, 110, 720, 420);
+      context.fillStyle = "#ffffff";
+      context.font = "700 86px Arial";
+      context.textAlign = "center";
+      context.fillText("WEBP", 480, 330);
+      context.font = "400 34px Arial";
+      context.fillText("local sample", 480, 390);
+      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.88));
+      if (!blob) throw new Error("This browser cannot create a WebP sample.");
+      await addFiles([new File([blob], "pngtoolbox-sample.webp", { type: "image/webp" })]);
+    } catch {
+      ui.status.textContent = "Sample unavailable; choose your own WebP file.";
+    } finally {
+      ui.sampleButton.disabled = false;
     }
-    const canvas = document.createElement("canvas");
-    canvas.width = 960;
-    canvas.height = 640;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-    context.fillStyle = "#eff8f4";
-    context.fillRect(0, 0, 960, 640);
-    context.fillStyle = "#087d5b";
-    context.fillRect(120, 110, 720, 420);
-    context.fillStyle = "#ffffff";
-    context.font = "700 86px Arial";
-    context.textAlign = "center";
-    context.fillText("WEBP", 480, 330);
-    context.font = "400 34px Arial";
-    context.fillText("local sample", 480, 390);
-    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.88));
-    if (!blob) {
-      ui.status.textContent = "This browser cannot create a WebP sample, but you can still choose your own files.";
-      return;
-    }
-    await addFiles([new File([blob], "pngtoolbox-sample.webp", { type: "image/webp" })]);
   });
 
   ui.formatSelect.addEventListener("change", syncFormatRow);

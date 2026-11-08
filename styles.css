@@ -843,6 +843,11 @@ details p { margin: 12px 0 0; color: var(--ink-2); font-size: 0.95rem; }
   font-size: 0.88rem;
 }
 
+.webp-result-list .webp-output-failure {
+  grid-template-columns: 1fr;
+  border-color: #d99a8d;
+}
+
 .webp-result-list .webp-output-row > div { display: grid; gap: 4px; min-width: 0; }
 .webp-result-list .webp-output-row > div > p { margin: 0; color: var(--ink-3); font-size: 0.82rem; }
 .webp-result-list .webp-output-row > div > p + p { color: var(--ink-2); }
