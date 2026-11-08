@@ -830,10 +830,15 @@ details p { margin: 12px 0 0; color: var(--ink-2); font-size: 0.95rem; }
 .webp-queue-row strong { overflow-wrap: anywhere; }
 .webp-queue-row span { color: var(--ink-3); font-size: 0.82rem; }
 
-/* One converted result: thumbnail, measured detail, then the download button. */
+.converter-item.is-converting { border-color: var(--accent-line); }
+.converter-item.is-failed { border-color: #d99a8d; }
+.converter-item-state { overflow-wrap: anywhere; }
+.converter-item .file-remove { width: auto; padding-inline: 10px; font-size: 0.78rem; }
+
+/* One source row updates in place with measured output and actions. */
 .webp-result-list .webp-output-row {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
+  grid-template-columns: 64px minmax(0, 1fr);
   gap: 14px;
   align-items: center;
   background: var(--surface);
@@ -883,10 +888,11 @@ body.dark .format-warning { color: #f0c76a; }
 }
 
 @media (max-width: 720px) {
-  .webp-result-list .webp-output-row { grid-template-columns: 48px 1fr; }
+  .webp-result-list .webp-output-row { grid-template-columns: 48px minmax(0, 1fr); padding: 12px; }
   .webp-result-list .webp-output-row > .primary-button,
   .webp-result-list .webp-output-row > .secondary-button { grid-column: 1 / -1; justify-self: start; }
   .webp-result-list img { width: 48px; height: 48px; }
+  .webp-output-actions { grid-column: 1 / -1; }
 }
 
 .webp-zip { justify-self: start; }

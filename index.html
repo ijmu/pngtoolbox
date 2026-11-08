@@ -41,7 +41,7 @@
       {"@context": "https://schema.org", "@type": "WebApplication", "name": "PNGToolbox", "url": "https://www.pngtoolbox.com/", "applicationCategory": "MultimediaApplication", "operatingSystem": "Any modern web browser", "description": "A free browser-based WebP converter with PNG, JPG, and WebP output, batch ZIP export, optional resizing, adjustable quality, and local processing.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "featureList": ["WebP to PNG conversion", "WebP to JPG conversion", "WebP re-encoding", "Adjustable output quality", "Batch conversion with ZIP download", "Transparency preservation", "Optional output resizing", "Measured conversion report", "Local browser processing", "No account required"], "dateModified": "2026-10-08"}
     </script>
     <script type="application/ld+json">
-      {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Are my WebP files uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. Decoding, conversion, and ZIP packaging all happen locally in your browser. Your files are never transmitted anywhere."}}, {"@type": "Question", "name": "Does the PNG keep transparency?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. When the WebP source contains transparent pixels, the converted PNG preserves the alpha channel. The report shows the real output so you can verify it."}}, {"@type": "Question", "name": "Why is the PNG larger than my WebP?", "acceptedAnswer": {"@type": "Answer", "text": "PNG is lossless and keeps every pixel exact, while WebP usually applies stronger compression. That's normal — PNG trades file size for universal compatibility and quality."}}, {"@type": "Question", "name": "Can I convert many files at once?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Add as many WebP files as you like, convert the whole batch, and download everything as one ZIP archive."}}, {"@type": "Question", "name": "Can I convert WebP to JPG instead of PNG?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Switch the output format to JPG and pick a quality level. JPG files are smaller and work everywhere, but they can't store transparency — transparent areas are filled with white."}}, {"@type": "Question", "name": "Can I resize during conversion?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Set an optional output width and height before converting. Keep the ratio lock enabled to avoid stretching."}}, {"@type": "Question", "name": "What about animated WebP files?", "acceptedAnswer": {"@type": "Answer", "text": "This converter is designed for still images. Animated WebP files may only expose a single frame depending on your browser's decoder."}}, {"@type": "Question", "name": "Is there a limit on file count or size?", "acceptedAnswer": {"@type": "Answer", "text": "No account or credit system. Each file is subject to the stated size limit, and very large conversions also depend on your device's available memory."}}, {"@type": "Question", "name": "Does it work on mobile?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The layout adapts to phones and tablets, and file selection works with the normal system picker."}}], "dateModified": "2026-10-08", "datePublished": "2026-09-06"}
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are my WebP files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Decoding, conversion, measurement, and ZIP packaging run locally in your browser. Your image files are not sent to a PNGToolbox server."}},{"@type":"Question","name":"Does PNG output keep transparency?","acceptedAnswer":{"@type":"Answer","text":"Yes. If the WebP source has transparent pixels, PNG output preserves them. JPG output replaces transparent pixels with the background color you choose."}},{"@type":"Question","name":"Why can PNG output be larger than WebP?","acceptedAnswer":{"@type":"Answer","text":"PNG uses lossless compression, while WebP can use stronger lossy or lossless compression. The converter shows the actual size of every result."}},{"@type":"Question","name":"What are the WebP and file-size limits?","acceptedAnswer":{"@type":"Answer","text":"The converter is designed for still WebP images. Animated files may expose only one frame, each input is limited to 20 MB, and very large batches depend on available device memory."}}]}
     </script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-XDE7CN1DH1"></script>
     <script>
@@ -59,82 +59,73 @@
     </header>
 
     <main class="workspace-page">
-      <!-- ===== Hero ===== -->
-      <section class="hp-hero">
+      <section class="hp-hero hp-hero-compact" aria-labelledby="page-title">
         <div class="hp-hero-inner">
-          <p class="hp-badge">Free &middot; Private &middot; Right in your browser</p>
-          <h1>Convert WebP to <em>PNG, JPG, or WebP</em> without uploading anything.</h1>
-      <p class="page-meta">Last reviewed: 22 October 2026</p>
-          <p class="hp-lead">PNGToolbox turns WebP images into universal PNG or compact JPG files — in batches, with ZIP download, optional resizing, adjustable quality, and transparency kept intact. Every conversion happens on your own device.</p>
-          <div class="hp-actions">
-            <a class="hp-btn-primary" href="#tool">Convert WebP files — free</a>
-            <a class="hp-btn-ghost" href="#how">How it works</a>
-          </div>
-          <ul class="hp-chips">
-            <li>Batch + ZIP export</li>
-            <li>PNG &amp; JPG output</li>
-            <li>Keeps transparency</li>
-            <li>No upload, no account</li>
+          <p class="hp-badge">Local WebP workspace</p>
+          <h1 id="page-title">Convert WebP files <em>in your browser.</em></h1>
+          <p class="hp-lead">Batch-convert to PNG, JPG, or WebP, adjust output settings, and download measured results without uploading.</p>
+          <ul class="hp-chips" aria-label="Converter highlights">
+            <li>Batch-ready</li>
+            <li>Measured output</li>
+            <li>Files stay local</li>
           </ul>
         </div>
       </section>
 
-      <!-- ===== Tool ===== -->
-      <section id="tool" class="hp-section" aria-labelledby="tool-title">
+      <section id="tool" class="hp-section hp-workspace-section" aria-labelledby="tool-title">
         <div class="hp-section-inner">
           <div class="hp-toolcard">
             <div class="hp-toolcard-head">
               <div>
-                <h2 id="tool-title">WebP to PNG &amp; JPG converter</h2>
-                <p>Add one file or a whole batch — each result is measured in your browser.</p>
+                <h2 id="tool-title">WebP converter</h2>
+                <p>Choose an output, add one file or a batch, then review each measured result in place.</p>
               </div>
-              <span class="local-note">Files stay on this device</span>
+              <span class="local-note">WebP input · local processing</span>
             </div>
             <div class="hp-panel">
               <div class="webp-workspace-grid">
                 <aside class="webp-controls">
+                  <fieldset id="webpFormatControls" class="webp-size-controls output-intent">
+                    <legend>Output format</legend>
+                    <label>Convert to
+                      <select id="webpPageFormat"><option value="png" selected>PNG</option><option value="jpg">JPG</option><option value="webp">WebP</option></select>
+                    </label>
+                    <div class="range-line converter-after-upload" id="webpQualityRow" hidden>
+                      <label for="webpPageQuality">JPG quality</label><input id="webpPageQuality" type="range" min="40" max="95" value="85" /><output id="webpQualityValue">85%</output>
+                    </div>
+                    <p class="field-help format-help">PNG preserves transparency. JPG replaces transparent pixels with a background color. WebP is intended for modern web delivery.</p>
+                    <p class="field-help" id="webpFormatNote" hidden>This browser may substitute PNG if WebP encoding is unavailable; every affected result will show its actual format.</p>
+                  </fieldset>
                   <div id="webpPageDropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop WebP files">
                     <input id="webpPageInput" type="file" accept="image/webp,.webp" multiple />
                     <span class="upload-plus" aria-hidden="true">+</span><p><strong>Choose WebP files</strong></p><span>or drop them here · multiple files welcome</span>
                   </div>
-                  <fieldset id="webpSizeControls" class="webp-size-controls" disabled>
-                    <legend>Optional output size</legend>
-                    <div class="field-row"><label>Width <input id="webpPageWidth" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label><label>Height <input id="webpPageHeight" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label></div>
-                    <label class="check-row"><input id="webpPageLock" type="checkbox" checked /> Keep each image ratio</label>
-                  </fieldset>
-                  <fieldset id="webpFormatControls" class="webp-size-controls">
-                    <legend>Output format</legend>
-                    <div class="field-row">
-                      <label>Convert to
-                        <select id="webpPageFormat">
-                          <option value="png" selected>PNG</option>
-                          <option value="jpg">JPG</option>
-                          <option value="webp">WebP</option>
-                        </select>
-                      </label>
+                  <button id="webpSampleBtn" class="try-sample" type="button">Try a sample WebP</button>
+                  <details class="advanced-settings converter-after-upload">
+                    <summary>Advanced settings</summary>
+                    <div class="advanced-settings-body">
+                      <fieldset id="webpSizeControls" class="webp-size-controls" disabled>
+                        <legend>Optional output size</legend>
+                        <div class="field-row"><label>Width <input id="webpPageWidth" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label><label>Height <input id="webpPageHeight" type="number" min="1" max="12000" inputmode="numeric" placeholder="Original" /></label></div>
+                        <label class="check-row"><input id="webpPageLock" type="checkbox" checked /> Keep each image ratio</label>
+                      </fieldset>
+                      <div class="jpg-background" id="webpMatteRow" hidden>
+                        <label>JPG background<select id="webpPageMatte"><option value="#ffffff">White</option><option value="#000000">Black</option><option value="custom">Custom</option></select></label>
+                        <label>Custom color<input id="webpPageMatteColor" type="color" value="#ffffff" hidden /></label>
+                      </div>
                     </div>
-                    <div class="range-line" id="webpQualityRow" hidden>
-                      <label for="webpPageQuality">JPG quality</label>
-                      <input id="webpPageQuality" type="range" min="40" max="95" value="85" />
-                      <output id="webpQualityValue">85%</output>
-                    </div>
-                    <p class="field-help format-help">PNG keeps transparency and exact pixels. JPG is for photos; WebP is for web delivery.</p>
-                     <p class="field-help" id="webpFormatNote" hidden>Some browsers cannot re-encode WebP. If that happens the file is saved as PNG instead and every affected row says so.</p>
-                  </fieldset>
-                  <button id="webpPageConvert" class="primary-button" type="button" disabled>Convert selected files</button>
-                  <div class="webp-secondary-actions">
-                    <button id="webpSampleBtn" class="try-sample" type="button">Try a sample WebP</button>
-                    <button id="webpPageClear" class="secondary-button" type="button" disabled>Clear queue</button>
-                  </div>
+                  </details>
+                  <button id="webpPageConvert" class="primary-button converter-after-upload" type="button" disabled>Convert selected files</button>
+                  <div class="webp-secondary-actions converter-after-upload"><button id="webpPageClear" class="secondary-button" type="button" disabled>Clear queue</button></div>
                   <progress id="webpPageProgress" class="progress-bar" max="100" value="0" hidden>0%</progress>
-                  <div id="webpPageStatus" class="status" role="status">Choose one or more WebP files to see measured results here.</div>
+                  <div id="webpPageStatus" class="status" role="status">Choose one or more WebP files to start.</div>
                 </aside>
                 <div class="webp-results" aria-live="polite">
-                  <div class="webp-results-head"><div><strong>Conversion report</strong><span>Measured in your browser</span></div><span id="webpPageCount">No files yet</span></div>
-                  <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your measured results appear here</h3><p>Choose one or more WebP files to see measured dimensions, file sizes, and downloads here.</p></div>
+                  <div class="webp-results-head"><div><strong>Queue and measured results</strong><span>Each file updates in place</span></div><span id="webpPageCount">No files yet</span></div>
+                  <div id="webpPageEmpty" class="webp-empty"><span class="preview-symbol">PNG</span><h3>Your files and results appear here</h3><p>Choose one or more WebP files to begin.</p></div>
                   <p id="webpPageSummary" class="webp-summary" hidden></p>
                   <div id="webpPageResults" class="webp-result-list"></div>
-                  <button id="webpPageZip" class="primary-button webp-zip" type="button" hidden>Download all PNGs as ZIP</button>
+                  <button id="webpPageZip" class="primary-button webp-zip" type="button" hidden>Download successful files as ZIP</button>
                 </div>
               </div>
             </div>
@@ -142,172 +133,47 @@
         </div>
       </section>
 
-      <!-- ===== Features ===== -->
-      <section id="features" class="hp-section hp-section-alt" aria-labelledby="features-title">
+      <!-- ===== Compact supporting content ===== -->
+      <section class="hp-section hp-section-compact" aria-labelledby="tools-title">
         <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">Features</p>
-            <h2 id="features-title">Everything a converter should do</h2>
-            <p>And nothing that puts your files at risk.</p>
-          </div>
-          <div class="hp-features">
-            <div class="hp-card"><div class="hp-icon">📦</div><h3>True batch conversion</h3><p>Queue as many WebP files as you need and convert them all in one pass — no one-at-a-time limits.</p></div>
-            <div class="hp-card"><div class="hp-icon">🗂️</div><h3>One-click ZIP download</h3><p>Batch results are bundled into a single ZIP archive, so you download everything at once.</p></div>
-            <div class="hp-card"><div class="hp-icon">🫥</div><h3>Transparency preserved</h3><p>If the WebP source has transparent pixels, the PNG output keeps the alpha channel intact.</p></div>
-            <div class="hp-card"><div class="hp-icon">🎚️</div><h3>PNG, JPG, or WebP output</h3><p>Choose per batch: PNG for lossless quality and transparency, JPG for compact photos, or WebP for web delivery.</p></div>
-            <div class="hp-card"><div class="hp-icon">📐</div><h3>Optional resizing</h3><p>Keep the original dimensions or set an exact output size with aspect-ratio protection.</p></div>
-            <div class="hp-card"><div class="hp-icon">🧾</div><h3>Measured report</h3><p>Every row shows real source and output dimensions plus real file sizes — read from the actual files.</p></div>
-            <div class="hp-card"><div class="hp-icon">🔒</div><h3>100% local &amp; private</h3><p>Conversion runs on your device with the browser's own decoders. Nothing is uploaded — ever.</p></div>
+          <div class="section-head compact-head"><p class="eyebrow">More PNG tools</p><h2 id="tools-title">Continue with a focused task</h2></div>
+          <div class="tool-matrix">
+            <a class="tool-link" href="./png-to-jpg.html"><span>Convert</span><strong>PNG to JPG</strong><small>Choose a background color for transparent areas.</small></a>
+            <a class="tool-link" href="./png-to-webp.html"><span>Convert</span><strong>PNG to WebP</strong><small>Create a web-ready copy and measure the result.</small></a>
+            <a class="tool-link" href="./webp-to-png.html"><span>Convert</span><strong>WebP to PNG</strong><small>Create a lossless PNG copy with transparency.</small></a>
+            <a class="tool-link" href="./png-white-background.html"><span>Background</span><strong>Add a white background</strong><small>Flatten transparent pixels onto white.</small></a>
+            <a class="tool-link" href="./how-to-make-png-background-transparent.html"><span>Transparency</span><strong>Make a background transparent</strong><small>Remove a solid or near-solid background.</small></a>
+            <a class="tool-link" href="./image-formats-compared.html"><span>Compare</span><strong>Compare image formats</strong><small>See measured trade-offs across common formats.</small></a>
           </div>
         </div>
       </section>
 
-      <!-- ===== Privacy band ===== -->
-      <section class="hp-section" aria-labelledby="privacy-title">
+      <section class="hp-section hp-section-compact" aria-label="Privacy and format guidance">
         <div class="hp-section-inner">
-          <div class="hp-privacy">
-            <div>
-              <h2 id="privacy-title">Your files <em>never touch</em> a server</h2>
-              <p>Typical converters upload your images, process them remotely, and hand back a download link. PNGToolbox skips all of that: the browser decodes the WebP, encodes the format you choose, and saves it straight to your device.</p>
-            </div>
-            <ul class="hp-privacy-list">
-              <li><span class="hp-pi">📴</span><div><b>Works offline</b><span>Once the page is loaded, no connection is needed to convert files.</span></div></li>
-              <li><span class="hp-pi">🕵️</span><div><b>Nothing to leak</b><span>Sensitive screenshots and client work stay where they belong — with you.</span></div></li>
-              <li><span class="hp-pi">⚡</span><div><b>No queue, no waiting</b><span>Conversion starts the moment you click, with no server round-trip.</span></div></li>
-            </ul>
-          </div>
+          <div class="trust-strip"><strong>Your files stay on this device.</strong><span>PNG preserves transparency.</span><span>JPG uses a chosen background; WebP is intended for modern web delivery.</span></div>
         </div>
       </section>
 
-      <!-- ===== How it works ===== -->
-      <section id="how" class="hp-section hp-section-alt" aria-labelledby="how-title">
+      <section id="guides" class="hp-section hp-section-compact hp-section-alt" aria-labelledby="guides-title">
         <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">How it works</p>
-            <h2 id="how-title">Three steps, zero friction</h2>
+          <div class="section-head compact-head"><p class="eyebrow">Popular guides</p><h2 id="guides-title">Understand the output before you convert</h2></div>
+          <div class="hp-guides compact-guides">
+            <a class="hp-guide" href="./benchmark-2026.html"><b>Measured WebP to PNG file sizes</b><span>READ GUIDE &rarr;</span></a>
+            <a class="hp-guide" href="./png-compression-guide.html"><b>How PNG compression works</b><span>READ GUIDE &rarr;</span></a>
+            <a class="hp-guide" href="./alpha-transparency-guide.html"><b>Alpha channels and edge halos</b><span>READ GUIDE &rarr;</span></a>
           </div>
-          <div class="hp-steps">
-            <div class="hp-step"><div class="hp-num">STEP 01</div><h3>Add your WebP files</h3><p>Choose or drop one or more WebP images. They're listed instantly because they never leave your device.</p></div>
-            <div class="hp-step"><div class="hp-num">STEP 02</div><h3>Convert (and resize if needed)</h3><p>Click convert. Optionally set an exact output size first — the ratio lock keeps images from stretching.</p></div>
-            <div class="hp-step"><div class="hp-num">STEP 03</div><h3>Download your files or a ZIP</h3><p>Grab each file from the measured report, or take the whole batch as a single ZIP archive.</p></div>
-          </div>
+          <a class="section-link" href="./guides.html">View all guides &rarr;</a>
         </div>
       </section>
 
-      <!-- ===== Use cases ===== -->
-      <section class="hp-section" aria-labelledby="usecases-title">
-        <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">Use cases</p>
-            <h2 id="usecases-title">When you actually need PNG</h2>
-          </div>
-          <div class="hp-usecases">
-            <div class="hp-usecase"><span class="hp-ui">🎨</span><div><b>Design &amp; editing tools</b><span>Older editors and office suites still refuse WebP — hand them a PNG instead.</span></div></div>
-            <div class="hp-usecase"><span class="hp-ui">🛒</span><div><b>Ecommerce uploads</b><span>Marketplaces and store builders that demand PNG product images.</span></div></div>
-            <div class="hp-usecase"><span class="hp-ui">🖨️</span><div><b>Print workflows</b><span>Print shops and PDF exporters that expect lossless PNG input.</span></div></div>
-            <div class="hp-usecase"><span class="hp-ui">📝</span><div><b>Forms &amp; portals</b><span>Upload systems that reject WebP outright — government, school, and job portals.</span></div></div>
-            <div class="hp-usecase"><span class="hp-ui">🫥</span><div><b>Transparent graphics</b><span>Logos and cutouts that must keep their alpha channel everywhere.</span></div></div>
-            <div class="hp-usecase"><span class="hp-ui">🗄️</span><div><b>Long-term archives</b><span>PNG's decades-long support makes it the safer format for storage.</span></div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== Compare ===== -->
-      <section class="hp-section hp-section-alt" aria-labelledby="compare-title">
-        <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">Format guide</p>
-            <h2 id="compare-title">WebP vs PNG vs JPG</h2>
-            <p>Know which format fits the job before you convert.</p>
-          </div>
-          <div class="hp-compare" role="table" aria-label="Image format comparison">
-            <div class="hp-row hp-head" role="row"><span role="columnheader"></span><span role="columnheader">WebP</span><span role="columnheader">PNG</span><span role="columnheader">JPG</span></div>
-            <div class="hp-row" role="row"><span role="cell">Best for</span><span role="cell">Modern web delivery</span><span role="cell">Graphics, transparency, archiving</span><span role="cell">Photos and small files</span></div>
-            <div class="hp-row" role="row"><span role="cell">Transparency</span><span role="cell"><span class="yes">✓</span> Supported</span><span role="cell"><span class="yes">✓</span> Supported</span><span role="cell"><span class="no">✗</span> None</span></div>
-            <div class="hp-row" role="row"><span role="cell">Compatibility</span><span role="cell">Modern apps only</span><span role="cell"><span class="yes">✓</span> Universal</span><span role="cell"><span class="yes">✓</span> Universal</span></div>
-            <div class="hp-row" role="row"><span role="cell">Compression</span><span role="cell">Small, lossy or lossless</span><span role="cell">Lossless — larger files</span><span role="cell">Lossy — smallest for photos</span></div>
-            <div class="hp-row" role="row"><span role="cell">Convert when…</span><span role="cell">Already the right choice</span><span role="cell">A tool or form requires PNG</span><span role="cell">Only photo size matters</span></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== FAQ ===== -->
-      <section id="faq" class="hp-section" aria-labelledby="faq-title">
-        <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">FAQ</p>
-            <h2 id="faq-title">Questions, answered</h2>
-          </div>
+      <section id="faq" class="hp-section hp-section-compact" aria-labelledby="faq-title">
+        <div class="hp-section-inner faq-layout">
+          <div class="section-head compact-head"><p class="eyebrow">FAQ</p><h2 id="faq-title">Before you convert</h2></div>
           <div class="hp-faq-list">
-            <details>
-              <summary>Are my WebP files uploaded to a server?</summary>
-              <p>No. Decoding, conversion, and ZIP packaging all happen locally in your browser. Your files are never transmitted anywhere.</p>
-            </details>
-            <details>
-              <summary>Does the PNG keep transparency?</summary>
-              <p>Yes. When the WebP source contains transparent pixels, the converted PNG preserves the alpha channel. The report shows the real output so you can verify it.</p>
-            </details>
-            <details>
-              <summary>Why is the PNG larger than my WebP?</summary>
-              <p>PNG is lossless and keeps every pixel exact, while WebP usually applies stronger compression. That's normal — PNG trades file size for universal compatibility and quality.</p>
-            </details>
-            <details>
-              <summary>Can I convert many files at once?</summary>
-              <p>Yes. Add as many WebP files as you like, convert the whole batch, and download everything as one ZIP archive.</p>
-            </details>
-            <details>
-              <summary>Can I convert WebP to JPG instead of PNG?</summary>
-              <p>Yes. Switch the output format to JPG and pick a quality level. JPG files are smaller and work everywhere, but they can't store transparency — transparent areas are filled with white.</p>
-            </details>
-            <details>
-              <summary>Can I resize during conversion?</summary>
-              <p>Yes. Set an optional output width and height before converting. Keep the ratio lock enabled to avoid stretching.</p>
-            </details>
-            <details>
-              <summary>What about animated WebP files?</summary>
-              <p>This converter is designed for still images. Animated WebP files may only expose a single frame depending on your browser's decoder.</p>
-            </details>
-            <details>
-              <summary>Is there a limit on file count or size?</summary>
-              <p>There are no account credits or artificial file-count caps. Each input file is limited to 20 MB, and very large batches still depend on your device's available memory.</p>
-            </details>
-            <details>
-              <summary>Does it work on mobile?</summary>
-              <p>Yes. The layout adapts to phones and tablets, and file selection works with the normal system picker.</p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== Guides ===== -->
-      <section id="guides" class="hp-section hp-section-alt" aria-labelledby="guides-title">
-        <div class="hp-section-inner">
-          <div class="section-head">
-            <p class="eyebrow">Guides</p>
-            <h2 id="guides-title">Go deeper</h2>
-          </div>
-          <div class="hp-guides">
-            <a class="hp-guide" href="./benchmark-2026.html"><b>What a WebP to PNG conversion does to your file size — measured on six image types</b><span>READ GUIDE &rarr;</span></a>
-            <a class="hp-guide" href="./png-compression-guide.html"><b>How PNG compression really works: filters, DEFLATE and colour types</b><span>READ GUIDE &rarr;</span></a>
-            <a class="hp-guide" href="./alpha-transparency-guide.html"><b>Alpha channels, mattes and why transparency can pick up a halo</b><span>READ GUIDE &rarr;</span></a>
-            <a class="hp-guide" href="./image-formats-compared.html"><b>PNG vs WebP vs JPEG vs AVIF: choosing a format in 2026</b><span>READ GUIDE &rarr;</span></a>
-            <a class="hp-guide" href="./screenshot-image-formats.html"><b>The best format for screenshots, charts and text-heavy images</b><span>READ GUIDE &rarr;</span></a>
-            <a class="hp-guide" href="./guides.html"><b>Every guide in one place — all guides &rarr;</b><span>READ GUIDE &rarr;</span></a>
-          </div>        </div>
-      </section>
-      <section class="hp-section" aria-labelledby="method-band">
-        <div class="hp-section-inner">
-          <div class="cta-band"><div><h2>Every number on this site is measured</h2><p>File sizes, quality metrics and transparency checks come from a script we publish alongside the results. If a claim cannot be reproduced, it does not go on the page.</p></div><a class="btn" href="./benchmark-2026.html">Read the 2026 benchmark</a></div>
-        </div>
-      </section>
-
-      <!-- ===== CTA ===== -->
-      <section class="hp-section" aria-label="Call to action">
-        <div class="hp-section-inner">
-          <div class="hp-cta">
-            <h2>Convert your first WebP now</h2>
-            <p>Free forever. Batch-ready. And your files never leave your device.</p>
-            <a class="hp-btn-primary" href="#tool">Start converting</a>
+            <details><summary>Are my WebP files uploaded to a server?</summary><p>No. Decoding, conversion, measurement, and ZIP packaging run locally in your browser. Your image files are not sent to a PNGToolbox server.</p></details>
+            <details><summary>Does PNG output keep transparency?</summary><p>Yes. If the WebP source has transparent pixels, PNG output preserves them. JPG output replaces transparent pixels with the background color you choose.</p></details>
+            <details><summary>Why can PNG output be larger than WebP?</summary><p>PNG uses lossless compression, while WebP can use stronger lossy or lossless compression. The converter shows the actual size of every result.</p></details>
+            <details><summary>What are the WebP and file-size limits?</summary><p>The converter is designed for still WebP images. Animated files may expose only one frame, each input is limited to 20 MB, and very large batches depend on available device memory.</p></details>
           </div>
         </div>
       </section>
